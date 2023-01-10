@@ -1,4 +1,4 @@
-package users;
+import java.util.TreeMap;
 
 abstract class User {
   private String username;
@@ -6,10 +6,14 @@ abstract class User {
   private String email;
   Position position;
 
+  TreeMap<String, String> administratorMap = new TreeMap<>();
+  TreeMap<String, String> userMap = new TreeMap<>();
+
   public User(String username, String password, String email) {
     this.username = username;
     this.password = password;
     this.email = email;
+    userMap.put(email, username);
   }
 
   public String getUsername() {

@@ -1,9 +1,11 @@
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Application {
 
-  private int id;
+  private int id = 0;
   private String name;
   private List<Material> materials;
   private Date creationDate;
@@ -19,6 +21,27 @@ public class Application {
   private String marriageDetectedBy;
   private String marriageDescription;
   private String marriagePhotoUrl;
+
+  public Application(String name, List<Material> materials) {
+
+    int id = this.id++;
+    this.name = name;
+    this.materials = materials;
+
+    Date creationDate = new Date();
+    String dayFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(creationDate);
+    ApplicationStatus status = ApplicationStatus.NEW;
+    String responsibleSupplier = "";
+    Date deliveryDate = null;
+    Date statusChangeDate = new Date();
+    boolean isClosed = false;
+    Date closingDate = null;
+    String closedBy = " ";
+    boolean hasFactoryMarriage = false;
+    Date marriageDetectionDate;
+    String marriageDetectedBy;
+    String marriageDescription;
+  }
 
   public int getId() {
     return id;
@@ -161,5 +184,27 @@ public class Application {
     setMarriageDetectedBy(marriageDetectedBy);
     setMarriageDescription(marriageDescription);
     setMarriagePhotoUrl(marriagePhotoUrl);
+  }
+
+  @Override
+  public String toString() {
+    return "Application{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", materials=" + materials +
+        ", creationDate=" + creationDate +
+        ", status=" + status +
+        ", responsibleSupplier='" + responsibleSupplier + '\'' +
+        ", deliveryDate=" + deliveryDate +
+        ", statusChangeDate=" + statusChangeDate +
+        ", isClosed=" + isClosed +
+        ", closingDate=" + closingDate +
+        ", closedBy='" + closedBy + '\'' +
+        ", hasFactoryMarriage=" + hasFactoryMarriage +
+        ", marriageDetectionDate=" + marriageDetectionDate +
+        ", marriageDetectedBy='" + marriageDetectedBy + '\'' +
+        ", marriageDescription='" + marriageDescription + '\'' +
+        ", marriagePhotoUrl='" + marriagePhotoUrl + '\'' +
+        '}';
   }
 }
