@@ -1,5 +1,7 @@
-package com.example.Application;
+package com.example.Application.staff;
 
+import com.example.Application.core.Application;
+import com.example.Application.core.ApplicationStatus;
 import java.util.Date;
 
 public class Supplier extends User {
