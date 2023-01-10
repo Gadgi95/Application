@@ -1,5 +1,6 @@
-package com.example.Application;
+package com.example.Application.staff;
 
+import com.example.Application.core.Application;
 import java.util.Date;
 
 class Foreman extends User {
