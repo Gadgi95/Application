@@ -2,7 +2,7 @@ package main.java;
 
 import java.util.Date;
 
-class Supplier extends User {
+public class Supplier extends User {
 
   public Supplier(String username, String password, String email) {
     super(username, password, email);

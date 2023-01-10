@@ -8,7 +8,7 @@ public abstract class User {
   private String email;
   Position position;
 
-  TreeMap<String, String> administratorMap = new TreeMap<>();
+  public TreeMap<String, String> administratorMap = new TreeMap<>();
   public TreeMap<String, String> userMap = new TreeMap<>();
   String VALID_EMAIL_ADDRESS_REGEX = "\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b";
 
