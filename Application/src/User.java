@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.TreeMap;
 
 abstract class User {
@@ -8,12 +9,19 @@ abstract class User {
 
   TreeMap<String, String> administratorMap = new TreeMap<>();
   TreeMap<String, String> userMap = new TreeMap<>();
+  String VALID_EMAIL_ADDRESS_REGEX = "\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b";
+
 
   public User(String username, String password, String email) {
-    this.username = username;
-    this.password = password;
-    this.email = email;
-    userMap.put(email, username);
+    if(email.matches((VALID_EMAIL_ADDRESS_REGEX))){
+      this.email = email;
+      this.username = username;
+      this.password = password;
+      userMap.put(email, username);
+    }
+    else {
+      System.out.println("Неверный формат email");
+    }
   }
 
   public String getUsername() {
