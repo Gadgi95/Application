@@ -16,9 +16,14 @@ public class Administrator extends User {
   }
 
   public void addSupplier(Supplier supplier) {
+    //Проверка почты и имени науникальность значений, если такая почта или имя уже зареган - ошибка
+
     new Supplier(supplier.getUsername(), supplier.getPassword(), supplier.getEmail());
   }
   public void addForeman(Foreman foreman) {
+    //Проверка почты и имени науникальность значений, если такая почта или имя уже зареган - ошибка
+
+
     new Supplier(foreman.getUsername(), foreman.getPassword(), foreman.getEmail());
   }
 

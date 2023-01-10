@@ -50,4 +50,18 @@ public abstract class User {
   }
 
   public abstract String getType();
+
+  public TreeMap<String, String> getUserMap() {
+    return userMap;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        "username='" + username + '\'' +
+        ", password='" + password + '\'' +
+        ", email='" + email + '\'' +
+        ", position=" + position +
+        '}';
+  }
 }
