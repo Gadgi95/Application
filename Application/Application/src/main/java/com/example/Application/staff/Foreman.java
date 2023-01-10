@@ -3,7 +3,7 @@ package com.example.Application.staff;
 import com.example.Application.core.Application;
 import java.util.Date;
 
-class Foreman extends User {
+public class Foreman extends User {
 
   public Foreman(String username, String password, String email) {
     super(username, password, email);
