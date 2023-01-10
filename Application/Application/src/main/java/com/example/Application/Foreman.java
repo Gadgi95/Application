@@ -33,4 +33,8 @@ class Foreman extends User {
     application.setMarriageDetectedBy(getUsername());
     application.setMarriageDescription(description);
   }
+
+  public void look() {
+    System.out.println("look");
+  }
 }
