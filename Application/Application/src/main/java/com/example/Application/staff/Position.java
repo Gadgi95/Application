@@ -1,4 +1,4 @@
-package com.example.Application;
+package com.example.Application.staff;
 
 public enum Position {
   ADMINISTRATOR,

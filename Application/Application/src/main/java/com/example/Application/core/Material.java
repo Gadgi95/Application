@@ -1,4 +1,4 @@
-package com.example.Application;
+package com.example.Application.core;
 
 public class Material {
   private String name;
