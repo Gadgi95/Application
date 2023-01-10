@@ -1,3 +1,5 @@
+package main.java;
+
 import java.util.Date;
 
 class Supplier extends User {
@@ -10,7 +12,7 @@ class Supplier extends User {
 
   @Override
   public String getType() {
-    return "Supplier";
+    return "main.java.Supplier";
   }
 
   public void viewApplication(Application application) {

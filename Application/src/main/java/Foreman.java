@@ -1,3 +1,5 @@
+package main.java;
+
 import java.util.Date;
 
 class Foreman extends User {
@@ -10,7 +12,7 @@ class Foreman extends User {
 
   @Override
   public String getType() {
-    return "Foreman";
+    return "main.java.Foreman";
   }
 
   public void createApplication(Application application) {

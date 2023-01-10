@@ -1,5 +1,6 @@
+package main.java;
+
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -188,7 +189,7 @@ public class Application {
 
   @Override
   public String toString() {
-    return "Application{" +
+    return "main.java.Application{" +
         "id=" + id +
         ", name='" + name + '\'' +
         ", materials=" + materials +

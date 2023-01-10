@@ -1,3 +1,5 @@
+package main.java;
+
 import java.util.Map;
 
 class Administrator extends User {
@@ -10,7 +12,7 @@ class Administrator extends User {
 
   @Override
   public String getType() {
-    return "Administrator";
+    return "main.java.Administrator";
   }
 
   public void addSupplier(Supplier supplier) {

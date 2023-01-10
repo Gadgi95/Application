@@ -1,14 +1,15 @@
-import java.util.Locale;
+package main.java;
+
 import java.util.TreeMap;
 
-abstract class User {
+public abstract class User {
   private String username;
   private String password;
   private String email;
   Position position;
 
   TreeMap<String, String> administratorMap = new TreeMap<>();
-  TreeMap<String, String> userMap = new TreeMap<>();
+  public TreeMap<String, String> userMap = new TreeMap<>();
   String VALID_EMAIL_ADDRESS_REGEX = "\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b";
 
 
