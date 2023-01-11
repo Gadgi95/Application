@@ -16,13 +16,13 @@ public class Application {
 	private int id = 0;
 	private String name;
 	private List<Material> materials;
-	private Date creationDate;
+	private String creationDate;
 	private ApplicationStatus status;
 	private String responsibleSupplier;
-	private Date deliveryDate;
-	private Date statusChangeDate;
+	private String deliveryDate;
+	private String statusChangeDate;
 	private boolean isClosed;
-	private Date closingDate;
+	private String closingDate;
 	private String closedBy;
 	private boolean hasFactoryMarriage;
 	private Date marriageDetectionDate;
@@ -36,8 +36,7 @@ public class Application {
 		this.name = name;
 		this.materials = materials;
 
-		Date creationDate = new Date();
-		String dayFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(creationDate);
+		String creationDate = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
 		ApplicationStatus status = ApplicationStatus.NEW;
 		String responsibleSupplier = "";
 		Date deliveryDate = null;
@@ -75,12 +74,8 @@ public class Application {
 		this.materials = materials;
 	}
 
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
 	}
 
 	public ApplicationStatus getStatus() {
@@ -99,19 +94,19 @@ public class Application {
 		this.responsibleSupplier = responsibleSupplier;
 	}
 
-	public Date getDeliveryDate() {
+	public String getDeliveryDate() {
 		return deliveryDate;
 	}
 
-	public void setDeliveryDate(Date deliveryDate) {
+	public void setDeliveryDate(String deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
 
-	public Date getStatusChangeDate() {
+	public String getStatusChangeDate() {
 		return statusChangeDate;
 	}
 
-	public void setStatusChangeDate(Date statusChangeDate) {
+	public void setStatusChangeDate(String statusChangeDate) {
 		this.statusChangeDate = statusChangeDate;
 	}
 
@@ -123,11 +118,11 @@ public class Application {
 		isClosed = closed;
 	}
 
-	public Date getClosingDate() {
+	public String getClosingDate() {
 		return closingDate;
 	}
 
-	public void setClosingDate(Date closingDate) {
+	public void setClosingDate(String closingDate) {
 		this.closingDate = closingDate;
 	}
 
@@ -181,7 +176,7 @@ public class Application {
 
 	public void closeApplication(Date closingDate, String closedBy) {
 		setClosed(true);
-		setClosingDate(closingDate);
+		setClosingDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(closingDate));
 		setClosedBy(closedBy);
 	}
 

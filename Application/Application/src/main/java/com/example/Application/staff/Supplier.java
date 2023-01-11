@@ -2,6 +2,7 @@ package com.example.Application.staff;
 
 import com.example.Application.core.Application;
 import com.example.Application.core.ApplicationStatus;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Supplier extends User {
@@ -21,9 +22,9 @@ public class Supplier extends User {
     System.out.println(application.toString());
   }
 
-  public void updateApplication(Application application, Date deliveryDate) {
+  public void updateApplication(Application application, String deliveryDate) {
     application.setStatus(ApplicationStatus.IN_PROGRESS);
-    application.setStatusChangeDate(new Date());
+    application.setStatusChangeDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()));
     application.setDeliveryDate(deliveryDate);
     application.setResponsibleSupplier(getUsername());
   }
