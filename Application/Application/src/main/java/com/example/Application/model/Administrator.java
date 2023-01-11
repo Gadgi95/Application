@@ -1,18 +1,18 @@
-package com.example.Application.staff;
+package com.example.Application.model;
 
 import java.util.Map;
 
-public class Administrator extends User {
+public class Administrator extends Users {
 
   public Administrator(String username, String password, String email) {
     super(username, password, email);
-    this.position = Position.ADMINISTRATOR;
+    this.role = Role.ADMINISTRATOR;
     administratorMap.put(email, username);
   }
 
   @Override
   public String getType() {
-    return "main.java.Administrator";
+    return "main.java.model.Administrator";
   }
 
   public void addSupplier(Supplier supplier) {
@@ -27,7 +27,7 @@ public class Administrator extends User {
     new Supplier(foreman.getUsername(), foreman.getPassword(), foreman.getEmail());
   }
 
-  public void removeUser(User user) {
+  public void removeUser(Users user) {
     for (Map.Entry<String, String> users : userMap.entrySet()) {
       String value = users.getValue();
       String key = users.getKey();

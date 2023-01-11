@@ -1,15 +1,15 @@
-package com.example.Application.staff;
+package com.example.Application.model;
 
 import com.example.Application.core.Application;
 import com.example.Application.core.ApplicationStatus;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Supplier extends User {
+public class Supplier extends Users {
 
   public Supplier(String username, String password, String email) {
     super(username, password, email);
-    this.position = Position.SUPPLIER;
+    this.role = Role.SUPPLIER;
 
   }
 

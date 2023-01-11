@@ -1,19 +1,21 @@
-package com.example.Application.staff;
+package com.example.Application.model;
 
 import java.util.TreeMap;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 
-public abstract class User {
+public abstract class Users {
   private String username;
   private String password;
   private String email;
-  Position position;
+  Role role;
 
   public TreeMap<String, String> administratorMap = new TreeMap<>();
   public TreeMap<String, String> userMap = new TreeMap<>();
   String VALID_EMAIL_ADDRESS_REGEX = "\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b";
 
 
-  public User(String username, String password, String email) {
+  public Users(String username, String password, String email) {
     if(email.matches((VALID_EMAIL_ADDRESS_REGEX))){
       this.email = email;
       this.username = username;
@@ -25,6 +27,8 @@ public abstract class User {
     }
   }
 
+
+  @Secured("ROLE_ADMIN")
   public String getUsername() {
     return username;
   }
@@ -33,6 +37,7 @@ public abstract class User {
     this.username = username;
   }
 
+  @Secured("ROLE_ADMIN")
   public String getPassword() {
     return password;
   }
@@ -51,17 +56,18 @@ public abstract class User {
 
   public abstract String getType();
 
+  @PreAuthorize("hasRole('ROLE_USER')")
   public TreeMap<String, String> getUserMap() {
     return userMap;
   }
 
   @Override
   public String toString() {
-    return "User{" +
+    return "Users{" +
         "username='" + username + '\'' +
         ", password='" + password + '\'' +
         ", email='" + email + '\'' +
-        ", position=" + position +
+        ", role=" + role +
         '}';
   }
 }

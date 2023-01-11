@@ -1,13 +1,13 @@
-package com.example.Application.staff;
+package com.example.Application.model;
 
 import com.example.Application.core.Application;
 import java.util.Date;
 
-public class Foreman extends User {
+public class Foreman extends Users {
 
   public Foreman(String username, String password, String email) {
     super(username, password, email);
-    this.position = Position.FOREMAN;
+    this.role = Role.FOREMAN;
 
   }
 

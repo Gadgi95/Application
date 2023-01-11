@@ -1,18 +1,18 @@
 package com.example.Application.staffTest;
 
-import com.example.Application.staff.User;
+import com.example.Application.model.Users;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
-public class UserTest {
+public class UsersTest {
 
   @Test
   public void testValidUserCreation() {
     String username = "john";
     String password = "password";
     String email = "john@example.com";
-    User user = new User(username, password, email) {
+    Users user = new Users(username, password, email) {
       @Override
       public String getType() {
         return null;
@@ -28,7 +28,7 @@ public class UserTest {
     String username = "john";
     String password = "password";
     String email = "john_example.com";
-    User user = new User(username, password, email) {
+    Users user = new Users(username, password, email) {
       @Override
       public String getType() {
         return null;
@@ -41,7 +41,7 @@ public class UserTest {
     String username = "john";
     String password = "password";
     String email = "john_example.com";
-    User user = new User(username, password, email) {
+    Users user = new Users(username, password, email) {
       @Override
       public String getType() {
         return null;
@@ -49,7 +49,7 @@ public class UserTest {
     };
     Assert.assertTrue(user.userMap.isEmpty());
     email = "john@example.com";
-    user = new User(username, password, email) {
+    user = new Users(username, password, email) {
       @Override
       public String getType() {
         return null;
