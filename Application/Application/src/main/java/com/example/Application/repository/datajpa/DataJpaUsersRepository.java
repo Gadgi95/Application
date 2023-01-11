@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 public class DataJpaUsersRepository implements UsersRepository {
 
     private final CrudUsersRepository crudRepository;
-
     public DataJpaUsersRepository(CrudUsersRepository crudRepository) {
         this.crudRepository = crudRepository;
     }

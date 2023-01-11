@@ -5,6 +5,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public abstract class Users {
+  private Integer id;
   private String username;
   private String password;
   private String email;
@@ -14,6 +15,12 @@ public abstract class Users {
   public TreeMap<String, String> userMap = new TreeMap<>();
   String VALID_EMAIL_ADDRESS_REGEX = "\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b";
 
+  public Users(Integer id, String username, String password, String email) {
+    this.id = id;
+    this.email = email;
+    this.username = username;
+    this.password = password;
+  }
 
   public Users(String username, String password, String email) {
     if(email.matches((VALID_EMAIL_ADDRESS_REGEX))){
@@ -26,7 +33,13 @@ public abstract class Users {
       System.out.println("Неверный формат email");
     }
   }
+  public Integer getId() {
+    return id;
+  }
 
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
   @Secured("ROLE_ADMIN")
   public String getUsername() {
