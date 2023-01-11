@@ -13,7 +13,7 @@ public class DatabaseConfig {
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
     dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-    dataSource.setUrl("jdbc:mysql://gadgi95.beget.tech:3306/gadgi95_applicat");
+    dataSource.setUrl("jdbc:mysql://gadgi95.beget.tech:3306/gadgi95_applicat?autoReconnect=true&useSSL=false");
     dataSource.setUsername("gadgi95_applicat");
     dataSource.setPassword("Qwerty!23");
     return dataSource;
