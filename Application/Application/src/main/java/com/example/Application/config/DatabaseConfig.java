@@ -12,8 +12,8 @@ public class DatabaseConfig {
   @Bean
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName("org.postgresql.Driver");
-    dataSource.setUrl("jdbc:postgresql://gadgi95.beget.tech:5432/mydatabase");
+    dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+    dataSource.setUrl("jdbc:mysql://gadgi95.beget.tech:3306/gadgi95_applicat");
     dataSource.setUsername("gadgi95_applicat");
     dataSource.setPassword("Qwerty!23");
     return dataSource;
