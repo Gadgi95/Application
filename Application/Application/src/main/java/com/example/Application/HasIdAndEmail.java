@@ -18,5 +18,6 @@ public interface HasIdAndEmail {
   }
 
   String getEmail();
+  String getEmail();
 
 }
