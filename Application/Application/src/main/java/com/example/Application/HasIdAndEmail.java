@@ -16,6 +16,4 @@ public interface HasIdAndEmail {
     Assert.notNull(getId(), "Entity must has id");
     return getId();
   }
-//test
-  String getEmail();
 }
