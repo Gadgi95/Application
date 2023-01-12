@@ -5,7 +5,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public abstract class Users {
-  private Integer id;
+  private Integer id = 1;
   private String username;
   private String password;
   private String email;
@@ -24,6 +24,7 @@ public abstract class Users {
 
   public Users(String username, String password, String email) {
     if(email.matches((VALID_EMAIL_ADDRESS_REGEX))){
+      int id = this.id++;
       this.email = email;
       this.username = username;
       this.password = password;
