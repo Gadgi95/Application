@@ -4,6 +4,10 @@ import java.util.Map;
 
 public class Administrator extends Users {
 
+  public Administrator(Integer id, String username, String password, String email) {
+    super(id, username, password, email);
+  }
+
   public Administrator(String username, String password, String email) {
     super(username, password, email);
     this.role = Role.ADMINISTRATOR;
