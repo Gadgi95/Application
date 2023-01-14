@@ -35,8 +35,9 @@ public class DatabaseController {
 
         ArrayList<String> tasks = new ArrayList<>();
         while (resultSet.next()) {
-            tasks.add(resultSet.getString("task"));
+            tasks.add(resultSet.getString("Name"));
         }
+        System.out.println(tasks);
         return tasks;
     }
 }
