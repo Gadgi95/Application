@@ -2,16 +2,17 @@ package com.example.Application.repository.datajpa;
 
 import com.example.Application.model.Administrator;
 import com.example.Application.model.Users;
+import com.example.Application.repository.AbstractServiceTest;
 import com.example.Application.repository.UsersRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.function.BiConsumer;
 
-class DataJpaUsersRepositoryTest {
+class DataJpaUsersRepositoryTest extends AbstractServiceTest {
 
     @Autowired
-    UsersRepository usersRepository;
+    protected UsersRepository usersRepository;
 
     private BiConsumer<Users, Users> assertion;
 

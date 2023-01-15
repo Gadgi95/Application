@@ -1,6 +1,5 @@
-package com.example.Application.controller;
+package com.example.Application;
 
-import com.example.Application.repository.UserRepository;
 import com.example.Application.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
