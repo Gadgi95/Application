@@ -28,27 +28,4 @@ public class Administrator extends UserTo {
 
     new Supplier(foreman.getName(), foreman.getPassword(), foreman.getEmail());
   }
-
-//  public void removeUser(UserTo user) {
-//    for (Map.Entry<String, String> users : userMap.entrySet()) {
-//      String value = users.getValue();
-//      String key = users.getKey();
-//      if(user.getEmail().equalsIgnoreCase(value))
-//      {
-//        userMap.remove(value);
-//      }
-//    }
-//  }
-//
-//  public void removeAdministrator(Administrator administrator) {
-//    for (Map.Entry<String, String> administrators : administratorMap.entrySet()) {
-//      String value = administrators.getValue();
-//      String key = administrators.getKey();
-//      if(administrator.getEmail().equalsIgnoreCase(value))
-//      {
-//        userMap.remove(value);
-//      }
-//    }
-//  }
-
 }
