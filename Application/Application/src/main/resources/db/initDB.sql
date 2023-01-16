@@ -5,8 +5,9 @@ CREATE TABLE User (
                       ROLE ENUM('admin', 'user') NOT NULL
 );
 
-CREATE TABLE Application (
+CREATE TABLE Ticket (
                              id INT AUTO_INCREMENT PRIMARY KEY,
+                             user_id INT NOT NULL,
                              name VARCHAR(255) NOT NULL,
                              creationDate DATE NOT NULL,
                              status ENUM('NEW', 'IN_PROGRESS', 'CLOSED') NOT NULL

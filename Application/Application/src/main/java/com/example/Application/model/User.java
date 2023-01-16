@@ -70,7 +70,6 @@ import java.util.*;
         @NamedQuery(name = User.BY_EMAIL, query = "SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
         @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name, u.email"),
 })
-
 @Entity
 @Table(name = "users")
 public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEmailAddress {

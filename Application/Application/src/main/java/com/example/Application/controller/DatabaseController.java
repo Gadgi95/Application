@@ -1,9 +1,10 @@
 package com.example.Application.controller;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
+
 
 public class DatabaseController {
 
@@ -21,21 +22,22 @@ public class DatabaseController {
         this.password = prop.getProperty("spring.datasource.password");
     }
 
-    public void connect() throws SQLException {
+    public void insertTask() throws SQLException, ClassNotFoundException {
         connection = DriverManager.getConnection(url, username, password);
+        PreparedStatement prSt = connection.prepareStatement("INSERT INTO User (name, mail, ROLE) VALUES ('John Doe', 'johndoe@example.com', 'admin')");
+        prSt.executeUpdate();
     }
 
-    public void disconnect() throws SQLException {
-        connection.close();
-    }
-
-    public ResultSet executeQuery(String sql) throws SQLException {
+    public ArrayList<String> geTasks() throws SQLException, ClassNotFoundException {
+        String sql = "SELECT * FROM User";
         Statement statement = connection.createStatement();
-        return statement.executeQuery(sql);
-    }
+        ResultSet resultSet = statement.executeQuery(sql);
 
-    public int executeUpdate(String sql) throws SQLException {
-        Statement statement = connection.createStatement();
-        return statement.executeUpdate(sql);
+        ArrayList<String> tasks = new ArrayList<>();
+        while (resultSet.next()) {
+            tasks.add(resultSet.getString("Name"));
+        }
+        System.out.println(tasks);
+        return tasks;
     }
 }
