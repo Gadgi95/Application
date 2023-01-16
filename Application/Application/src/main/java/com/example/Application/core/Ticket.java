@@ -1,15 +1,22 @@
 package com.example.Application.core;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.example.Application.View;
+import com.example.Application.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@SpringBootApplication
-public class Application {
+public class Ticket {
 
-	private int id = 0;
+	private int id;
 	private String name;
 	private List<Material> materials;
 	private String creationDate;
@@ -26,14 +33,22 @@ public class Application {
 	private String marriageDescription;
 	private String marriagePhotoUrl;
 
-	public Application(String name, List<Material> materials) {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	@NotNull(groups = View.Persist.class)
+	private User user;
+
+	public Ticket(String name, List<Material> materials) {
 
 		int id = this.id++;
 		this.name = name;
 		this.materials = materials;
-
 		String creationDate = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
 		ApplicationStatus status = ApplicationStatus.NEW;
+		User createdBy = user; //user добавлен в конструктор
+
 		String responsibleSupplier = "";
 		Date deliveryDate = null;
 		Date statusChangeDate = new Date();

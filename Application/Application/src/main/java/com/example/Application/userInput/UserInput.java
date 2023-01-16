@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class UserInput {
+public interface UserInput {
 
 
   public static String getLine() throws IOException {
