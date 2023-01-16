@@ -1,6 +1,7 @@
-package com.example.Application;
+package com.example.Application.controller;
 
 import com.example.Application.model.User;
+import com.example.Application.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class MainController {
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the GET or POST request
 
-    User n = new User();
+    User n = new User(0); //выдавал ошибку при значении new User(id)!!
     n.setName(name);
     n.setEmail(email);
     userRepository.save(n);

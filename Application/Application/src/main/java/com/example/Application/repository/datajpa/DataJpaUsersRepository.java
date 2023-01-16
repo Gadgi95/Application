@@ -1,6 +1,6 @@
 package com.example.Application.repository.datajpa;
 
-import com.example.Application.model.Users;
+import com.example.Application.to.UserTo;
 import com.example.Application.repository.UsersRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +13,7 @@ public class DataJpaUsersRepository implements UsersRepository {
     }
 
     @Override
-    public Users save(Users user) {
+    public UserTo save(UserTo user) {
         return crudRepository.save(user);
     }
 }

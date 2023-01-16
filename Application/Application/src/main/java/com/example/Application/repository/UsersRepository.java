@@ -1,7 +1,7 @@
 package com.example.Application.repository;
 
-import com.example.Application.model.Users;
+import com.example.Application.to.UserTo;
 
 public interface UsersRepository {
-    Users save(Users user);
+    UserTo save(UserTo user);
 }

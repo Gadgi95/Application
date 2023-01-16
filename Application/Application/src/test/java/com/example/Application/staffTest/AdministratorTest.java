@@ -4,7 +4,7 @@ package com.example.Application.staffTest;
 import com.example.Application.model.Administrator;
 import com.example.Application.model.Foreman;
 import com.example.Application.model.Supplier;
-import com.example.Application.model.Users;
+import com.example.Application.to.UserTo;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
@@ -40,7 +40,7 @@ public class AdministratorTest {
   @Test
   public void testRemoveUser() {
     Administrator administrator = new Administrator("admin", "password", "admin@example.com");
-    Users user = new Users("john", "password", "john@example.com") {
+    UserTo user = new UserTo("john", "password", "john@example.com") {
       @Override
       public String getType() {
         return "User";

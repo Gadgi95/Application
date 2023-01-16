@@ -1,19 +1,18 @@
 package com.example.Application.model;
 
 import com.example.Application.core.Application;
+import com.example.Application.to.UserTo;
+
 import java.util.Date;
 
-public class Foreman extends Users {
+public class Foreman extends UserTo {
+
+  Role role;
 
   public Foreman(String username, String password, String email) {
     super(username, password, email);
-    this.role = Role.FOREMAN;
+    this.role = Role.USER;
 
-  }
-
-  @Override
-  public String getType() {
-    return "main.java.Foreman";
   }
 
   public void createApplication(Application application) {
@@ -31,7 +30,7 @@ public class Foreman extends Users {
   public void detectFactoryMarriage(Application application, String description) {
     application.setHasFactoryMarriage(true);
     application.setMarriageDetectionDate(new Date());
-    application.setMarriageDetectedBy(getUsername());
+    application.setMarriageDetectedBy(getName());
     application.setMarriageDescription(description);
   }
 }

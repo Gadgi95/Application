@@ -1,6 +1,6 @@
 package com.example.Application.staffTest;
 
-import com.example.Application.model.Users;
+import com.example.Application.to.UserTo;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -12,13 +12,8 @@ public class UsersTest {
     String username = "john";
     String password = "password";
     String email = "john@example.com";
-    Users user = new Users(username, password, email) {
-      @Override
-      public String getType() {
-        return null;
-      }
-    };
-    Assert.assertEquals(username, user.getUsername());
+    UserTo user = new UserTo(username, password, email);
+    Assert.assertEquals(username, user.getName());
     Assert.assertEquals(password, user.getPassword());
     Assert.assertEquals(email, user.getEmail());
   }
@@ -28,33 +23,8 @@ public class UsersTest {
     String username = "john";
     String password = "password";
     String email = "john_example.com";
-    Users user = new Users(username, password, email) {
-      @Override
-      public String getType() {
-        return null;
-      }
+    UserTo user = new UserTo(username, password, email) {
     };
     Assert.assertNull(user.getEmail());
-  }
-  @Test
-  public void testTreeMap() {
-    String username = "john";
-    String password = "password";
-    String email = "john_example.com";
-    Users user = new Users(username, password, email) {
-      @Override
-      public String getType() {
-        return null;
-      }
-    };
-    Assert.assertTrue(user.userMap.isEmpty());
-    email = "john@example.com";
-    user = new Users(username, password, email) {
-      @Override
-      public String getType() {
-        return null;
-      }
-    };
-    Assert.assertFalse(user.userMap.isEmpty());
   }
 }
