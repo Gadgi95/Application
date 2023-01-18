@@ -1,6 +1,7 @@
 package com.example.Application.core;
 
 import com.example.Application.View;
+import com.example.Application.model.ObjectName;
 import com.example.Application.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
@@ -32,6 +33,7 @@ public class Ticket {
 	private String marriageDetectedBy;
 	private String marriageDescription;
 	private String marriagePhotoUrl;
+	private ObjectName objectName;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)

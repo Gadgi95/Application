@@ -1,6 +1,6 @@
 package com.example.Application.model;
 
-import com.example.Application.core.Application;
+import com.example.Application.core.Ticket;
 import com.example.Application.core.ApplicationStatus;
 import com.example.Application.to.UserTo;
 
@@ -16,11 +16,11 @@ public class Supplier extends UserTo {
 
   }
 
-  public void viewApplication(Application application) {
+  public void viewApplication(Ticket application) {
     System.out.println(application.toString());
   }
 
-  public void updateApplication(Application application, String deliveryDate) {
+  public void updateApplication(Ticket application, String deliveryDate) {
     application.setStatus(ApplicationStatus.IN_PROGRESS);
     application.setStatusChangeDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()));
     application.setDeliveryDate(deliveryDate);

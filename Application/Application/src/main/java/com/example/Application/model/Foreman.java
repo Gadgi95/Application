@@ -1,6 +1,6 @@
 package com.example.Application.model;
 
-import com.example.Application.core.Application;
+import com.example.Application.core.Ticket;
 import com.example.Application.to.UserTo;
 
 import java.util.Date;
@@ -15,19 +15,19 @@ public class Foreman extends UserTo {
 
   }
 
-  public void createApplication(Application application) {
-    new Application(application.getName(), application.getMaterials());
+  public void createApplication(Ticket application) {
+    new Ticket(application.getName(), application.getMaterials());
   }
 
-  public void viewApplication(Application application) {
+  public void viewApplication(Ticket application) {
     System.out.println(application.toString());
   }
 
-  public void closeApplication(Application application) {
+  public void closeApplication(Ticket application) {
     application.setClosed(true);
   }
 
-  public void detectFactoryMarriage(Application application, String description) {
+  public void detectFactoryMarriage(Ticket application, String description) {
     application.setHasFactoryMarriage(true);
     application.setMarriageDetectionDate(new Date());
     application.setMarriageDetectedBy(getName());
