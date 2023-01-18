@@ -46,7 +46,7 @@ CREATE TABLE materials
     characteristics VARCHAR(255),
     cost            INT
 );
-CREATE TABLE user_role
+CREATE TABLE user_roles
 (
     user_id INT,
     role    VARCHAR(255),

@@ -30,8 +30,6 @@ import org.hibernate.annotations.*;
 import com.example.Application.HasIdAndEmail;
 import com.example.Application.to.util.validation.NoHtml;
 import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -65,22 +63,9 @@ import java.util.*;
  */
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@NamedQueries({
-        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
-        @NamedQuery(name = User.BY_EMAIL, query = "SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
-        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name, u.email"),
-})
 @Entity
 @Table(name = "users")
 public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEmailAddress {
-
-  public static final String DELETE = "User.delete";
-  public static final String BY_EMAIL = "User.getByEmail";
-  public static final String ALL_SORTED = "User.getAllSorted";
-  private Integer id;
-  private String name;
-
-  private Date date;
 
   @Column(name = "email", nullable = false, unique = true)
   @Email
@@ -111,7 +96,10 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
   @BatchSize(size = 200)
   @JoinColumn(name = "user_id") //https://stackoverflow.com/a/62848296/548473
   @OnDelete(action = OnDeleteAction.CASCADE)
-  private Role roles;
+  private Set<Role> roles;
+
+  public User() {
+  }
 
   public User(Integer id) {
     this.id = id;
@@ -124,7 +112,7 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
     }
   }
 
-  public User(Integer id, String name, String email, String password, Role roles, Date registered) {
+  public User(Integer id, String name, String email, String password, Set<Role> roles, Date registered) {
     if(!isValidEmailAddress(email)) {
       System.out.println("Введен неверный формат email!");
     }
@@ -173,11 +161,11 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
     return password;
   }
 
-  public Role getRoles() {
+  public Set<Role> getRoles() {
     return roles;
   }
 
-  public void setRoles(Role roles) {
+  public void setRoles(Set<Role> roles) {
     this.roles = roles;
   }
 
@@ -191,44 +179,3 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
             '}';
   }
 }
-
-//
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.GeneratedValue;
-//import jakarta.persistence.GenerationType;
-//import jakarta.persistence.Id;
-//
-//@Entity // This tells Hibernate to make a table out of this class
-//public class User {
-//  @Id
-//  @GeneratedValue(strategy=GenerationType.AUTO)
-//  private Integer id;
-//
-//  private String name;
-//
-//  private String email;
-//
-//  public Integer getId() {
-//    return id;
-//  }
-//
-//  public void setId(Integer id) {
-//    this.id = id;
-//  }
-//
-//  public String getName() {
-//    return name;
-//  }
-//
-//  public void setName(String name) {
-//    this.name = name;
-//  }
-//
-//  public String getEmail() {
-//    return email;
-//  }
-//
-//  public void setEmail(String email) {
-//    this.email = email;
-//  }
-//}
