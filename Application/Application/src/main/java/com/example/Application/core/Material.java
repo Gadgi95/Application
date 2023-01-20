@@ -1,9 +1,7 @@
 package com.example.Application.core;
 
-import com.example.Application.model.AbstractNamedEntity;
-
-public class Material extends AbstractNamedEntity {
-
+public class Material {
+  private String name;
   private int quantity;
   private String characteristics;
 
@@ -11,6 +9,14 @@ public class Material extends AbstractNamedEntity {
     this.name = name;
     this.quantity = quantity;
     this.characteristics = characteristics;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public int getQuantity() {

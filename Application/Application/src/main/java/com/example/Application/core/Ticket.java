@@ -1,7 +1,6 @@
 package com.example.Application.core;
 
 import com.example.Application.View;
-import com.example.Application.model.AbstractNamedEntity;
 import com.example.Application.model.ObjectName;
 import com.example.Application.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,8 +15,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class Ticket extends AbstractNamedEntity {
+public class Ticket {
 
+	private int id;
+	private String name;
 	private List<Material> materials;
 	private String creationDate;
 	private ApplicationStatus status;
@@ -60,6 +61,14 @@ public class Ticket extends AbstractNamedEntity {
 		Date marriageDetectionDate;
 		String marriageDetectedBy;
 		String marriageDescription;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
