@@ -6,6 +6,7 @@ CREATE TABLE users
     password   VARCHAR(255)           NOT NULL,
     registered DATETIME DEFAULT NOW() NOT NULL
 );
+CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
 
 CREATE TABLE tickets
 (
@@ -27,6 +28,7 @@ CREATE TABLE tickets
     marriagePhotoUrl      VARCHAR(255),
     objectName            VARCHAR(255)
 );
+CREATE UNIQUE INDEX tickets_unique_user_date_idx ON tickets (user_id, creationDate);
 
 CREATE TABLE tickets_archive
 (
@@ -41,22 +43,28 @@ CREATE TABLE tickets_archive
 CREATE TABLE materials
 (
     id              INT AUTO_INCREMENT PRIMARY KEY,
-    name            VARCHAR(255),
-    quantity        INT,
-    characteristics VARCHAR(255),
-    cost            INT
+    ticket_id       INT,
+    name            VARCHAR(255) NOT NULL,
+    quantity        INT          NOT NULL,
+    characteristics VARCHAR(255) NOT NULL,
+    cost            INT,
+    FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE
 );
+CREATE UNIQUE INDEX materials_unique_name_idx ON materials (name);
+
 CREATE TABLE user_roles
 (
-    user_id INT,
-    role    VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    user_id INT          NOT NULL,
+    role    VARCHAR(255) NOT NULL,
+    CONSTRAINT user_roles_idx UNIQUE (user_id, role),
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
+
 CREATE TABLE tickets_materials
 (
-    ticket_id   INT,
-    material_id INT,
-    FOREIGN KEY (ticket_id) REFERENCES tickets (id),
+    ticket_id   INT NOT NULL,
+    material_id INT NOT NULL,
+    FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE,
     FOREIGN KEY (material_id) REFERENCES materials (id)
 );
 

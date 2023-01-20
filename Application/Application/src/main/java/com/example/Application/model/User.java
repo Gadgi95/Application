@@ -24,12 +24,13 @@ package com.example.Application.model;
 
 import com.example.Application.ValidEmailAddress;
 import com.example.Application.View;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.Application.core.Ticket;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import com.example.Application.HasIdAndEmail;
 import com.example.Application.to.util.validation.NoHtml;
 import javax.persistence.Entity;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -78,15 +79,12 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
   @NotBlank
   @Size(min = 5, max = 128)
   // https://stackoverflow.com/a/12505165/548473
-  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
 
   @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
   @NotNull
-  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private Date registered = new Date();
 
-  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   @Enumerated(EnumType.STRING)
   @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
           uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_roles")})
@@ -97,6 +95,11 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
   @JoinColumn(name = "user_id") //https://stackoverflow.com/a/62848296/548473
   @OnDelete(action = OnDeleteAction.CASCADE)
   private Set<Role> roles;
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+  @OrderBy("creationDate DESC")
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private List<Ticket> tickets;
 
   public User() {
   }
@@ -167,6 +170,14 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
+  }
+
+  public List<Ticket> getTickets() {
+    return tickets;
+  }
+
+  public void setTickets(List<Ticket> tickets) {
+    this.tickets = tickets;
   }
 
   @Override
