@@ -30,6 +30,8 @@ public class DatabaseController {
     }
 
     public ArrayList<String> geTasks() throws SQLException, ClassNotFoundException {
+        //Получаем все колонки, точно известно что там есть колонка Name, к которой обращаемся ниже?
+        //Если нам нужна только колонка Name, то надо грузить только одну колонку, без лишних данных
         String sql = "SELECT * FROM User";
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);

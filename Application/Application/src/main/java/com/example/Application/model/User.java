@@ -105,6 +105,7 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
     this.id = id;
   }
 
+  //Поменять на метод CreateCopy
   public User(User u, Integer id) {
     this(u.id, u.name, u.email, u.password, u.roles, u.registered);
     if(!isValidEmailAddress(u.email)) {
@@ -126,6 +127,7 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
     }
   }
 
+  //Совместить 2 конструктора т.к. код дублируется с конструктором выше
   public User(Integer id, String name, String email, String password, Date registered) {
     super(id, name);
     this.email = email;
@@ -157,6 +159,7 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
     this.registered = registered;
   }
 
+  //Пароль задается только через конструктор?
   public String getPassword() {
     return password;
   }
