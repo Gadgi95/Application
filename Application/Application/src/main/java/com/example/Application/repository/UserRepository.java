@@ -8,6 +8,7 @@ import java.util.List;
 // CRUD refers Create, Read, Update, Delete
 
 public interface UserRepository {
+
     User save(User user);
 
     boolean delete(int id);
@@ -17,4 +18,6 @@ public interface UserRepository {
     User getByEmail(String email);
 
     List<User> getAll();
+
+    User getWithTickets(int id);
 }

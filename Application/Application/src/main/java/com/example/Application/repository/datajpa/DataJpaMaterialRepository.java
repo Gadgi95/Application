@@ -6,23 +6,24 @@ import com.example.Application.repository.MaterialRepository;
 import java.util.List;
 
 public class DataJpaMaterialRepository implements MaterialRepository {
+
     @Override
-    public Material save(Material ticket) {
+    public Material save(Material material, int ticketId) {
         return null;
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id, int ticketId) {
         return false;
     }
 
     @Override
-    public Material get(int id) {
+    public Material get(int id, int ticketId) {
         return null;
     }
 
     @Override
-    public List<Material> getAll() {
+    public List<Material> getAll(int ticketId) {
         return null;
     }
 }

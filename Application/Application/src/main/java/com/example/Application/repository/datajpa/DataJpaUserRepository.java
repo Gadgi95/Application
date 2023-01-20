@@ -17,7 +17,7 @@ public class DataJpaUserRepository implements UserRepository {
 
     @Override
     public User save(User user) {
-        return null;
+        return crudRepository.save(user);
     }
 
     @Override
@@ -37,6 +37,11 @@ public class DataJpaUserRepository implements UserRepository {
 
     @Override
     public List<User> getAll() {
+        return null;
+    }
+
+    @Override
+    public User getWithTickets(int id) {
         return null;
     }
 }

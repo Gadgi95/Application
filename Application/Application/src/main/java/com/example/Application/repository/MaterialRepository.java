@@ -5,11 +5,12 @@ import com.example.Application.core.Material;
 import java.util.List;
 
 public interface MaterialRepository {
-    Material save(Material ticket);
 
-    boolean delete(int id);
+    Material save(Material material, int ticketId);
 
-    Material get(int id);
+    boolean delete(int id, int ticketId);
 
-    List<Material> getAll();
+    Material get(int id, int ticketId);
+
+    List<Material> getAll(int ticketId);
 }
