@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface MaterialRepository {
 
-    Material save(Material material, int ticketId);
+    Material save(Material material);
 
     boolean delete(int id, int ticketId);
 
-    Material get(int id, int ticketId);
+    Material get(String name);
 
-    List<Material> getAll(int ticketId);
+    List<Material> getAll();
 }
