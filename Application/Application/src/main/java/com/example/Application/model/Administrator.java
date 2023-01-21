@@ -2,19 +2,20 @@ package com.example.Application.model;
 
 import com.example.Application.to.UserTo;
 
-import java.util.Map;
+import java.util.Collections;
+import java.util.Set;
 
 public class Administrator extends UserTo {
 
-  Role role;
+  Set<Role> role;
 
-  public Administrator(Integer id, String username, String password, String email, Role role) {
+  public Administrator(Integer id, String username, String password, String email, Set<Role>role) {
     super(id, username, password, email, role);
   }
 
   public Administrator(String username, String password, String email) {
     super(username, password, email);
-    this.role = Role.ADMINISTRATOR;
+    this.role = Collections.singleton(Role.ADMINISTRATOR);
   }
 
   public void addSupplier(Supplier supplier) {
