@@ -1,6 +1,8 @@
 package com.example.Application.to;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import com.example.Application.HasId;
 import com.example.Application.ValidEmailAddress;
 import com.example.Application.model.Role;
@@ -27,9 +29,9 @@ public class UserTo extends BaseTo implements HasId, Serializable, ValidEmailAdd
   @Size(min = 5, max = 32)
   private String password;
 
-  private Role role;
+  private Set<Role> role;
 
-  public UserTo(Integer id, String username, String password, String email, Role role) {
+  public UserTo(Integer id, String username, String password, String email, Set<Role> role) {
     if(isValidEmailAddress(email)) {
       this.id = id;
       this.email = email;
@@ -48,7 +50,6 @@ public class UserTo extends BaseTo implements HasId, Serializable, ValidEmailAdd
       this.email = email;
       this.name = username;
       this.password = password;
-      this.role = role;
     }
     else {
       System.out.println("Неверный формат email");
@@ -88,11 +89,11 @@ public class UserTo extends BaseTo implements HasId, Serializable, ValidEmailAdd
     this.email = email;
   }
 
-  public Role getRole() {
+  public Set<Role> getRole() {
     return role;
   }
 
-  public void setRole(Role role) {
+  public void setRole(Set<Role> role) {
     this.role = role;
   }
 

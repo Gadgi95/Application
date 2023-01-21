@@ -22,14 +22,18 @@ package com.example.Application.model;
  такие как @NoHtml и @Range, для проверки и маскирования данных.
  */
 
+import com.example.Application.HasId;
 import com.example.Application.ValidEmailAddress;
 import com.example.Application.View;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.Application.core.Ticket;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import com.example.Application.HasIdAndEmail;
 import com.example.Application.to.util.validation.NoHtml;
+
+import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -65,7 +69,12 @@ import java.util.*;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "users")
-public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEmailAddress {
+public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, ValidEmailAddress {
+
+  @Id
+  @Access(AccessType.FIELD)
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Integer id;
 
   @Column(name = "email", nullable = false, unique = true)
   @Email
@@ -78,15 +87,12 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
   @NotBlank
   @Size(min = 5, max = 128)
   // https://stackoverflow.com/a/12505165/548473
-  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
 
   @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
   @NotNull
-  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private Date registered = new Date();
 
-  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   @Enumerated(EnumType.STRING)
   @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
           uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_roles")})
@@ -97,6 +103,11 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
   @JoinColumn(name = "user_id") //https://stackoverflow.com/a/62848296/548473
   @OnDelete(action = OnDeleteAction.CASCADE)
   private Set<Role> roles;
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+  @OrderBy("creationDate DESC")
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private List<Ticket> tickets;
 
   public User() {
   }
@@ -129,13 +140,24 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
 
   //Совместить 2 конструктора т.к. код дублируется с конструктором выше
   public User(Integer id, String name, String email, String password, Date registered) {
-    super(id, name);
+    super(name);
+    this.id = id;
     this.email = email;
     this.password = password;
     this.registered = registered;
     if(!isValidEmailAddress(email)) {
       System.out.println("Введен неверный формат email!");
     }
+  }
+
+  @Override
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  @Override
+  public Integer getId() {
+    return id;
   }
 
   @Override
@@ -172,6 +194,14 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
     this.roles = roles;
   }
 
+  public List<Ticket> getTickets() {
+    return tickets;
+  }
+
+  public void setTickets(List<Ticket> tickets) {
+    this.tickets = tickets;
+  }
+
   @Override
   public String toString() {
     return "User{" +
@@ -180,5 +210,18 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
             ", name=" + name +
             ", roles=" + roles +
             '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    User user = (User) o;
+    return id.equals(user.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
   }
 }

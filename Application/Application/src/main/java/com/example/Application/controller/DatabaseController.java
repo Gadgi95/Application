@@ -25,14 +25,14 @@ public class DatabaseController {
 
     public void insertTask() throws SQLException, ClassNotFoundException {
         connection = DriverManager.getConnection(url, username, password);
-        PreparedStatement prSt = connection.prepareStatement("INSERT INTO User (name, mail, ROLE) VALUES ('John Doe', 'johndoe@example.com', 'admin')");
+        PreparedStatement prSt = connection.prepareStatement("INSERT INTO users (name, email, password) VALUES ('John Doe', 'johndoe@example.com', 'admin')");
         prSt.executeUpdate();
     }
 
     public ArrayList<String> geTasks() throws SQLException, ClassNotFoundException {
         //Получаем все колонки, точно известно что там есть колонка Name, к которой обращаемся ниже?
         //Если нам нужна только колонка Name, то надо грузить только одну колонку, без лишних данных
-        String sql = "SELECT * FROM User";
+        String sql = "SELECT * FROM users";
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
 

@@ -1,45 +1,91 @@
 package com.example.Application.core;
 
-import com.example.Application.View;
+import com.example.Application.HasId;
+import com.example.Application.model.AbstractNamedEntity;
 import com.example.Application.model.ObjectName;
 import com.example.Application.model.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
-public class Ticket {
+@Entity
+@Table(name = "tickets")
+public class Ticket extends AbstractNamedEntity implements HasId {
 
-	private int id;
-	private String name;
-	private List<Material> materials;
+	@Id
+	@Access(AccessType.FIELD)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+
+	@Column(name = "creationDate", nullable = false)
+	@NotBlank
 	private String creationDate;
+
+	@Column(name = "status", nullable = false)
+	@NotNull
 	private ApplicationStatus status;
+
+	@Column(name = "responsibleSupplier")
+	@Size(min = 2, max = 128)
 	private String responsibleSupplier;
+
+	@Column(name = "deliveryDate")
+	@Size(min = 2, max = 20)
 	private String deliveryDate;
+
+	@Column(name = "statusChangeDate")
+	@Size(min = 2, max = 20)
 	private String statusChangeDate;
+
+	@Column(name = "isClosed")
 	private boolean isClosed;
+
+	@Column(name = "closingDate")
+	@Size(min = 2, max = 20)
 	private String closingDate;
+
+	@Column(name = "closedBy")
+	@Size(min = 2, max = 128)
 	private String closedBy;
+
+	@Column(name = "hasFactoryMarriage")
 	private boolean hasFactoryMarriage;
+
+	@Column(name = "marriageDetectionDate")
+	@Size(min = 2, max = 20)
 	private Date marriageDetectionDate;
+
+	@Column(name = "marriageDetectedBy")
+	@Size(min = 2, max = 128)
 	private String marriageDetectedBy;
+
+	@Column(name = "marriageDescription")
+	@Size(min = 2, max = 120)
 	private String marriageDescription;
+
+	@Column(name = "marriagePhotoUrl")
+	@Size(min = 2, max = 150)
 	private String marriagePhotoUrl;
+
+	@Column(name = "objectName")
 	private ObjectName objectName;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket")
+	@OrderBy("name DESC")
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private List<Material> materials;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
-	@NotNull(groups = View.Persist.class)
 	private User user;
 
 	public Ticket(String name, List<Material> materials) {
@@ -63,11 +109,16 @@ public class Ticket {
 		String marriageDescription;
 	}
 
-	public int getId() {
+	public Ticket() {
+	}
+
+	@Override
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	@Override
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -89,6 +140,10 @@ public class Ticket {
 
 	public String getCreationDate() {
 		return creationDate;
+	}
+
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	public ApplicationStatus getStatus() {
@@ -187,6 +242,22 @@ public class Ticket {
 		this.marriagePhotoUrl = marriagePhotoUrl;
 	}
 
+	public ObjectName getObjectName() {
+		return objectName;
+	}
+
+	public void setObjectName(ObjectName objectName) {
+		this.objectName = objectName;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public void closeApplication(Date closingDate, String closedBy) {
 		setClosed(true);
 		setClosingDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(closingDate));
@@ -224,4 +295,16 @@ public class Ticket {
 				'}';
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Ticket ticket = (Ticket) o;
+		return id.equals(ticket.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 }
