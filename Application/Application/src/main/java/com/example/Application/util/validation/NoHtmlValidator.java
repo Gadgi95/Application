@@ -1,4 +1,4 @@
-package com.example.Application.to.util.validation;
+package com.example.Application.util.validation;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;

@@ -10,7 +10,7 @@ public interface MaterialRepository {
 
     boolean delete(int id, int ticketId);
 
-    Material get(String name);
+    Material get(int id, String name);
 
     List<Material> getAll();
 }

@@ -1,4 +1,4 @@
-package com.example.Application.to.util.exception;
+package com.example.Application.util.exception;
 
 public class UpdateRestrictionException extends ApplicationException {
     public static final String EXCEPTION_UPDATE_RESTRICTION = "exception.user.updateRestriction";

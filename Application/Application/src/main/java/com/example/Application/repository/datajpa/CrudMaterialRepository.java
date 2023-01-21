@@ -17,6 +17,6 @@ public interface CrudMaterialRepository extends JpaRepository<Material, Integer>
     int delete(@Param("id") int id, @Param("ticketId") int ticketId);
 
     @Query("SELECT t.name as 'Название заявки', t.creationDate as 'Дата создания', t.status as 'Статус', m.name as 'Название материала', m.quantity as 'Количество материала'\n" +
-            "FROM materials m RIGHT JOIN tickets t ON m.ticket_id = t.id WHERE m.name=:name")
-    Material findByName(@Param("name") String name);
+            "FROM materials m RIGHT JOIN tickets t ON m.ticket_id = t.id WHERE m.id=:id AND m.name=:name")
+    Material findByName(@Param("id") int id, @Param("name") String name);
 }

@@ -29,7 +29,7 @@ import com.example.Application.core.Ticket;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import com.example.Application.HasIdAndEmail;
-import com.example.Application.to.util.validation.NoHtml;
+import com.example.Application.util.validation.NoHtml;
 
 import javax.persistence.AccessType;
 import javax.persistence.Entity;

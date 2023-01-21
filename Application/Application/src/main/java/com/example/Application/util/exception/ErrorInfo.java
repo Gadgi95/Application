@@ -1,4 +1,4 @@
-package com.example.Application.to.util.exception;
+package com.example.Application.util.exception;
 
 public class ErrorInfo {
     private final String url;
