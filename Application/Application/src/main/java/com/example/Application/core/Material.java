@@ -1,5 +1,6 @@
 package com.example.Application.core;
 
+import com.example.Application.HasId;
 import com.example.Application.model.AbstractNamedEntity;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -9,10 +10,16 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 @Table(name = "materials")
-public class Material extends AbstractNamedEntity {
+public class Material extends AbstractNamedEntity implements HasId {
+
+  @Id
+  @Access(AccessType.FIELD)
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Integer id;
 
   @NotNull
   @Range(min = 0, max = 5000)
@@ -33,15 +40,17 @@ public class Material extends AbstractNamedEntity {
     this.characteristics = characteristics;
   }
 
+  @Override
+  public Integer getId() {
+    return id;
+  }
+
+  @Override
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
   public Material() {
-  }
-
-  public Ticket getTicket() {
-    return ticket;
-  }
-
-  public void setTicket(Ticket ticket) {
-    this.ticket = ticket;
   }
 
   public int getQuantity() {
@@ -60,14 +69,36 @@ public class Material extends AbstractNamedEntity {
     this.characteristics = characteristics;
   }
 
+  public Ticket getTicket() {
+    return ticket;
+  }
+
+  public void setTicket(Ticket ticket) {
+    this.ticket = ticket;
+  }
+
   @Override
   public String toString() {
     return "Material{" +
+            "id=" + id +
             "quantity=" + quantity +
             ", characteristics='" + characteristics + '\'' +
             ", ticket=" + ticket +
             ", id=" + id +
             ", name='" + name + '\'' +
             '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Material material = (Material) o;
+    return id.equals(material.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
   }
 }

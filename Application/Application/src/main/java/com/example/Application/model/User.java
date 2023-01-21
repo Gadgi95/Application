@@ -22,6 +22,7 @@ package com.example.Application.model;
  такие как @NoHtml и @Range, для проверки и маскирования данных.
  */
 
+import com.example.Application.HasId;
 import com.example.Application.ValidEmailAddress;
 import com.example.Application.View;
 import com.example.Application.core.Ticket;
@@ -29,6 +30,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import com.example.Application.HasIdAndEmail;
 import com.example.Application.to.util.validation.NoHtml;
+
+import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -66,7 +69,12 @@ import java.util.*;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "users")
-public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEmailAddress {
+public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, ValidEmailAddress {
+
+  @Id
+  @Access(AccessType.FIELD)
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Integer id;
 
   @Column(name = "email", nullable = false, unique = true)
   @Email
@@ -132,13 +140,24 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
 
   //Совместить 2 конструктора т.к. код дублируется с конструктором выше
   public User(Integer id, String name, String email, String password, Date registered) {
-    super(id, name);
+    super(name);
+    this.id = id;
     this.email = email;
     this.password = password;
     this.registered = registered;
     if(!isValidEmailAddress(email)) {
       System.out.println("Введен неверный формат email!");
     }
+  }
+
+  @Override
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  @Override
+  public Integer getId() {
+    return id;
   }
 
   @Override
@@ -191,5 +210,18 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail, ValidEma
             ", name=" + name +
             ", roles=" + roles +
             '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    User user = (User) o;
+    return id.equals(user.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
   }
 }

@@ -1,5 +1,6 @@
 package com.example.Application.core;
 
+import com.example.Application.HasId;
 import com.example.Application.model.AbstractNamedEntity;
 import com.example.Application.model.ObjectName;
 import com.example.Application.model.User;
@@ -13,10 +14,16 @@ import javax.validation.constraints.Size;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tickets")
-public class Ticket extends AbstractNamedEntity {
+public class Ticket extends AbstractNamedEntity implements HasId {
+
+	@Id
+	@Access(AccessType.FIELD)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 
 	@Column(name = "creationDate", nullable = false)
 	@NotBlank
@@ -103,6 +110,16 @@ public class Ticket extends AbstractNamedEntity {
 	}
 
 	public Ticket() {
+	}
+
+	@Override
+	public Integer getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -278,4 +295,16 @@ public class Ticket extends AbstractNamedEntity {
 				'}';
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Ticket ticket = (Ticket) o;
+		return id.equals(ticket.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 }
