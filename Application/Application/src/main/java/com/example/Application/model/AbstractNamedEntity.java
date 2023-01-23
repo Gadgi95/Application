@@ -10,7 +10,7 @@ package com.example.Application.model;
  */
 
 import com.example.Application.View;
-import com.example.Application.to.util.validation.NoHtml;
+import com.example.Application.util.validation.NoHtml;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;

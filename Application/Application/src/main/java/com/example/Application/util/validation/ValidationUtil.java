@@ -1,13 +1,13 @@
-package com.example.Application.to.util.validation;
+package com.example.Application.util.validation;
 
 import org.slf4j.Logger;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 
 import com.example.Application.HasId;
-import com.example.Application.to.util.exception.ErrorType;
-import com.example.Application.to.util.exception.IllegalRequestDataException;
-import com.example.Application.to.util.exception.NotFoundException;
+import com.example.Application.util.exception.ErrorType;
+import com.example.Application.util.exception.IllegalRequestDataException;
+import com.example.Application.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.*;

@@ -25,7 +25,7 @@ public class DatabaseController {
 
     public void insertTask() throws SQLException, ClassNotFoundException {
         connection = DriverManager.getConnection(url, username, password);
-        PreparedStatement prSt = connection.prepareStatement("INSERT INTO users (name, email, password) VALUES ('John Doe', 'johndoe@example.com', 'admin')");
+        PreparedStatement prSt = connection.prepareStatement("INSERT INTO users (name, email, password) VALUES ('John Doe1', 'johndoe@example.com1', 'admin')");
         prSt.executeUpdate();
     }
 

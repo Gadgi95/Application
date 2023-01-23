@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TicketRepository {
 
-    Ticket save(Ticket ticket, int userId);
+    Ticket save(Ticket ticket);
 
     boolean delete(int id, int userId);
 

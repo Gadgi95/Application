@@ -50,7 +50,7 @@ CREATE TABLE materials
     cost            INT,
     FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX materials_unique_name_idx ON materials (name);
+CREATE INDEX materials_name_idx ON materials (name);
 
 CREATE TABLE user_roles
 (

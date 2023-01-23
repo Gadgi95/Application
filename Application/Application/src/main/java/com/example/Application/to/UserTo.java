@@ -6,7 +6,7 @@ import java.util.Set;
 import com.example.Application.HasId;
 import com.example.Application.ValidEmailAddress;
 import com.example.Application.model.Role;
-import com.example.Application.to.util.validation.NoHtml;
+import com.example.Application.util.validation.NoHtml;
 import org.springframework.security.access.annotation.Secured;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

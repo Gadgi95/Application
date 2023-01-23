@@ -1,4 +1,4 @@
-package com.example.Application.to.util;
+package com.example.Application.util;
 
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
