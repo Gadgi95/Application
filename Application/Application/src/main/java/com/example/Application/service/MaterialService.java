@@ -1,6 +1,6 @@
 package com.example.Application.service;
 
-import com.example.Application.core.Material;
+import com.example.Application.model.Material;
 import com.example.Application.repository.MaterialRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;

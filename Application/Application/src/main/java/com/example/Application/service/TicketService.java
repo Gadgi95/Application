@@ -1,6 +1,6 @@
 package com.example.Application.service;
 
-import com.example.Application.core.Ticket;
+import com.example.Application.model.Ticket;
 import com.example.Application.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;

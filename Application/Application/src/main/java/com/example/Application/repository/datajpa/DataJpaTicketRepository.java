@@ -1,7 +1,7 @@
 package com.example.Application.repository.datajpa;
 
-import com.example.Application.core.Material;
-import com.example.Application.core.Ticket;
+import com.example.Application.model.Material;
+import com.example.Application.model.Ticket;
 import com.example.Application.repository.TicketRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;

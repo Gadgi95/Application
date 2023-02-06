@@ -25,7 +25,6 @@ package com.example.Application.model;
 import com.example.Application.HasId;
 import com.example.Application.ValidEmailAddress;
 import com.example.Application.View;
-import com.example.Application.core.Ticket;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import com.example.Application.HasIdAndEmail;
@@ -43,19 +42,6 @@ import javax.validation.constraints.Size;
 import java.util.*;
 
 /**
- * Этот блок кода использует Hibernate для определения именованных запросов для класса «Пользователь» в приложении Java.
- Определены следующие именованные запросы:
-
- *DELETE: этот запрос используется для удаления пользователя из базы данных по его идентификатору.
- Синтаксис этого запроса следующий: DELETE FROM User u WHERE u.id=:id
-
- * BY_EMAIL: этот запрос используется для получения отдельного пользователя из базы данных по его адресу электронной почты,
- а также для получения его ролей. Синтаксис этого запроса следующий:
- SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1
-
- * ALL_SORTED: этот запрос используется для извлечения всех пользователей из базы данных в порядке их имени и электронной почты.
- Синтаксис этого запроса следующий: SELECT u FROM User u ORDER BY u.name, u.email
-
  * Кроме того, этот блок кода также применяет кэширование к классу «Пользователь», используя нестрогую стратегию чтения-записи.
  * Это означает, что несколько потоков могут читать из кеша одновременно,
  * но только один поток может одновременно записывать в кеш.

@@ -1,6 +1,6 @@
 package com.example.Application.repository.datajpa;
 
-import com.example.Application.core.Material;
+import com.example.Application.model.Material;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

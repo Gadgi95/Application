@@ -1,7 +1,7 @@
 package com.example.Application.repository;
 
-import com.example.Application.core.Material;
-import com.example.Application.core.Ticket;
+import com.example.Application.model.Material;
+import com.example.Application.model.Ticket;
 
 import java.util.List;
 

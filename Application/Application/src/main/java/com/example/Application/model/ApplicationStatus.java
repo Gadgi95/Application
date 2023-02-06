@@ -1,4 +1,4 @@
-package com.example.Application.core;
+package com.example.Application.model;
 
 public enum ApplicationStatus {
   NEW,

@@ -1,9 +1,6 @@
-package com.example.Application.core;
+package com.example.Application.model;
 
 import com.example.Application.HasId;
-import com.example.Application.model.AbstractNamedEntity;
-import com.example.Application.model.ObjectName;
-import com.example.Application.model.User;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 

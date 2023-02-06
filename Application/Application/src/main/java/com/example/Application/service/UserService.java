@@ -3,6 +3,8 @@ package com.example.Application.service;
 import com.example.Application.AuthorizedUser;
 import com.example.Application.model.User;
 import com.example.Application.repository.UserRepository;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +18,7 @@ import static com.example.Application.util.UserUtil.prepareToSave;
 import static com.example.Application.util.validation.ValidationUtil.checkNotFound;
 import static com.example.Application.util.validation.ValidationUtil.checkNotFoundWithId;
 
-@Service
+@Service("userService")
 public class UserService implements UserDetailsService {
 
     private final UserRepository repository;

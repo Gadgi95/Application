@@ -3,7 +3,7 @@ package com.example.Application.core;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,10 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.example.Application.core.Ticket;
-import com.example.Application.core.Material;
-import com.example.Application.model.ObjectName;
-import com.example.Application.model.User;
+import com.example.Application.model.Ticket;
+import com.example.Application.model.Material;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

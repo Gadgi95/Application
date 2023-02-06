@@ -1,7 +1,6 @@
-package com.example.Application.core;
+package com.example.Application.model;
 
 import com.example.Application.HasId;
-import com.example.Application.model.AbstractNamedEntity;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
