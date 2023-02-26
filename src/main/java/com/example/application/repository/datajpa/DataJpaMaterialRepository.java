@@ -30,7 +30,8 @@ public class DataJpaMaterialRepository implements MaterialRepository {
 
     @Override
     public Material get(int id, String name) {
-        return crudMaterialRepository.findByName(id, name);
+        return null;
+//        return crudMaterialRepository.findByName(id, name);
     }
 
     @Override

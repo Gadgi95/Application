@@ -47,6 +47,7 @@ public class DataJpaTicketRepository implements TicketRepository {
 
     @Override
     public Ticket getWithMaterial(int id, int userId, List<Material> materialList) {
-        return crudTicketRepository.getWithMaterial(id, userId, materialList);
+        return null;
+//        return crudTicketRepository.getWithMaterial(id, userId, materialList);
     }
 }

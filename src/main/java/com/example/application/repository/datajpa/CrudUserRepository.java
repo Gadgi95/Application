@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 public interface CrudUserRepository extends JpaRepository<User, Integer> {
 
     @Modifying
-    @Query("INSERT INTO User (name, email, password) SELECT ut.name, ut.email, ut.password FROM UserTo ut")
+//    @Query("INSERT INTO User (name, email, password) SELECT ut.name, ut.email, ut.password FROM UserTo ut")
     User save(User entity);
 
     @Modifying

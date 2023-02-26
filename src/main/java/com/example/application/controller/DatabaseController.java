@@ -16,11 +16,11 @@ public class DatabaseController {
 
     public DatabaseController() throws IOException {
         Properties prop = new Properties();
-        InputStream input = DatabaseController.class.getClassLoader().getResourceAsStream("application.properties");
+        InputStream input = DatabaseController.class.getClassLoader().getResourceAsStream("db/application.properties");
         prop.load(input);
-        this.url = prop.getProperty("spring.datasource.url");
-        this.username = prop.getProperty("spring.datasource.username");
-        this.password = prop.getProperty("spring.datasource.password");
+        this.url = prop.getProperty("database.url");
+        this.username = prop.getProperty("database.username");
+        this.password = prop.getProperty("database.password");
     }
 
     public void insertTask() throws SQLException, ClassNotFoundException {

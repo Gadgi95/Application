@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -15,7 +15,7 @@ import com.example.application.model.Ticket;
 import com.example.application.model.Material;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+//@SpringBootTest
 @Component
 @TestPropertySource(locations = "classpath:application-context.xml")
 public class TicketTest {

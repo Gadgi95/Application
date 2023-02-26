@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Graduation Project (Topjava)</title>
-</head>
-
+<html>
+<jsp:include page="fragments/headTag.jsp"/>
 <body>
-<h3>Graduation project <a href="https://github.com/VadiMayer/graduationProject" target="_blank">Java Enterprise (Topjava)</a></h3>
-<hr>
-
-<div class="container">
-    <a href="swagger-ui.html" target="_blank">Swagger REST Api Documentation</a>
-</div>
-
+<jsp:include page="fragments/bodyHeader.jsp"/>
+<br>
+<section>
+    <form method="post" action="users">
+        <spring:message code="app.login"/>: <select name="userId">
+        <option value="1" selected>User</option>
+        <option value="2">Admin</option>
+    </select>
+        <button type="submit"><spring:message code="common.select"/></button>
+    </form>
+</section>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

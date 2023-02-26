@@ -53,25 +53,6 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 	@Size(min = 2, max = 128)
 	private String closedBy;
 
-	@Column(name = "hasFactoryMarriage")
-	private boolean hasFactoryMarriage;
-
-	@Column(name = "marriageDetectionDate")
-	@Size(min = 2, max = 20)
-	private Date marriageDetectionDate;
-
-	@Column(name = "marriageDetectedBy")
-	@Size(min = 2, max = 128)
-	private String marriageDetectedBy;
-
-	@Column(name = "marriageDescription")
-	@Size(min = 2, max = 120)
-	private String marriageDescription;
-
-	@Column(name = "marriagePhotoUrl")
-	@Size(min = 2, max = 150)
-	private String marriagePhotoUrl;
-
 	@Column(name = "objectName")
 	private ObjectName objectName;
 
@@ -100,10 +81,6 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 		boolean isClosed = false;
 		Date closingDate = null;
 		String closedBy = " ";
-		boolean hasFactoryMarriage = false;
-		Date marriageDetectionDate;
-		String marriageDetectedBy;
-		String marriageDescription;
 	}
 
 	public Ticket() {
@@ -199,46 +176,6 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 		this.closedBy = closedBy;
 	}
 
-	public boolean hasFactoryMarriage() {
-		return hasFactoryMarriage;
-	}
-
-	public void setHasFactoryMarriage(boolean hasFactoryMarriage) {
-		this.hasFactoryMarriage = hasFactoryMarriage;
-	}
-
-	public Date getMarriageDetectionDate() {
-		return marriageDetectionDate;
-	}
-
-	public void setMarriageDetectionDate(Date marriageDetectionDate) {
-		this.marriageDetectionDate = marriageDetectionDate;
-	}
-
-	public String getMarriageDetectedBy() {
-		return marriageDetectedBy;
-	}
-
-	public void setMarriageDetectedBy(String marriageDetectedBy) {
-		this.marriageDetectedBy = marriageDetectedBy;
-	}
-
-	public String getMarriageDescription() {
-		return marriageDescription;
-	}
-
-	public void setMarriageDescription(String marriageDescription) {
-		this.marriageDescription = marriageDescription;
-	}
-
-	public String getMarriagePhotoUrl() {
-		return marriagePhotoUrl;
-	}
-
-	public void setMarriagePhotoUrl(String marriagePhotoUrl) {
-		this.marriagePhotoUrl = marriagePhotoUrl;
-	}
-
 	public ObjectName getObjectName() {
 		return objectName;
 	}
@@ -261,15 +198,6 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 		setClosedBy(closedBy);
 	}
 
-	public void detectFactoryMarriage(Date marriageDetectionDate, String marriageDetectedBy,
-			String marriageDescription, String marriagePhotoUrl) {
-		setHasFactoryMarriage(true);
-		setMarriageDetectionDate(marriageDetectionDate);
-		setMarriageDetectedBy(marriageDetectedBy);
-		setMarriageDescription(marriageDescription);
-		setMarriagePhotoUrl(marriagePhotoUrl);
-	}
-
 	@Override
 	public String toString() {
 		return "main.java.Application{" +
@@ -284,24 +212,6 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 				", isClosed=" + isClosed +
 				", closingDate=" + closingDate +
 				", closedBy='" + closedBy + '\'' +
-				", hasFactoryMarriage=" + hasFactoryMarriage +
-				", marriageDetectionDate=" + marriageDetectionDate +
-				", marriageDetectedBy='" + marriageDetectedBy + '\'' +
-				", marriageDescription='" + marriageDescription + '\'' +
-				", marriagePhotoUrl='" + marriagePhotoUrl + '\'' +
 				'}';
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Ticket ticket = (Ticket) o;
-		return id.equals(ticket.id);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
 	}
 }

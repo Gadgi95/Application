@@ -1,3 +1,10 @@
+DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS tickets_archive;
+DROP TABLE IF EXISTS tickets_materials;
+DROP TABLE IF EXISTS materials;
+DROP TABLE IF EXISTS tickets;
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE users
 (
     id         INT AUTO_INCREMENT PRIMARY KEY,
@@ -10,25 +17,20 @@ CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
 
 CREATE TABLE tickets
 (
-    id                    INT AUTO_INCREMENT PRIMARY KEY,
-    user_id               INT                    NOT NULL,
-    name                  VARCHAR(255)           NOT NULL,
-    creationDate          DATETIME DEFAULT NOW() NOT NULL,
-    status                VARCHAR(255)           NOT NULL,
-    responsibleSupplier   VARCHAR(255),
-    deliveryDate          DATE,
-    statusChangeDate      DATE,
-    isClosed              BOOLEAN,
-    closingDate           DATE,
-    closedBy              VARCHAR(255),
-    hasFactoryMarriage    BOOLEAN,
-    marriageDetectionDate DATE,
-    marriageDetectedBy    VARCHAR(255),
-    marriageDescription   VARCHAR(255),
-    marriagePhotoUrl      VARCHAR(255),
-    objectName            VARCHAR(255)
+    id                  INT AUTO_INCREMENT PRIMARY KEY,
+    user_id             INT                    NOT NULL,
+    name                VARCHAR(255)           NOT NULL,
+    creationDate        DATETIME DEFAULT NOW() NOT NULL,
+    status              VARCHAR(255)           NOT NULL,
+    responsibleSupplier VARCHAR(255),
+    deliveryDate        DATE,
+    statusChangeDate    DATE,
+    isClosed            BOOLEAN,
+    closingDate         DATE,
+    closedBy            VARCHAR(255),
+    objectName          VARCHAR(255)
 );
-CREATE UNIQUE INDEX tickets_unique_user_date_idx ON tickets (user_id, creationDate);
+CREATE INDEX tickets_unique_user_date_idx ON tickets (user_id, creationDate);
 
 CREATE TABLE tickets_archive
 (
@@ -42,12 +44,17 @@ CREATE TABLE tickets_archive
 
 CREATE TABLE materials
 (
-    id              INT AUTO_INCREMENT PRIMARY KEY,
-    ticket_id       INT,
-    name            VARCHAR(255) NOT NULL,
-    quantity        INT          NOT NULL,
-    characteristics VARCHAR(255) NOT NULL,
-    cost            INT,
+    id                    INT AUTO_INCREMENT PRIMARY KEY,
+    ticket_id             INT,
+    name                  VARCHAR(255) NOT NULL,
+    quantity              INT          NOT NULL,
+    characteristics       VARCHAR(255) NOT NULL,
+    cost                  INT,
+    hasFactoryMarriage    BOOLEAN,
+    marriageDetectionDate DATE,
+    marriageDetectedBy    VARCHAR(255),
+    marriageDescription   VARCHAR(255),
+    marriagePhotoUrl      VARCHAR(255),
     FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE
 );
 CREATE INDEX materials_name_idx ON materials (name);
@@ -68,18 +75,18 @@ CREATE TABLE tickets_materials
     FOREIGN KEY (material_id) REFERENCES materials (id)
 );
 
-SELECT *
-FROM tickets
-ORDER BY objectName;
-SELECT *
-FROM tickets
-ORDER BY user_id;
-SELECT *
-FROM tickets
-ORDER BY creationDate;
-
-SELECT tickets.id, tickets.name, materials.name
-FROM tickets
-         JOIN tickets_materials ON tickets.id = tickets_materials.ticket_id
-         JOIN materials ON tickets_materials.material_id = materials.id
-ORDER BY materials.name;
+-- SELECT *
+-- FROM tickets
+-- ORDER BY objectName;
+-- SELECT *
+-- FROM tickets
+-- ORDER BY user_id;
+-- SELECT *
+-- FROM tickets
+-- ORDER BY creationDate;
+--
+-- SELECT tickets.id, tickets.name, materials.name
+-- FROM tickets
+--          JOIN tickets_materials ON tickets.id = tickets_materials.ticket_id
+--          JOIN materials ON tickets_materials.material_id = materials.id
+-- ORDER BY materials.name;
