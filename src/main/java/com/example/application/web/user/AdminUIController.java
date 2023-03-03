@@ -1,12 +1,20 @@
 package com.example.application.web.user;
 
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.application.model.User;
+import org.springframework.stereotype.Controller;
+
+import java.util.List;
 
 
-@RestController
-@RequestMapping(value = "/admin/users", produces = MediaType.APPLICATION_JSON_VALUE)
+@Controller
 public class AdminUIController extends AbstractUserController {
+    @Override
+    public List<User> getAll() {
+        return super.getAll();
+    }
 
+    @Override
+    public User get(int id) {
+        return super.get(id);
+    }
 }
