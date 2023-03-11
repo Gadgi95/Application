@@ -22,7 +22,7 @@ public abstract class AbstractNamedEntity {
     @NotBlank
     @Size(min = 2, max = 128)
     @Column(name = "name", nullable = false)
-    @NoHtml(groups = {View.Web.class})
+//    @NoHtml(groups = {View.Web.class})
     protected String name;
 
     protected AbstractNamedEntity() {

@@ -42,7 +42,7 @@ public class DataJpaTicketRepository implements TicketRepository {
 
     @Override
     public List<Ticket> getAll(int userId) {
-        return crudTicketRepository.findAll(SORT_CREATION_DATE);
+        return crudTicketRepository.getAll(userId);
     }
 
     @Override

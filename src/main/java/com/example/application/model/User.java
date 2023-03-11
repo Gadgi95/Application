@@ -1,27 +1,5 @@
 package com.example.application.model;
 
-
-/**
-
- Этот класс представляет объект User в базе данных приложения и помечен аннотацией JPA @Entity,
- чтобы указать, что это сохраняемый объект. Класс расширяет класс AbstractNamedEntity
- и реализует интерфейс HasIdAndEmail, он определяет несколько полей, таких как
- электронная почта, пароль, включен, зарегистрирован и роли для пользователя.
- Эти поля сопоставляются со столбцами в таблице «users» в базе данных с помощью аннотации JPA @Column.
- Этот класс также определяет несколько именованных запросов, которые можно использовать для извлечения
- и управления объектами пользователя в базе данных, например «User.delete»,
- «User.getByEmail» и «User.getAllSorted». Эти именованные запросы определяются
- с помощью аннотаций @NamedQueries и @NamedQuery.
- Он также использует несколько других аннотаций, таких как @Cache, @ElementCollection,
- @Enumerated, @Column, @Fetch, @BatchSize, @JoinColumn и @OnDelete, которые настраивают
- способ сохранения и загрузки класса из базы данных.
- Класс также использует аннотации JSR-303 Bean Validation, такие как @NotBlank, @Size,
- @Email и @NoHtml, для проверки полей перед сохранением в базе данных.
- Он также использует аннотации Джексона, такие как @JsonProperty, для настройки того,
- как объект сериализуется при возврате как часть API JSON, а также пользовательские аннотации,
- такие как @NoHtml и @Range, для проверки и маскирования данных.
- */
-
 import com.example.application.HasId;
 import com.example.application.ValidEmailAddress;
 import com.example.application.View;
@@ -29,6 +7,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import com.example.application.HasIdAndEmail;
 import com.example.application.util.validation.NoHtml;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -52,7 +31,7 @@ import java.util.*;
  * Кроме того, класс должен быть аннотирован @Entity и иметь правильные сопоставления с таблицей базы данных.
  */
 
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "users")
 public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, ValidEmailAddress {
@@ -66,7 +45,7 @@ public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, V
   @Email
   @NotBlank
   @Size(max = 128)
-  @NoHtml(groups = {View.Web.class})  // https://stackoverflow.com/questions/17480809
+//  @NoHtml(groups = {View.Web.class})  // https://stackoverflow.com/questions/17480809
   private String email;
 
   @Column(name = "password", nullable = false)
@@ -98,42 +77,13 @@ public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, V
   public User() {
   }
 
-  public User(Integer id) {
-    this.id = id;
-  }
-
-  //Поменять на метод CreateCopy
-  public User(User u, Integer id) {
-    this(u.id, u.name, u.email, u.password, u.roles, u.registered);
-    if(!isValidEmailAddress(u.email)) {
-      System.out.println("Введен неверный формат email!");
-    }
-  }
-
-  public User(Integer id, String name, String email, String password, Set<Role> roles, Date registered) {
-    if(!isValidEmailAddress(email)) {
-      System.out.println("Введен неверный формат email!");
-    }
-    else {
-      this.id = id;
-      this.name = name;
-      this.email = email;
-      this.password = password;
-      this.roles = roles;
-      this.registered = registered;
-    }
-  }
-
-  //Совместить 2 конструктора т.к. код дублируется с конструктором выше
-  public User(Integer id, String name, String email, String password, Date registered) {
+  public User(Integer id, String name, String email, String password, Date registered, Collection<Role> roles) {
     super(name);
     this.id = id;
     this.email = email;
     this.password = password;
     this.registered = registered;
-    if(!isValidEmailAddress(email)) {
-      System.out.println("Введен неверный формат email!");
-    }
+    setRoles(roles);
   }
 
   @Override
@@ -176,16 +126,12 @@ public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, V
     return roles;
   }
 
-  public void setRoles(Set<Role> roles) {
-    this.roles = roles;
+  public void setRoles(Collection<Role> roles) {
+    this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
   }
 
   public List<Ticket> getTickets() {
     return tickets;
-  }
-
-  public void setTickets(List<Ticket> tickets) {
-    this.tickets = tickets;
   }
 
   @Override
@@ -196,18 +142,5 @@ public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, V
             ", name=" + name +
             ", roles=" + roles +
             '}';
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    User user = (User) o;
-    return id.equals(user.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id);
   }
 }

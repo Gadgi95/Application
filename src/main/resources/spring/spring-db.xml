@@ -21,10 +21,14 @@
     <tx:annotation-driven/>
 
     <beans>
+<!--        <bean class="org.springframework.beans.factory.config.MethodInvokingBean">-->
+<!--            <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install"/>-->
+<!--        </bean>-->
+
         <context:property-placeholder location="classpath:db/application.properties" system-properties-mode="OVERRIDE"/>
         <bean id="dataSource"
               class="org.apache.tomcat.jdbc.pool.DataSource"
-              p:driverClassName="com.mysql.cj.jdbc.Driver"
+              p:driverClassName="${spring.datasource.driver-class-name}"
               p:url="${database.url}"
               p:username="${database.username}"
               p:password="${database.password}"/>

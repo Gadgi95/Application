@@ -16,6 +16,9 @@ public interface CrudTicketRepository extends JpaRepository<Ticket, Integer> {
 //    @Query("INSERT INTO Ticket (user_id, name, status) SELECT tt.user_id, tt.name, tt.status FROM TicketTo tt")
     Ticket save(Ticket entity);
 
+    @Query("SELECT t FROM Ticket t WHERE t.user.id=:userId ORDER BY t.creationDate DESC")
+    List<Ticket> getAll(@Param("userId") int userId);
+
     @Modifying
     @Query("DELETE FROM Ticket t WHERE t.id=:id AND t.user.id=:user_id")
     int delete(@Param("id") int id, @Param("user_id") int user_id);

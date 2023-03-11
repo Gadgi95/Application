@@ -16,13 +16,13 @@ public class UserTo extends BaseTo implements HasId, Serializable, ValidEmailAdd
 
   @NotBlank
   @Size(min = 2, max = 100)
-  @NoHtml
+//  @NoHtml
   private String name;
 
   @Email
   @NotBlank
   @Size(max = 100)
-  @NoHtml // https://stackoverflow.com/questions/17480809
+//  @NoHtml // https://stackoverflow.com/questions/17480809
   private String email;
 
   @NotBlank
