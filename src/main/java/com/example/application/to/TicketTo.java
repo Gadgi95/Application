@@ -5,6 +5,7 @@ import com.example.application.model.Material;
 import com.example.application.model.ObjectName;
 
 import java.beans.ConstructorProperties;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -15,9 +16,9 @@ public class TicketTo {
 
     private final String name;
 
-    private final String creationDate;
+    private final LocalDateTime creationDate;
 
-    private final ApplicationStatus status;
+    private final String status;
 
     private final String responsibleSupplier;
 
@@ -31,29 +32,15 @@ public class TicketTo {
 
     private final String closedBy;
 
-    private final boolean hasFactoryMarriage;
-
-    private final Date marriageDetectionDate;
-
-    private final String marriageDetectedBy;
-
-    private final String marriageDescription;
-
-    private final String marriagePhotoUrl;
-
-    private final ObjectName objectName;
-
-    private final List<Material> materials;
+    private final String objectName;
 
     private final boolean excess;
 
     @ConstructorProperties({"id", "name", "creationDate", "status", "responsibleSupplier", "deliveryDate", "statusChangeDate",
-            "closingDate", "closedBy", "hasFactoryMarriage", "marriageDetectionDate", "marriageDetectedBy", "marriageDescription",
-            "marriagePhotoUrl", "objectName", "materials", "isClosed", "excess"})
-    public TicketTo(Integer id, String name, String creationDate, ApplicationStatus status, String responsibleSupplier, String deliveryDate,
-                    String statusChangeDate, boolean isClosed, String closingDate, String closedBy, boolean hasFactoryMarriage, Date marriageDetectionDate,
-                    String marriageDetectedBy, String marriageDescription, String marriagePhotoUrl,
-                    ObjectName objectName, List<Material> materials, boolean excess) {
+            "closingDate", "closedBy", "objectName", "isClosed", "excess"})
+    public TicketTo(Integer id, String name, LocalDateTime creationDate, String status, String responsibleSupplier, String deliveryDate,
+                    String statusChangeDate, boolean isClosed, String closingDate, String closedBy,
+                    String objectName, boolean excess) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
@@ -64,13 +51,7 @@ public class TicketTo {
         this.isClosed = isClosed;
         this.closingDate = closingDate;
         this.closedBy = closedBy;
-        this.hasFactoryMarriage = hasFactoryMarriage;
-        this.marriageDetectionDate = marriageDetectionDate;
-        this.marriageDetectedBy = marriageDetectedBy;
-        this.marriageDescription = marriageDescription;
-        this.marriagePhotoUrl = marriagePhotoUrl;
         this.objectName = objectName;
-        this.materials = materials;
         this.excess = excess;
     }
 
@@ -82,11 +63,11 @@ public class TicketTo {
         return name;
     }
 
-    public String getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public ApplicationStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
@@ -114,59 +95,13 @@ public class TicketTo {
         return closedBy;
     }
 
-    public boolean isHasFactoryMarriage() {
-        return hasFactoryMarriage;
-    }
-
-    public Date getMarriageDetectionDate() {
-        return marriageDetectionDate;
-    }
-
-    public String getMarriageDetectedBy() {
-        return marriageDetectedBy;
-    }
-
-    public String getMarriageDescription() {
-        return marriageDescription;
-    }
-
-    public String getMarriagePhotoUrl() {
-        return marriagePhotoUrl;
-    }
-
-    public ObjectName getObjectName() {
+    public String getObjectName() {
         return objectName;
-    }
-
-    public List<Material> getMaterials() {
-        return materials;
     }
 
     public boolean isExcess() {
         return excess;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TicketTo ticketTo = (TicketTo) o;
-        return isClosed == ticketTo.isClosed && hasFactoryMarriage == ticketTo.hasFactoryMarriage && excess == ticketTo.excess
-                && id.equals(ticketTo.id) && name.equals(ticketTo.name) && creationDate.equals(ticketTo.creationDate)
-                && status == ticketTo.status && responsibleSupplier.equals(ticketTo.responsibleSupplier) && deliveryDate.equals(ticketTo.deliveryDate)
-                && statusChangeDate.equals(ticketTo.statusChangeDate) && closingDate.equals(ticketTo.closingDate) && closedBy.equals(ticketTo.closedBy)
-                && marriageDetectionDate.equals(ticketTo.marriageDetectionDate) && marriageDetectedBy.equals(ticketTo.marriageDetectedBy)
-                && marriageDescription.equals(ticketTo.marriageDescription) && marriagePhotoUrl.equals(ticketTo.marriagePhotoUrl)
-                && objectName == ticketTo.objectName && materials.equals(ticketTo.materials);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, creationDate, status, responsibleSupplier, deliveryDate, statusChangeDate,
-                isClosed, closingDate, closedBy, hasFactoryMarriage, marriageDetectionDate, marriageDetectedBy,
-                marriageDescription, marriagePhotoUrl, objectName, materials, excess);
-    }
-
     @Override
     public String toString() {
         return "TicketTo{" +
@@ -180,13 +115,7 @@ public class TicketTo {
                 ", isClosed=" + isClosed +
                 ", closingDate='" + closingDate + '\'' +
                 ", closedBy='" + closedBy + '\'' +
-                ", hasFactoryMarriage=" + hasFactoryMarriage +
-                ", marriageDetectionDate=" + marriageDetectionDate +
-                ", marriageDetectedBy='" + marriageDetectedBy + '\'' +
-                ", marriageDescription='" + marriageDescription + '\'' +
-                ", marriagePhotoUrl='" + marriagePhotoUrl + '\'' +
                 ", objectName=" + objectName +
-                ", materials=" + materials +
                 ", excess=" + excess +
                 '}';
     }

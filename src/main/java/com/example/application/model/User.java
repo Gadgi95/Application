@@ -10,6 +10,7 @@ import com.example.application.util.validation.NoHtml;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -37,7 +38,6 @@ import java.util.*;
 public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, ValidEmailAddress {
 
   @Id
-  @Access(AccessType.FIELD)
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
@@ -69,9 +69,10 @@ public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, V
   @OnDelete(action = OnDeleteAction.CASCADE)
   private Set<Role> roles;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
   @OrderBy("creationDate DESC")
   @OnDelete(action = OnDeleteAction.CASCADE)
+  @BatchSize(size = 100)
   private List<Ticket> tickets;
 
   public User() {

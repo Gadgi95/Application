@@ -30,7 +30,7 @@
         <button type="submit"><spring:message code="ticket.filter"/></button>
     </form>
     <hr>
-    <a href="meals/create"><spring:message code="ticket.add"/></a>
+    <a href="ticket/create"><spring:message code="ticket.add"/></a>
     <hr>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
@@ -42,10 +42,6 @@
             <th><spring:message code="ticket.deliveryDate"/></th>
             <th><spring:message code="ticket.status"/></th>
             <th><spring:message code="ticket.statusChangeDate"/></th>
-            <th><spring:message code="ticket.hasFactoryMarriage"/></th>
-            <th><spring:message code="ticket.marriageDetectionDate"/></th>
-            <th><spring:message code="ticket.marriageDetectedBy"/></th>
-            <th><spring:message code="ticket.marriageDescription"/></th>
             <th><spring:message code="ticket.isClosed"/></th>
             <th></th>
             <th></th>
@@ -63,11 +59,7 @@
                 <td>${ticket.deliveryDate}</td>
                 <td>${ticket.status}</td>
                 <td>${ticket.statusChangeDate}</td>
-                <td>${ticket.hasFactoryMarriage}</td>
-                <td>${ticket.marriageDetectionDate}</td>
-                <td>${ticket.marriageDetectedBy}</td>
-                <td>${ticket.marriageDescription}</td>
-                <td>${ticket.isClosed}</td>
+                <td>${ticket.closed}</td>
                 <td><a href="tickets/update?id=${ticket.id}"><spring:message code="common.update"/></a></td>
                 <td><a href="tickets/delete?id=${ticket.id}"><spring:message code="common.delete"/></a></td>
             </tr>

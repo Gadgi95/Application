@@ -2,6 +2,7 @@ package com.example.application.web;
 
 import com.example.application.service.TicketService;
 import com.example.application.service.UserService;
+import com.example.application.util.TicketsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +45,10 @@ public class RootController {
     }
 
     @GetMapping("/tickets")
-    public String getMeals(Model model) {
+    public String getTickets(Model model) {
         log.info("tickets");
         model.addAttribute("tickets",
-                ticketService.getAll(SecurityUtil.authUserId()));
+                TicketsUtil.getTos(ticketService.getAll(SecurityUtil.authUserId())));
         return "tickets";
     }
 }

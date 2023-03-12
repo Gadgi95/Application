@@ -23,12 +23,13 @@ CREATE TABLE tickets
     creationDate        DATETIME DEFAULT NOW() NOT NULL,
     status              VARCHAR(255)           NOT NULL,
     responsibleSupplier VARCHAR(255),
-    deliveryDate        DATE,
-    statusChangeDate    DATE,
-    isClosed            BOOLEAN,
-    closingDate         DATE,
+    deliveryDate        VARCHAR(255),
+    statusChangeDate    VARCHAR(255),
+    isClosed            BOOLEAN                NOT NULL,
+    closingDate         VARCHAR(255),
     closedBy            VARCHAR(255),
-    objectName          VARCHAR(255)
+    objectName          VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 CREATE INDEX tickets_unique_user_date_idx ON tickets (user_id, creationDate);
 
@@ -45,11 +46,10 @@ CREATE TABLE tickets_archive
 CREATE TABLE materials
 (
     id                    INT AUTO_INCREMENT PRIMARY KEY,
-    ticket_id             INT,
+    ticket_id             INT          NOT NULL,
     name                  VARCHAR(255) NOT NULL,
     quantity              INT          NOT NULL,
     characteristics       VARCHAR(255) NOT NULL,
-    cost                  INT,
     hasFactoryMarriage    BOOLEAN,
     marriageDetectionDate DATE,
     marriageDetectedBy    VARCHAR(255),
@@ -67,13 +67,13 @@ CREATE TABLE user_roles
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-CREATE TABLE tickets_materials
-(
-    ticket_id   INT NOT NULL,
-    material_id INT NOT NULL,
-    FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE,
-    FOREIGN KEY (material_id) REFERENCES materials (id)
-);
+# CREATE TABLE tickets_materials
+# (
+#     ticket_id   INT NOT NULL,
+#     material_id INT NOT NULL,
+#     FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE,
+#     FOREIGN KEY (material_id) REFERENCES materials (id)
+# );
 
 -- SELECT *
 -- FROM tickets

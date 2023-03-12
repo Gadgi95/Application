@@ -1,6 +1,8 @@
 package com.example.application.model;
 
 import com.example.application.HasId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -8,27 +10,24 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "tickets")
 public class Ticket extends AbstractNamedEntity implements HasId {
 
 	@Id
-	@Access(AccessType.FIELD)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
 	@Column(name = "creationDate", nullable = false)
-	@NotBlank
-	private String creationDate;
+	@NotNull
+	private LocalDateTime creationDate;
 
 	@Column(name = "status", nullable = false)
-	@NotNull
-	private ApplicationStatus status;
+	@NotBlank
+	private String status;
 
 	@Column(name = "responsibleSupplier")
 	@Size(min = 2, max = 128)
@@ -42,7 +41,7 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 	@Size(min = 2, max = 20)
 	private String statusChangeDate;
 
-	@Column(name = "isClosed")
+	@Column(name = "isClosed", nullable = false)
 	private boolean isClosed;
 
 	@Column(name = "closingDate")
@@ -54,33 +53,34 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 	private String closedBy;
 
 	@Column(name = "objectName")
-	private ObjectName objectName;
+	private String objectName;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket")
 	@OrderBy("name DESC")
+	@BatchSize(size = 100)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Material> materials;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
 	private User user;
 
-	public Ticket(String name, List<Material> materials) {
-
-		int id = this.id++;
-		this.name = name;
-		this.materials = materials;
-		String creationDate = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
-		ApplicationStatus status = ApplicationStatus.NEW;
-		User createdBy = user; //user добавлен в конструктор
-
-		String responsibleSupplier = "";
-		Date deliveryDate = null;
-		Date statusChangeDate = new Date();
-		boolean isClosed = false;
-		Date closingDate = null;
-		String closedBy = " ";
+	public Ticket(Integer id, String name, LocalDateTime creationDate, String status, String responsibleSupplier, String deliveryDate,
+				  String statusChangeDate, boolean isClosed, String closingDate, String closedBy,
+				  String objectName) {
+		super(name);
+		this.id = id;
+		this.creationDate = creationDate;
+		this.status = status;
+		this.responsibleSupplier = responsibleSupplier;
+		this.deliveryDate = deliveryDate;
+		this.statusChangeDate = statusChangeDate;
+		this.isClosed = isClosed;
+		this.closingDate = closingDate;
+		this.closedBy = closedBy;
+		this.objectName = objectName;
 	}
 
 	public Ticket() {
@@ -112,19 +112,19 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 		this.materials = materials;
 	}
 
-	public String getCreationDate() {
+	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(String creationDate) {
+	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
 	}
 
-	public ApplicationStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(ApplicationStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -176,11 +176,11 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 		this.closedBy = closedBy;
 	}
 
-	public ObjectName getObjectName() {
+	public String getObjectName() {
 		return objectName;
 	}
 
-	public void setObjectName(ObjectName objectName) {
+	public void setObjectName(String objectName) {
 		this.objectName = objectName;
 	}
 
@@ -190,12 +190,6 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public void closeApplication(Date closingDate, String closedBy) {
-		setClosed(true);
-		setClosingDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(closingDate));
-		setClosedBy(closedBy);
 	}
 
 	@Override

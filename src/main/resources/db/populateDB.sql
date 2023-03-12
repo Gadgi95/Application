@@ -1,6 +1,6 @@
 DELETE FROM user_roles;
 DELETE FROM tickets_archive;
-DELETE FROM tickets_materials;
+# DELETE FROM tickets_materials;
 DELETE FROM materials;
 DELETE FROM tickets;
 DELETE FROM users;
@@ -18,10 +18,10 @@ VALUES ('ADMIN', 1),
        ('USER', 3),
        ('FOREMAN', 3);
 
-INSERT INTO tickets (user_id, objectName, name, status, deliveryDate)
-VALUES (1, 'Рига', 'App 1', 'pending', null),
-       (2, 'Наследие', 'App 2', 'approved', '2023-06-25'),
-       (2, 'Наследие', 'App 3', 'approved', NOW());
+INSERT INTO tickets (user_id, objectName, name, status, deliveryDate, isClosed)
+VALUES (1, 'Рига', 'App 1', 'новая', null, false),
+       (2, 'Наследие', 'App 2', 'в работе', '2023-06-25', false),
+       (2, 'Наследие', 'App 3', 'новая', NOW(), false);
 
 INSERT INTO materials (ticket_id, name, quantity, characteristics, hasFactoryMarriage, marriageDetectionDate, marriageDescription, marriagePhotoUrl)
 VALUES (1, 'Краска', '2', 'черная', false, null, null, null),
@@ -33,9 +33,9 @@ INSERT INTO tickets_archive (name, creationDate, closingDate, closedBy)
 VALUES ('Archive 1', '2021-01-01', '2021-02-01', 1),
        ('Archive 2', '2021-03-01', NOW(), 2);
 
-INSERT INTO tickets_materials (ticket_id, material_id)
-VALUES (1, 1),
-       (1, 2),
-       (2, 3),
-       (3, 4);
+# INSERT INTO tickets_materials (ticket_id, material_id)
+# VALUES (1, 1),
+#        (1, 2),
+#        (2, 3),
+#        (3, 4);
 

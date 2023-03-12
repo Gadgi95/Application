@@ -1,6 +1,7 @@
 package com.example.application.model;
 
 import com.example.application.HasId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
@@ -17,7 +18,6 @@ import java.util.Objects;
 public class Material extends AbstractNamedEntity implements HasId {
 
   @Id
-  @Access(AccessType.FIELD)
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
@@ -51,18 +51,13 @@ public class Material extends AbstractNamedEntity implements HasId {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "ticket_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
+  @JsonIgnore
   private Ticket ticket;
 
   public Material(String name, int quantity, String characteristics) {
     this.name = name;
     this.quantity = quantity;
     this.characteristics = characteristics;
-
-    boolean hasFactoryMarriage = false;
-    Date marriageDetectionDate;
-    String marriageDetectedBy;
-    String marriageDescription;
-    String marriagePhotoUrl;
   }
 
   @Override
@@ -142,13 +137,13 @@ public class Material extends AbstractNamedEntity implements HasId {
     this.ticket = ticket;
   }
 
-  public void detectFactoryMarriage(Date marriageDetectionDate, String marriageDetectedBy,
+  public void detectFactoryMarriage(boolean hasFactoryMarriage, Date marriageDetectionDate, String marriageDetectedBy,
                                     String marriageDescription, String marriagePhotoUrl) {
-    setHasFactoryMarriage(true);
-    setMarriageDetectionDate(marriageDetectionDate);
-    setMarriageDetectedBy(marriageDetectedBy);
-    setMarriageDescription(marriageDescription);
-    setMarriagePhotoUrl(marriagePhotoUrl);
+    this.hasFactoryMarriage = hasFactoryMarriage;
+    this.marriageDetectionDate = marriageDetectionDate;
+    this.marriageDetectedBy = marriageDetectedBy;
+    this.marriageDescription = marriageDescription;
+    this.marriagePhotoUrl = marriagePhotoUrl;
   }
 
   @Override
