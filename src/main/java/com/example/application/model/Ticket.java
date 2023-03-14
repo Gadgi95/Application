@@ -3,6 +3,7 @@ package com.example.application.model;
 import com.example.application.HasId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -18,15 +19,17 @@ import java.util.List;
 public class Ticket extends AbstractNamedEntity implements HasId {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "creationDate", nullable = false)
+	@Column(name = "creationDate", nullable = false, columnDefinition = "datetime default now()", updatable = false)
 	@NotNull
-	private LocalDateTime creationDate;
+	private LocalDateTime creationDate = LocalDateTime.now();
 
 	@Column(name = "status", nullable = false)
 	@NotBlank
+	@Size(min = 2, max = 30)
 	private String status;
 
 	@Column(name = "responsibleSupplier")
@@ -42,6 +45,7 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 	private String statusChangeDate;
 
 	@Column(name = "isClosed", nullable = false)
+	@NotNull
 	private boolean isClosed;
 
 	@Column(name = "closingDate")
@@ -53,6 +57,7 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 	private String closedBy;
 
 	@Column(name = "objectName")
+	@Size(min = 2, max = 128)
 	private String objectName;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket")
@@ -82,7 +87,13 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 		this.closedBy = closedBy;
 		this.objectName = objectName;
 	}
-
+	public Ticket(Integer id, String name, String status, boolean isClosed, String objectName) {
+		super(name);
+		this.id = id;
+		this.status = status;
+		this.isClosed = isClosed;
+		this.objectName = objectName;
+	}
 	public Ticket() {
 	}
 

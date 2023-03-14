@@ -8,9 +8,9 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users
 (
     id         INT AUTO_INCREMENT PRIMARY KEY,
-    name       VARCHAR(255)           NOT NULL,
-    email      VARCHAR(255)           NOT NULL,
-    password   VARCHAR(255)           NOT NULL,
+    name       VARCHAR(128)           NOT NULL,
+    email      VARCHAR(128)           NOT NULL,
+    password   VARCHAR(128)           NOT NULL,
     registered DATETIME DEFAULT NOW() NOT NULL
 );
 CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
@@ -19,16 +19,16 @@ CREATE TABLE tickets
 (
     id                  INT AUTO_INCREMENT PRIMARY KEY,
     user_id             INT                    NOT NULL,
-    name                VARCHAR(255)           NOT NULL,
+    name                VARCHAR(128)           NOT NULL,
     creationDate        DATETIME DEFAULT NOW() NOT NULL,
-    status              VARCHAR(255)           NOT NULL,
-    responsibleSupplier VARCHAR(255),
-    deliveryDate        VARCHAR(255),
-    statusChangeDate    VARCHAR(255),
+    status              VARCHAR(30)            NOT NULL,
+    responsibleSupplier VARCHAR(128),
+    deliveryDate        VARCHAR(20),
+    statusChangeDate    VARCHAR(20),
     isClosed            BOOLEAN                NOT NULL,
-    closingDate         VARCHAR(255),
-    closedBy            VARCHAR(255),
-    objectName          VARCHAR(255),
+    closingDate         VARCHAR(20),
+    closedBy            VARCHAR(128),
+    objectName          VARCHAR(128),
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 CREATE INDEX tickets_unique_user_date_idx ON tickets (user_id, creationDate);
@@ -36,7 +36,7 @@ CREATE INDEX tickets_unique_user_date_idx ON tickets (user_id, creationDate);
 CREATE TABLE tickets_archive
 (
     id           INT AUTO_INCREMENT PRIMARY KEY,
-    name         VARCHAR(255)           NOT NULL,
+    name         VARCHAR(128)           NOT NULL,
     creationDate DATETIME DEFAULT NOW() NOT NULL,
     closingDate  DATE                   NOT NULL,
     closedBy     INT,
@@ -47,14 +47,14 @@ CREATE TABLE materials
 (
     id                    INT AUTO_INCREMENT PRIMARY KEY,
     ticket_id             INT          NOT NULL,
-    name                  VARCHAR(255) NOT NULL,
+    name                  VARCHAR(128) NOT NULL,
     quantity              INT          NOT NULL,
-    characteristics       VARCHAR(255) NOT NULL,
+    characteristics       VARCHAR(120) NOT NULL,
     hasFactoryMarriage    BOOLEAN,
     marriageDetectionDate DATE,
-    marriageDetectedBy    VARCHAR(255),
-    marriageDescription   VARCHAR(255),
-    marriagePhotoUrl      VARCHAR(255),
+    marriageDetectedBy    VARCHAR(128),
+    marriageDescription   VARCHAR(120),
+    marriagePhotoUrl      VARCHAR(150),
     FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE
 );
 CREATE INDEX materials_name_idx ON materials (name);

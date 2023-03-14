@@ -19,16 +19,8 @@
             <dd><input type="text" value="${ticket.name}" size=40 name="name" required></dd>
         </dl>
         <dl>
-            <dt><spring:message code="ticket.deliveryDate"/>:</dt>
-            <dd><input type="datetime-local" value="${ticket.deliveryDate}" name="deliveryDate" required></dd>
-        </dl>
-        <dl>
-            <dt><spring:message code="ticket.status"/>:</dt>
-            <dd><input type="text" value="${ticket.status}" name="status" required></dd>
-        </dl>
-        <dl>
-            <dt><spring:message code="ticket.isClosed"/>:</dt>
-            <dd><input type="text" value="${ticket.isClosed}" name="isClosed" required></dd>
+            <dt><spring:message code="ticket.objectName"/>:</dt>
+            <dd><input type="text" value="${ticket.objectName}" name="objectName" required></dd>
         </dl>
         <button type="submit"><spring:message code="common.save"/></button>
         <button onclick="window.history.back()" type="button"><spring:message code="common.cancel"/></button>

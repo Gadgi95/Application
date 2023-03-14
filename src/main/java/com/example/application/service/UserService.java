@@ -29,7 +29,7 @@ public class UserService {
 
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
-        return user;
+        return repository.save(user);
 //        return prepareAndSave(user);
     }
 

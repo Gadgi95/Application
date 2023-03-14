@@ -30,7 +30,7 @@
         <button type="submit"><spring:message code="ticket.filter"/></button>
     </form>
     <hr>
-    <a href="ticket/create"><spring:message code="ticket.add"/></a>
+    <a href="tickets/create"><spring:message code="ticket.add"/></a>
     <hr>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>

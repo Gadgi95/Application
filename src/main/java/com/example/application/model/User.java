@@ -38,7 +38,8 @@ import java.util.*;
 public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, ValidEmailAddress {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @Column(name = "email", nullable = false, unique = true)
@@ -54,7 +55,7 @@ public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, V
   // https://stackoverflow.com/a/12505165/548473
   private String password;
 
-  @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
+  @Column(name = "registered", nullable = false, columnDefinition = "datetime default now()", updatable = false)
   @NotNull
   private Date registered = new Date();
 
@@ -76,6 +77,15 @@ public class User extends AbstractNamedEntity implements HasId, HasIdAndEmail, V
   private List<Ticket> tickets;
 
   public User() {
+  }
+
+  public User(Integer id, String name, String email, String password, Collection<Role> roles) {
+    super(name);
+    this.id = id;
+    this.email = email;
+    this.password = password;
+    this.registered = registered;
+    setRoles(roles);
   }
 
   public User(Integer id, String name, String email, String password, Date registered, Collection<Role> roles) {

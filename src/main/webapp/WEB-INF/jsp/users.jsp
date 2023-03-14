@@ -13,7 +13,7 @@
         <h3 class="text-center"><spring:message code="user.title"/></h3>
         <button class="btn btn-primary">
             <span class="fa fa-plus"></span>
-            <spring:message code="common.add"/>
+            <a href="users/create"><spring:message code="common.add"/></a>
         </button>
         <table class="table table-striped mt-3">
             <thead>

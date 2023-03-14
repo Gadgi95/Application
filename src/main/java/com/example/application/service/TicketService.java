@@ -2,11 +2,15 @@ package com.example.application.service;
 
 import com.example.application.model.Ticket;
 import com.example.application.repository.TicketRepository;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import static com.example.application.util.DateTimeUtil.atStartOfDayOrMin;
+import static com.example.application.util.DateTimeUtil.atStartOfNextDayOrMax;
 import static com.example.application.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -30,13 +34,17 @@ public class TicketService {
         return ticketRepository.getAll(userId);
     }
 
-    public void update(Ticket ticket) {
-        Assert.notNull(ticket, "meal must not be null");
-        checkNotFoundWithId(ticketRepository.save(ticket), ticket.id());
+    public void update(Ticket ticket, int userId) {
+        Assert.notNull(ticket, "ticket must not be null");
+        checkNotFoundWithId(ticketRepository.save(ticket, userId), ticket.id());
     }
 
-    public Ticket create(Ticket ticket) {
-        Assert.notNull(ticket, "meal must not be null");
-        return ticketRepository.save(ticket);
+    public Ticket create(Ticket ticket, int userId) {
+        Assert.notNull(ticket, "ticket must not be null");
+        return ticketRepository.save(ticket, userId);
+    }
+
+    public List<Ticket> getBetweenInclusive(@Nullable LocalDate startDate, @Nullable LocalDate endDate, int userId) {
+        return ticketRepository.getBetweenHalfOpen(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate), userId);
     }
 }

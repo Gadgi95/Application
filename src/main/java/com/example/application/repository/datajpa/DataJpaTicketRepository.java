@@ -5,7 +5,9 @@ import com.example.application.model.Ticket;
 import com.example.application.repository.TicketRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -15,15 +17,20 @@ public class DataJpaTicketRepository implements TicketRepository {
 
     private final CrudTicketRepository crudTicketRepository;
 
-    public DataJpaTicketRepository(CrudTicketRepository crudTicketRepository) {
+    private final CrudUserRepository crudUserRepository;
+
+    public DataJpaTicketRepository(CrudTicketRepository crudTicketRepository, CrudUserRepository crudUserRepository) {
         this.crudTicketRepository = crudTicketRepository;
+        this.crudUserRepository = crudUserRepository;
     }
 
     @Override
-    public Ticket save(Ticket ticket) {
+    @Transactional
+    public Ticket save(Ticket ticket, int userId) {
         if (!ticket.isNew()) {
             return null;
         }
+        ticket.setUser(crudUserRepository.getOne(userId));
         return crudTicketRepository.save(ticket);
     }
 
@@ -49,5 +56,10 @@ public class DataJpaTicketRepository implements TicketRepository {
     public Ticket getWithMaterial(int id, int userId, List<Material> materialList) {
         return null;
 //        return crudTicketRepository.getWithMaterial(id, userId, materialList);
+    }
+
+    @Override
+    public List<Ticket> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+        return crudTicketRepository.getBetweenHalfOpen(startDateTime, endDateTime, userId);
     }
 }

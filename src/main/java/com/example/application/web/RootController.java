@@ -36,13 +36,13 @@ public class RootController {
         return "users";
     }
 
-    @PostMapping("/users")
-    public String setUser(HttpServletRequest request) {
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        log.info("setUser {}", userId);
-        SecurityUtil.setAuthUserId(userId);
-        return "redirect:tickets";
-    }
+//    @PostMapping("/users")
+//    public String setUser(HttpServletRequest request) {
+//        int userId = Integer.parseInt(request.getParameter("userId"));
+//        log.info("setUser {}", userId);
+//        SecurityUtil.setAuthUserId(userId);
+//        return "redirect:tickets";
+//    }
 
     @GetMapping("/tickets")
     public String getTickets(Model model) {

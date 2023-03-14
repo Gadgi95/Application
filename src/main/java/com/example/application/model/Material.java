@@ -18,14 +18,17 @@ import java.util.Objects;
 public class Material extends AbstractNamedEntity implements HasId {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @NotNull
+  @Column(name = "quantity")
   @Range(min = 0, max = 5000)
   private int quantity;
 
   @NotBlank
+  @Column(name = "characteristics")
   @Size(min = 2, max = 120)
   private String characteristics;
 

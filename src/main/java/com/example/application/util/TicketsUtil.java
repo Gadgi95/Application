@@ -3,6 +3,7 @@ package com.example.application.util;
 import com.example.application.model.Ticket;
 import com.example.application.to.TicketTo;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,4 +28,11 @@ public class TicketsUtil {
                 ticket.getClosingDate(), ticket.getClosedBy(),
                 ticket.getObjectName(), excess);
     }
+
+    public static List<TicketTo> getFilteredTos(Collection<Ticket> tickets, LocalTime startTime, LocalTime endTime) {
+        return tickets.stream()
+                .map(ticket -> createTo(ticket, ticket.getStatus().equals("новая")))
+                .filter(ticketTo -> ticketTo.getCreationDate().toLocalTime() == startTime && ticketTo.getCreationDate().toLocalTime() == endTime).toList();
+    }
+
 }
