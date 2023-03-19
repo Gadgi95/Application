@@ -40,6 +40,11 @@ public class DataJpaTicketRepository implements TicketRepository {
     }
 
     @Override
+    public boolean deleteForAdmin(int id) {
+        return crudTicketRepository.deleteForAdmin(id) != 0;
+    }
+
+    @Override
     public Ticket get(int id, int userId) {
         if (crudTicketRepository.findById(id) == null) {
             return null;
@@ -49,7 +54,12 @@ public class DataJpaTicketRepository implements TicketRepository {
 
     @Override
     public List<Ticket> getAll(int userId) {
-        return crudTicketRepository.findAll(SORT_CREATION_DATE);
+        return crudTicketRepository.getAll(userId);
+    }
+
+    @Override
+    public List<Ticket> getAll() {
+        return crudTicketRepository.findAll();
     }
 
     @Override

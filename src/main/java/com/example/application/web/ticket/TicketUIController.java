@@ -1,6 +1,11 @@
 package com.example.application.web.ticket;
 
+import com.example.application.model.Role;
 import com.example.application.model.Ticket;
+import com.example.application.service.UserService;
+import com.example.application.util.TicketsUtil;
+import com.example.application.web.SecurityUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +22,9 @@ import static com.example.application.util.DateTimeUtil.parseLocalTime;
 @RequestMapping(value = "/tickets")
 public class TicketUIController extends AbstractTicketController {
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
         model.addAttribute("ticket", super.get(getId(request)));
@@ -29,7 +37,7 @@ public class TicketUIController extends AbstractTicketController {
         return "ticketFormForeman";
     }
 
-    @PostMapping
+    @PostMapping()
     public String updateOrCreate(HttpServletRequest request) {
         Ticket ticket = new Ticket(null, request.getParameter("name"), "новая", false,
                 request.getParameter("objectName"));
@@ -42,6 +50,14 @@ public class TicketUIController extends AbstractTicketController {
         return "redirect:/tickets";
     }
 
+    @GetMapping("/delete")
+    public String delete(HttpServletRequest request) {
+        if (userService.get(getId(request)).getRoles().contains(Role.ADMIN)) {
+            super.delete(getId(request));
+        } else
+            super.delete(getId(request));
+        return "redirect:/tickets";
+    }
 
     @GetMapping("/filter")
     public String getBetween(HttpServletRequest request, Model model) {

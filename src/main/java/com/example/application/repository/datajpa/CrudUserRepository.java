@@ -3,6 +3,7 @@ package com.example.application.repository.datajpa;
 import com.example.application.model.User;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface CrudUserRepository extends JpaRepository<User, Integer> {
 
@@ -11,6 +12,7 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
 //    User save(User entity);
 
     @Modifying
+    @Transactional
     @Query("DELETE FROM User u WHERE u.id=:id")
     int delete(@Param("id") int id);
 

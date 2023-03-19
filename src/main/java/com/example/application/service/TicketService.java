@@ -34,6 +34,10 @@ public class TicketService {
         return ticketRepository.getAll(userId);
     }
 
+    public List<Ticket> getAll() {
+        return ticketRepository.getAll();
+    }
+
     public void update(Ticket ticket, int userId) {
         Assert.notNull(ticket, "ticket must not be null");
         checkNotFoundWithId(ticketRepository.save(ticket, userId), ticket.id());

@@ -20,8 +20,14 @@ public interface CrudTicketRepository extends JpaRepository<Ticket, Integer> {
     List<Ticket> getAll(@Param("userId") int userId);
 
     @Modifying
+    @Transactional
     @Query("DELETE FROM Ticket t WHERE t.id=:id AND t.user.id=:user_id")
     int delete(@Param("id") int id, @Param("user_id") int user_id);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Ticket t WHERE t.id=:id")
+    int deleteForAdmin(@Param("id") int id);
 
     @Query("SELECT t FROM Ticket t WHERE t.id=:id")
     Ticket findById(@Param("id") int id);

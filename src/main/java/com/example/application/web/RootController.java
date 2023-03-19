@@ -1,5 +1,6 @@
 package com.example.application.web;
 
+import com.example.application.model.Role;
 import com.example.application.service.TicketService;
 import com.example.application.service.UserService;
 import com.example.application.util.TicketsUtil;
@@ -36,19 +37,23 @@ public class RootController {
         return "users";
     }
 
-//    @PostMapping("/users")
-//    public String setUser(HttpServletRequest request) {
-//        int userId = Integer.parseInt(request.getParameter("userId"));
-//        log.info("setUser {}", userId);
-//        SecurityUtil.setAuthUserId(userId);
-//        return "redirect:tickets";
-//    }
+    @PostMapping("/users")
+    public String setUser(HttpServletRequest request) {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        log.info("setUser {}", userId);
+        SecurityUtil.setAuthUserId(userId);
+        return "redirect:tickets";
+    }
 
     @GetMapping("/tickets")
     public String getTickets(Model model) {
         log.info("tickets");
-        model.addAttribute("tickets",
-                TicketsUtil.getTos(ticketService.getAll(SecurityUtil.authUserId())));
+        if (userService.get(SecurityUtil.authUserId()).getRoles().contains(Role.ADMIN)) {
+            model.addAttribute("tickets",
+                    TicketsUtil.getTos(ticketService.getAll()));
+        } else
+            model.addAttribute("tickets",
+                    TicketsUtil.getTos(ticketService.getAll(SecurityUtil.authUserId())));
         return "tickets";
     }
 }

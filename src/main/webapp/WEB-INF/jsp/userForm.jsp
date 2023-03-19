@@ -8,7 +8,7 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
 <section>
-    <jsp:useBean id="user" type="com.example.application.model.User" scope="request"/>
+    <jsp:useBean id="user" class="com.example.application.model.User" scope="request"/>
     <%--    `meal.new` cause javax.el.ELException - bug tomcat --%>
     <h3><spring:message code="${user.isNew() ? 'user.add' : 'user.edit'}"/></h3>
     <hr>

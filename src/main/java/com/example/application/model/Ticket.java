@@ -3,7 +3,6 @@ package com.example.application.model;
 import com.example.application.HasId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -64,6 +63,7 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 	@OrderBy("name DESC")
 	@BatchSize(size = 100)
 	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
 	private List<Material> materials;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

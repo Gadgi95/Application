@@ -52,6 +52,7 @@ public class UserService {
 
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
+        checkNotFoundWithId(repository.save(user), user.id());
 //        prepareAndSave(user);
     }
 

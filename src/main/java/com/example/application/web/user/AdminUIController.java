@@ -19,7 +19,7 @@ public class AdminUIController extends AbstractUserController {
 
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
-        model.addAttribute("ticket", super.get(getId(request)));
+        model.addAttribute("user", super.get(getId(request)));
         return "userForm";
     }
 
@@ -29,7 +29,7 @@ public class AdminUIController extends AbstractUserController {
         return "userForm";
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public String updateOrCreate(HttpServletRequest request) {
         User user = new User(null, request.getParameter("name"), request.getParameter("email"),
                 request.getParameter("password"), Collections.singleton(Role.FOREMAN));
