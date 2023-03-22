@@ -1,36 +1,38 @@
 package com.example.application.service;
 
-//import com.example.application.AuthorizedUser;
+import com.example.application.AuthorizedUser;
 import com.example.application.model.User;
 import com.example.application.repository.UserRepository;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
 
-//import static com.example.application.util.UserUtil.prepareToSave;
+import static com.example.application.util.UserUtil.prepareToSave;
 import static com.example.application.util.validation.ValidationUtil.checkNotFound;
 import static com.example.application.util.validation.ValidationUtil.checkNotFoundWithId;
 
-@Service
-public class UserService {
+@Service("userService")
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
-//        this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
-        return repository.save(user);
-//        return prepareAndSave(user);
+        return prepareAndSave(user);
     }
 
     public void delete(int id) {
@@ -52,24 +54,23 @@ public class UserService {
 
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
-        checkNotFoundWithId(repository.save(user), user.id());
-//        prepareAndSave(user);
+        prepareAndSave(user);
     }
 
     public User getWithTickets(int id) {
         return checkNotFoundWithId(repository.getWithTickets(id), id);
     }
 
-//    private User prepareAndSave(User user) {
-//        return repository.save(prepareToSave(user, passwordEncoder));
-//    }
+    private User prepareAndSave(User user) {
+        return repository.save(prepareToSave(user, passwordEncoder));
+    }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        User user = repository.getByEmail(email.toLowerCase());
-//        if (user == null) {
-//            throw new UsernameNotFoundException("User " + email + " is not found");
-//        }
-//        return new AuthorizedUser(user);
-//    }
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = repository.getByEmail(email.toLowerCase());
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return new AuthorizedUser(user);
+    }
 }

@@ -27,7 +27,7 @@ public class RootController {
     @GetMapping("/")
     public String root() {
         log.info("root");
-        return "index";
+        return "login";
     }
 
     @GetMapping("/users")
@@ -37,12 +37,10 @@ public class RootController {
         return "users";
     }
 
-    @PostMapping("/users")
-    public String setUser(HttpServletRequest request) {
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        log.info("setUser {}", userId);
-        SecurityUtil.setAuthUserId(userId);
-        return "redirect:tickets";
+    @GetMapping("/login")
+    public String login() {
+        log.info("login");
+        return "login";
     }
 
     @GetMapping("/tickets")

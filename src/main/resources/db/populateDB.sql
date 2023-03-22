@@ -6,9 +6,9 @@ DELETE FROM tickets;
 DELETE FROM users;
 
 INSERT INTO users (name, email, password)
-VALUES ('Alexander', 'alexander@example.com', 'admin'),
-       ('Pavel', 'pavel@example.com', 'user1'),
-       ('Ilgiz', 'ilgiz@example.com', 'user2');
+VALUES ('Alexander', 'alexander@example.com', '{noop}admin'),
+       ('Pavel', 'pavel@example.com', '{noop}user1'),
+       ('Ilgiz', 'ilgiz@example.com', '{noop}user2');
 
 INSERT INTO user_roles (role, user_id)
 VALUES ('ADMIN', 1),
