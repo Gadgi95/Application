@@ -3,6 +3,8 @@ package com.example.application.service;
 import com.example.application.AuthorizedUser;
 import com.example.application.model.User;
 import com.example.application.repository.UserRepository;
+import com.example.application.to.UserTo;
+import com.example.application.util.UserUtil;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -55,6 +58,12 @@ public class UserService implements UserDetailsService {
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
         prepareAndSave(user);
+    }
+
+    @Transactional
+    public void update(UserTo userTo) {
+        User user = get(userTo.id());
+        prepareAndSave(UserUtil.updateFromTo(user, userTo));
     }
 
     public User getWithTickets(int id) {

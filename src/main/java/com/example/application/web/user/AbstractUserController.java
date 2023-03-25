@@ -3,6 +3,8 @@ package com.example.application.web.user;
 import com.example.application.model.Ticket;
 import com.example.application.model.User;
 import com.example.application.service.UserService;
+import com.example.application.to.UserTo;
+import com.example.application.util.UserUtil;
 import com.example.application.web.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,12 @@ public abstract class AbstractUserController {
         return service.create(user);
     }
 
+    public User create(UserTo userTo) {
+        log.info("create {}", userTo);
+        checkNew(userTo);
+        return service.create(UserUtil.createNewFromTo(userTo));
+    }
+
     public void delete(int id) {
         log.info("delete {}", id);
         service.delete(id);
@@ -34,6 +42,12 @@ public abstract class AbstractUserController {
         log.info("update {} with id={}", user, id);
         assureIdConsistent(user, id);
         service.update(user);
+    }
+
+    public void update(UserTo userTo, int id) {
+        log.info("update {} with id={}", userTo, id);
+        assureIdConsistent(userTo, id);
+        service.update(userTo);
     }
 
     public List<User> getAll() {

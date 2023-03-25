@@ -5,36 +5,35 @@
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
-<nav class="navbar navbar-dark bg-dark py-0">
-    <div class="container">
-        <div class="navbar-brand"><img src="resources/images/home.png"> <spring:message code="app.title"/></div>
-        <form class="form-inline my-2" id="login_form" action="spring_security_check" method="post">
-            <input class="form-control mr-1" type="text" placeholder="Email" name="username">
-            <input class="form-control mr-1" type="password" placeholder="Password" name="password">
-            <button class="btn btn-success" type="submit">
-                <span class="fa fa-sign-in"></span>
-            </button>
-        </form>
+<div>
+    <div>
+        <img src="resources/images/home.png"> <big><big><spring:message code="app.title"/></big></big>
     </div>
-</nav>
+    <form action="spring_security_check" method="post">
+        <input type="text" placeholder="Email" name="username">
+        <input type="password" placeholder="Password" name="password"> <input type="submit" value="Вход">
+    </form>
+</div>
 
-<div class="jumbotron py-0">
-    <div class="container">
+<div>
+    <div>
         <c:if test="${param.error}">
-            <div class="error">${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</div>
+            <div>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</div>
         </c:if>
         <c:if test="${not empty param.message}">
-            <div class="message"><spring:message code="${param.message}" text=""/></div>
+            <div><spring:message code="${param.message}" text=""/></div>
         </c:if>
+        <div><a href="profile/register"><spring:message code="app.register"/></a></div>
         <br/>
-        <p>
-            <button type="submit" class="btn btn-lg btn-primary" onclick="login('user@yandex.ru', 'password')">
-                <spring:message code="app.login"/> User
-            </button>
-            <button type="submit" class="btn btn-lg btn-primary" onclick="login('admin@gmail.com', 'admin')">
-                <spring:message code="app.login"/> Admin
-            </button>
-        </p>
+        <section>
+            <form method="post" action="users">
+                <spring:message code="app.login"/>: <select name="userId">
+                <option value="1" selected>Admin</option>
+                <option value="2">User</option>
+            </select>
+                <button type="submit"><spring:message code="common.select"/></button>
+            </form>
+        </section>
         <br/>
     </div>
 </div>

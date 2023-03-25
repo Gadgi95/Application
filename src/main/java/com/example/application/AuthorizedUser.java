@@ -1,6 +1,8 @@
 package com.example.application;
 
 import com.example.application.model.User;
+import com.example.application.to.UserTo;
+import com.example.application.util.UserUtil;
 
 import java.io.Serial;
 
@@ -8,28 +10,27 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private User user;
+    private UserTo userTo;
 
     public AuthorizedUser(User user) {
         super(user.getEmail(), user.getPassword(), true, true, true, true, user.getRoles());
-        setTo(user);
+        this.userTo = UserUtil.asTo(user);
     }
 
     public int getId() {
-        return user.id();
+        return userTo.id();
     }
 
-    public void setTo(User newTo) {
-        newTo.setPassword(null);
-        user = newTo;
+    public void update(UserTo newTo) {
+        userTo = newTo;
     }
 
-    public User getUserTo() {
-        return user;
+    public UserTo getUserTo() {
+        return userTo;
     }
 
     @Override
     public String toString() {
-        return user.toString();
+        return userTo.toString();
     }
 }

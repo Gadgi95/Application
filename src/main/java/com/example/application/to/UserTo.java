@@ -31,6 +31,9 @@ public class UserTo extends BaseTo implements HasId, Serializable, ValidEmailAdd
 
   private Set<Role> role;
 
+  public UserTo() {
+  }
+
   public UserTo(Integer id, String username, String password, String email, Set<Role> role) {
     if(isValidEmailAddress(email)) {
       this.id = id;
