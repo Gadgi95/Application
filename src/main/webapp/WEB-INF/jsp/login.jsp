@@ -1,43 +1,46 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
-<body>
-<div>
-    <div>
-        <img src="resources/images/home.png"> <big><big><spring:message code="app.title"/></big></big>
+<body class="body_login">
+<form action="spring_security_check" method="post" class="form">
+    <div class="wrapper">
+        <div class="title"> <img src="resources/images/topdom.png"></div>
+        <div class="container"> <spring:message code="app.title"/> </div>
     </div>
-    <form action="spring_security_check" method="post">
-        <input type="text" placeholder="Email" name="username">
-        <input type="password" placeholder="Password" name="password"> <input type="submit" value="Вход">
-    </form>
-</div>
-
-<div>
-    <div>
+    <br>
+    <div class="wrapper">
         <c:if test="${param.error}">
-            <div>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</div>
+            <div class="error">Неверные учетные данные</div>
         </c:if>
         <c:if test="${not empty param.message}">
             <div><spring:message code="${param.message}" text=""/></div>
         </c:if>
-        <div><a href="profile/register"><spring:message code="app.register"/></a></div>
-        <br/>
-        <section>
-            <form method="post" action="users">
-                <spring:message code="app.login"/>: <select name="userId">
-                <option value="1" selected>Admin</option>
-                <option value="2">User</option>
-            </select>
-                <button type="submit"><spring:message code="common.select"/></button>
-            </form>
-        </section>
-        <br/>
     </div>
-</div>
-</div>
-<jsp:include page="fragments/footer.jsp"/>
+    <div class="input-container ic2">
+        <input id="email" class="input" type="email" placeholder=" " value="alexander@example.com" name="username">
+        <div class="cut cut-short"></div>
+        <label for="email" class="placeholder">Email</label>
+    </div>
+    <div class="input-container ic1">
+        <input id="password" class="input" type="password" placeholder=" " value="admin" name="password">
+        <div class="cut"></div>
+        <label for="password" class="placeholder">Password</label>
+    </div>
+    <button type="submit" class="submit">
+        Вход
+    </button>
+    <br>
+    <br>
+    <div class="wrapper"><a class="submit_reg" href="profile/register"><spring:message code="app.register"/></a></div>
+    <br>
+    <div class="footer">
+        <spring:message code="app.footer"/>
+    </div>
+</form>
 </body>
 </html>
+
