@@ -1,5 +1,6 @@
 package com.example.application.to;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import com.example.application.util.validation.NoHtml;
@@ -8,6 +9,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class UserTo extends BaseTo implements Serializable {
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   @NotBlank
   @Size(min = 2, max = 100)
@@ -27,7 +30,7 @@ public class UserTo extends BaseTo implements Serializable {
   public UserTo() {
   }
 
-  public UserTo(Integer id, String username, String password, String email) {
+  public UserTo(Integer id, String username, String email, String password) {
       super(id);
       this.email = email;
       this.name = username;

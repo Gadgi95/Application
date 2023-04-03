@@ -29,13 +29,15 @@ public class DataJpaMaterialRepository implements MaterialRepository {
     }
 
     @Override
-    public Material get(int id, String name) {
-        return null;
-//        return crudMaterialRepository.findByName(id, name);
+    public Material get(int id) {
+        if (crudMaterialRepository.findById(id) == null) {
+            return null;
+        }
+        return crudMaterialRepository.findById(id);
     }
 
     @Override
-    public List<Material> getAll() {
-        return crudMaterialRepository.findAll(SORT_NAME);
+    public List<Material> getAllForTicket(int ticketId) {
+        return crudMaterialRepository.getAllForTicket(ticketId);
     }
 }

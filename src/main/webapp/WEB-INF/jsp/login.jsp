@@ -21,6 +21,7 @@
         </c:if>
     </div>
     <div class="input-container ic2">
+        <!--Без атрибута name сприг не отправляет значения input-->
         <input id="email" class="input" type="email" placeholder=" " value="alexander@example.com" name="username">
         <div class="cut cut-short"></div>
         <label for="email" class="placeholder">Email</label>

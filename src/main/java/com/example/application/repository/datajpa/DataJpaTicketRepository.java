@@ -63,13 +63,17 @@ public class DataJpaTicketRepository implements TicketRepository {
     }
 
     @Override
-    public Ticket getWithMaterial(int id, int userId, List<Material> materialList) {
-        return null;
-//        return crudTicketRepository.getWithMaterial(id, userId, materialList);
+    public Ticket getWithMaterial(int id, int userId) {
+        return crudTicketRepository.getWithMaterial(id, userId);
     }
 
     @Override
     public List<Ticket> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
         return crudTicketRepository.getBetweenHalfOpen(startDateTime, endDateTime, userId);
+    }
+
+    @Override
+    public List<Ticket> getBetweenHalfOpenForAdmin(LocalDateTime atStartOfDayOrMin, LocalDateTime atStartOfNextDayOrMax) {
+        return crudTicketRepository.getBetweenHalfOpenForAdmin(atStartOfDayOrMin, atStartOfNextDayOrMax);
     }
 }

@@ -4,13 +4,25 @@
 
 
 <header>
-    <a href="tickets"><img src="resources/images/home.png"></a>
-    <a href="tickets"> <spring:message code="app.title"/></a>
-    <sec:authorize access="isAuthenticated()">
-        <sec:authorize access="hasRole('ADMIN')">
-            <a href="users"><spring:message code="user.title"/></a>
+    <div style="display: table;">
+        <div>
+            <a href="tickets"><img src="resources/images/topdomBlack.png"></a>
+        </div>
+        <div style="display: table-cell;">${userTo.name}
+            <a class="header_title" href="tickets"><spring:message code="${register ? 'app.home' : 'app.title'}"/></a>
+        </div>
+        <sec:authorize access="isAuthenticated()">
+            <sec:authorize access="hasRole('ADMIN')">
+                <div class="header_div_reference">
+                    <a class="header_reference" href="users"><spring:message code="user.titleS"/></a>
+                </div>
+            </sec:authorize>
+            <div class="header_div_reference">
+                <a class="header_reference" href="profile">${userTo.name} <spring:message code="app.profile"/></a>
+            </div>
+            <div class="header_div_reference">
+                <a class="header_reference" href="logout"> выход</a>
+            </div>
         </sec:authorize>
-        <a href="profile">${userTo.name} <spring:message code="app.profile"/></a>
-        <a href="logout"> выход</a>
-    </sec:authorize>
+    </div>
 </header>

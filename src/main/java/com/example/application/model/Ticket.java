@@ -2,11 +2,12 @@ package com.example.application.model;
 
 import com.example.application.HasId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -59,16 +60,18 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 	@Size(min = 2, max = 128)
 	private String objectName;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket")
+	@OneToMany(mappedBy = "ticket")
+	@LazyCollection(LazyCollectionOption.TRUE)
 	@OrderBy("name DESC")
 	@BatchSize(size = 100)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private List<Material> materials;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "user_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
+	@BatchSize(size = 50)
 	@JsonIgnore
 	private User user;
 

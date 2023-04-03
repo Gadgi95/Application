@@ -51,4 +51,8 @@ public class TicketService {
     public List<Ticket> getBetweenInclusive(@Nullable LocalDate startDate, @Nullable LocalDate endDate, int userId) {
         return ticketRepository.getBetweenHalfOpen(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate), userId);
     }
+
+    public List<Ticket> deleteForAdmin(@Nullable LocalDate startDate, @Nullable LocalDate endDate) {
+        return ticketRepository.getBetweenHalfOpenForAdmin(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate));
+    }
 }

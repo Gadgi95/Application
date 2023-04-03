@@ -24,7 +24,7 @@
         </dl>
         <dl>
             <dt><spring:message code="user.password"/>:</dt>
-            <dd><input type="text" value="${user.password}" name="password" required></dd>
+            <dd><input type="password" value="${user.password}" name="password" required></dd>
         </dl>
         <button type="submit"><spring:message code="common.save"/></button>
         <button onclick="window.history.back()" type="button"><spring:message code="common.cancel"/></button>

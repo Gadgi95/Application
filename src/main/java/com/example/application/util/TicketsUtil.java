@@ -23,7 +23,7 @@ public class TicketsUtil {
     private static TicketTo createTo(Ticket ticket, boolean excess) {
         return new TicketTo(ticket.getId(), ticket.getName(),
                 ticket.getCreationDate(), ticket.getStatus(),
-                ticket.getResponsibleSupplier(), ticket.getDeliveryDate(),
+                ticket.getResponsibleSupplier(), ticket.getUser().getName(), ticket.getDeliveryDate(),
                 ticket.getStatusChangeDate(), ticket.isClosed(),
                 ticket.getClosingDate(), ticket.getClosedBy(),
                 ticket.getObjectName(), excess);
@@ -32,7 +32,7 @@ public class TicketsUtil {
     public static List<TicketTo> getFilteredTos(Collection<Ticket> tickets, LocalTime startTime, LocalTime endTime) {
         return tickets.stream()
                 .map(ticket -> createTo(ticket, ticket.getStatus().equals("новая")))
-                .filter(ticketTo -> ticketTo.getCreationDate().toLocalTime() == startTime && ticketTo.getCreationDate().toLocalTime() == endTime).toList();
+                .filter(ticketTo -> Util.isBetweenHalfOpen(ticketTo.getCreationDate().toLocalDate(), startTime, endTime)).toList();
     }
 
 }

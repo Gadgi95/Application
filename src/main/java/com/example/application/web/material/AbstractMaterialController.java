@@ -1,7 +1,9 @@
-package com.example.application.web.ticket;
+package com.example.application.web.material;
 
+import com.example.application.model.Material;
 import com.example.application.model.Role;
 import com.example.application.model.Ticket;
+import com.example.application.service.MaterialService;
 import com.example.application.service.TicketService;
 import com.example.application.service.UserService;
 import com.example.application.to.TicketTo;
@@ -11,53 +13,55 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static com.example.application.util.validation.ValidationUtil.assureIdConsistent;
-import static com.example.application.util.validation.ValidationUtil.checkNew;
+import static com.example.application.util.validation.ValidationUtil.*;
 
-
-public abstract class AbstractTicketController {
+public class AbstractMaterialController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private TicketService service;
+    private TicketService ticketService;
 
-    public Ticket get(int id) {
+    @Autowired
+    private MaterialService materialService;
+
+    public Material get(int id) {
         int userId = SecurityUtil.authUserId();
         log.info("get ticket {} for user {}", id, userId);
-        return service.get(id, userId);
+        return materialService.get(id);
     }
 
     public void delete(int id) {
         int userId = SecurityUtil.authUserId();
         log.info("delete ticket {} for user {}", id, userId);
-        service.delete(id, userId);
+        materialService.delete(id, userId);
     }
 
-    public List<TicketTo> getAll() {
+    public List<Material> getAllForTicket(int ticketId) {
         int userId = SecurityUtil.authUserId();
         log.info("getAll for user {}", userId);
-        return TicketsUtil.getTos(service.getAll(userId));
+        return materialService.getAllForTicket(ticketId);
     }
 
-    public Ticket create(Ticket ticket) {
+    public Material create(Material material, int ticketId) {
         int userId = SecurityUtil.authUserId();
-        log.info("create {} for user {}", ticket, userId);
-        checkNew(ticket);
-        return service.create(ticket, userId);
+        log.info("create {} for user {}", material, userId);
+        checkNew(material);
+        return materialService.create(material, ticketId, userId);
     }
 
-    public void update(Ticket ticket, int id) {
+    public void update(Material material, int id, int ticketId) {
         int userId = SecurityUtil.authUserId();
-        log.info("update {} for user {}", ticket, userId);
-        assureIdConsistent(ticket, id);
-        service.update(ticket, userId);
+        log.info("update {} for user {}", material, userId);
+        assureIdConsistent(material, id);
+        materialService.update(material, ticketId, userId);
     }
 
     /**
@@ -67,14 +71,14 @@ public abstract class AbstractTicketController {
      * </ol>
      */
     public List<TicketTo> getBetween(@Nullable LocalDate startDate, @Nullable LocalTime startTime,
-                                            @Nullable LocalDate endDate, @Nullable LocalTime endTime) {
+                                     @Nullable LocalDate endDate, @Nullable LocalTime endTime) {
         int userId = SecurityUtil.authUserId();
         log.info("getBetween dates({} - {}) time({} - {}) for user {}", startDate, endDate, startTime, endTime, userId);
         if (userService.get(userId).getRoles().contains(Role.ADMIN)) {
-            List<Ticket> mealsDateFiltered = service.deleteForAdmin(startDate, endDate);
+            List<Ticket> mealsDateFiltered = ticketService.deleteForAdmin(startDate, endDate);
             return TicketsUtil.getFilteredTos(mealsDateFiltered, startTime, endTime);
         } else {
-            List<Ticket> mealsDateFiltered = service.getBetweenInclusive(startDate, endDate, userId);
+            List<Ticket> mealsDateFiltered = ticketService.getBetweenInclusive(startDate, endDate, userId);
             return TicketsUtil.getFilteredTos(mealsDateFiltered, startTime, endTime);
         }
     }

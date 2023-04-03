@@ -15,7 +15,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "materials")
+@NamedEntityGraph(name = Material.graph, attributeNodes = {@NamedAttributeNode("ticket")})
 public class Material extends AbstractNamedEntity implements HasId {
+
+  public static final String graph = "Material.withTicket";
 
   @Id
   @Column(name = "id")

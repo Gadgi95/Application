@@ -21,6 +21,7 @@ public class TicketTo {
     private final String status;
 
     private final String responsibleSupplier;
+    private final String responsibleForeman;
 
     private final String deliveryDate;
 
@@ -36,9 +37,9 @@ public class TicketTo {
 
     private final boolean excess;
 
-    @ConstructorProperties({"id", "name", "creationDate", "status", "responsibleSupplier", "deliveryDate", "statusChangeDate",
+    @ConstructorProperties({"id", "name", "creationDate", "status", "responsibleSupplier", "responsibleForeman", "deliveryDate", "statusChangeDate",
             "closingDate", "closedBy", "objectName", "isClosed", "excess"})
-    public TicketTo(Integer id, String name, LocalDateTime creationDate, String status, String responsibleSupplier, String deliveryDate,
+    public TicketTo(Integer id, String name, LocalDateTime creationDate, String status, String responsibleSupplier, String responsibleForeman, String deliveryDate,
                     String statusChangeDate, boolean isClosed, String closingDate, String closedBy,
                     String objectName, boolean excess) {
         this.id = id;
@@ -46,6 +47,7 @@ public class TicketTo {
         this.creationDate = creationDate;
         this.status = status;
         this.responsibleSupplier = responsibleSupplier;
+        this.responsibleForeman = responsibleForeman;
         this.deliveryDate = deliveryDate;
         this.statusChangeDate = statusChangeDate;
         this.isClosed = isClosed;
@@ -73,6 +75,9 @@ public class TicketTo {
 
     public String getResponsibleSupplier() {
         return responsibleSupplier;
+    }
+    public String getResponsibleForeman() {
+        return responsibleForeman;
     }
 
     public String getDeliveryDate() {
@@ -102,20 +107,22 @@ public class TicketTo {
     public boolean isExcess() {
         return excess;
     }
+
     @Override
     public String toString() {
         return "TicketTo{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", creationDate='" + creationDate + '\'' +
-                ", status=" + status +
+                ", creationDate=" + creationDate +
+                ", status='" + status + '\'' +
                 ", responsibleSupplier='" + responsibleSupplier + '\'' +
+                ", responsibleForeman='" + responsibleForeman + '\'' +
                 ", deliveryDate='" + deliveryDate + '\'' +
                 ", statusChangeDate='" + statusChangeDate + '\'' +
                 ", isClosed=" + isClosed +
                 ", closingDate='" + closingDate + '\'' +
                 ", closedBy='" + closedBy + '\'' +
-                ", objectName=" + objectName +
+                ", objectName='" + objectName + '\'' +
                 ", excess=" + excess +
                 '}';
     }

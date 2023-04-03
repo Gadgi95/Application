@@ -19,7 +19,9 @@ public interface TicketRepository {
 
     List<Ticket> getAll();
 
-    Ticket getWithMaterial(int id, int userId, List<Material> materialList);
+    Ticket getWithMaterial(int id, int userId);
 
     List<Ticket> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId);
+
+    List<Ticket> getBetweenHalfOpenForAdmin(LocalDateTime atStartOfDayOrMin, LocalDateTime atStartOfNextDayOrMax);
 }

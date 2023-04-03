@@ -30,7 +30,9 @@
         <button type="submit"><spring:message code="ticket.filter"/></button>
     </form>
     <hr>
-    <a href="tickets/create"><spring:message code="ticket.add"/></a>
+    <button class="btn btn-primary">
+        <a class="button_users" href="tickets/create"><spring:message code="ticket.add"/></a>
+    </button>
     <hr>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
@@ -38,6 +40,7 @@
             <th><spring:message code="ticket.creationDate"/></th>
             <th><spring:message code="ticket.objectName"/></th>
             <th><spring:message code="ticket.name"/></th>
+            <th><spring:message code="ticket.responsibleForeman"/></th>
             <th><spring:message code="ticket.responsibleSupplier"/></th>
             <th><spring:message code="ticket.deliveryDate"/></th>
             <th><spring:message code="ticket.status"/></th>
@@ -55,13 +58,14 @@
                 </td>
                 <td>${ticket.objectName}</td>
                 <td>${ticket.name}</td>
+                <td>${ticket.responsibleForeman}</td>
                 <td>${ticket.responsibleSupplier}</td>
                 <td>${ticket.deliveryDate}</td>
                 <td>${ticket.status}</td>
                 <td>${ticket.statusChangeDate}</td>
                 <td>${ticket.closed}</td>
-                <td><a href="tickets/update?id=${ticket.id}"><spring:message code="common.update"/></a></td>
-                <td><a href="tickets/delete?id=${ticket.id}"><spring:message code="common.delete"/></a></td>
+                <td><button class="btn btn-primary"><a class="button_users" href="tickets/update?id=${ticket.id}"><spring:message code="ticket.edit"/></a></button></td>
+                <td><button class="btn btn-primary"><a class="button_users" href="tickets/delete?id=${ticket.id}"><spring:message code="common.delete"/></a></button></td>
             </tr>
         </c:forEach>
     </table>

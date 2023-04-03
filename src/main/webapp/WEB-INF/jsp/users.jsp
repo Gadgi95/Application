@@ -10,10 +10,10 @@
 
 <div class="jumbotron pt-4">
     <div class="container">
-        <h3 class="text-center"><spring:message code="user.title"/></h3>
+        <h3 style="color: black"><spring:message code="user.title"/></h3>
         <button class="btn btn-primary">
             <span class="fa fa-plus"></span>
-            <a href="users/create"><spring:message code="common.add"/></a>
+            <a class="button_users" href="users/create"><spring:message code="common.add"/></a>
         </button>
         <table class="table table-striped mt-3">
             <thead>
@@ -35,8 +35,8 @@
                     <td>${user.roles}</td>
 <%--                    <td><input type="checkbox" <c:if test="${user.enabled}">checked</c:if>/></td>--%>
                     <td><fmt:formatDate value="${user.registered}" pattern="dd-MMMM-yyyy"/></td>
-                    <td><a href="users/update?id=${user.id}"><spring:message code="common.update"/><span class="fa fa-pencil"></span></a></td>
-                    <td><a href="users/delete?id=${user.id}"><spring:message code="common.delete"/><span class="fa fa-remove"></span></a></td>
+                    <td><button><a class="button_users" href="users/update?id=${user.id}"><spring:message code="common.update"/><span class="fa fa-pencil"></span></a></button></td>
+                    <td><button><a class="button_users" href="users/delete?id=${user.id}"><spring:message code="common.delete"/><span class="fa fa-remove"></span></a></button></td>
                 </tr>
             </c:forEach>
         </table>
