@@ -9,7 +9,7 @@
 <form action="spring_security_check" method="post" class="form">
     <div class="wrapper">
         <div class="title"> <img src="resources/images/topdom.png"></div>
-        <div class="container"> <spring:message code="app.title"/> </div>
+        <div class="container1"> <spring:message code="app.title"/> </div>
     </div>
     <br>
     <div class="wrapper">

@@ -35,8 +35,8 @@
                     <td>${user.roles}</td>
 <%--                    <td><input type="checkbox" <c:if test="${user.enabled}">checked</c:if>/></td>--%>
                     <td><fmt:formatDate value="${user.registered}" pattern="dd-MMMM-yyyy"/></td>
-                    <td><button><a class="button_users" href="users/update?id=${user.id}"><spring:message code="common.update"/><span class="fa fa-pencil"></span></a></button></td>
-                    <td><button><a class="button_users" href="users/delete?id=${user.id}"><spring:message code="common.delete"/><span class="fa fa-remove"></span></a></button></td>
+                    <td><button><a class="button_users" href="users/update?id=${user.id}"><span class="fa fa-pencil"></span></a></button></td>
+                    <td><button><a class="button_users" href="users/delete?id=${user.id}"><span class="fa fa-remove"></span></a></button></td>
                 </tr>
             </c:forEach>
         </table>
