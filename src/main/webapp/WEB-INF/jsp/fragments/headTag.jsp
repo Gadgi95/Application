@@ -7,4 +7,5 @@
     <title><spring:message code="app.title"/></title>
     <base href="${pageContext.request.contextPath}/"/>
     <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+    <link rel="stylesheet" href="webjars/bootstrap/4.6.1/css/bootstrap.min.css">
 </head>

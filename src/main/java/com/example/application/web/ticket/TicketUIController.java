@@ -1,13 +1,7 @@
 package com.example.application.web.ticket;
 
-import com.example.application.model.Role;
 import com.example.application.model.Ticket;
-import com.example.application.service.TicketService;
-import com.example.application.service.UserService;
-import com.example.application.util.TicketsUtil;
 import com.example.application.util.exception.NotFoundException;
-import com.example.application.web.SecurityUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +17,6 @@ import static com.example.application.util.DateTimeUtil.parseLocalTime;
 @Controller
 @RequestMapping(value = "/tickets")
 public class TicketUIController extends AbstractTicketController {
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private TicketService ticketService;
 
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
