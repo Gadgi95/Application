@@ -8,7 +8,7 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
 <div class="jumbotron pt-4">
-    <div class="container">
+    <div style="margin-left: 0px;" class="container">
         <h3 class="text-center"><spring:message code="ticket.title"/></h3>
         <div class="card border-dark">
             <div class="card-body pb-0">
@@ -30,21 +30,25 @@
                             <label for="endTime"><spring:message code="ticket.endTime"/>:</label>
                             <input class="form-control" name="endTime" id="endTime" type="time" autocomplete="off" value="${param.endTime}">
                         </div>
-                        <button class="btn btn-primary" type="submit">
-                            <span class="fa fa-filter"></span>
-                            <spring:message code="ticket.filter"/>
-                        </button>
+                        <div style="padding: 0.75rem 1.25rem; margin-left: 600px;">
+                            <button class="btn btn-danger" type="reset">
+                                <span class="fa fa-remove"></span>
+                                <spring:message code="common.cancel"/>
+                            </button>
+                            <button class="btn btn-primary" type="submit">
+                                <span class="fa fa-filter"></span>
+                                <spring:message code="ticket.filter"/>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
         <br/>
-        <button class="btn btn-primary">
+        <a href="tickets/create"><button class="btn btn-primary">
             <span class="fa fa-plus"></span>
-            <a class="button_users" href="tickets/create">
-                <spring:message code="ticket.add"/>
-            </a>
-        </button>
+            <spring:message code="ticket.add"/>
+        </button></a>
         <table class="table table-striped" id="datatable">
             <thead>
             <tr>

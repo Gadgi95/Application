@@ -36,7 +36,13 @@
     </button>
     <br>
     <br>
-    <div class="wrapper"><a class="submit_reg" href="profile/register"><spring:message code="app.register"/></a></div>
+    <div class="wrapper">
+        <a href="profile/register">
+            <button class="btn btn-primary">
+                <spring:message code="app.register"/>
+            </button>
+        </a>
+    </div>
     <br>
     <div class="footer">
         <spring:message code="app.footer"/>

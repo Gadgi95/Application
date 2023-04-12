@@ -11,10 +11,10 @@
 <div class="jumbotron pt-4">
     <div class="container">
         <h3 style="color: black"><spring:message code="user.title"/></h3>
-        <button class="btn btn-primary">
+        <a href="users/create"><button class="btn btn-primary">
             <span class="fa fa-plus"></span>
-            <a class="button_users" href="users/create"><spring:message code="common.add"/></a>
-        </button>
+            <spring:message code="common.add"/>
+        </button></a>
         <table class="table table-striped mt-3">
             <thead>
             <tr>

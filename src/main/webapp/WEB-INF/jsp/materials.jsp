@@ -7,7 +7,7 @@
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
-<section>
+<section class="modal fade">
     <jsp:useBean id="material" type="com.example.application.model.Material" scope="request"/>
     <%--    `material.new` cause javax.el.ELException - bug tomcat --%>
     <h3><spring:message code="${material.isNew() ? 'material.add' : 'material.edit'}"/></h3>
