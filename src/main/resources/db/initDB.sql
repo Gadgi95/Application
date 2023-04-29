@@ -46,7 +46,7 @@ CREATE TABLE tickets_archive
 CREATE TABLE materials
 (
     id                    INT AUTO_INCREMENT PRIMARY KEY,
-    ticket_id             INT          NOT NULL,
+    ticket_id             INT,
     name                  VARCHAR(128) NOT NULL,
     quantity              INT          NOT NULL,
     characteristics       VARCHAR(120) NOT NULL,

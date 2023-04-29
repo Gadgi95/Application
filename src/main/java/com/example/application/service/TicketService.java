@@ -23,7 +23,7 @@ public class TicketService {
     }
 
     public Ticket get(int id, int userId) {
-        return checkNotFoundWithId(ticketRepository.get(id, userId), id);
+        return ticketRepository.get(id, userId);
     }
 
     public void delete(int id, int userId) {

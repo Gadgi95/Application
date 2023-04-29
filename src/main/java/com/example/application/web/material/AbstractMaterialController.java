@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import static com.example.application.repository.datajpa.DataJpaTicketRepository.addTemp;
 import static com.example.application.util.validation.ValidationUtil.*;
 
 public class AbstractMaterialController {
@@ -38,10 +39,22 @@ public class AbstractMaterialController {
         return materialService.get(id);
     }
 
+    public Material getNew(int id) {
+        int userId = SecurityUtil.authUserId();
+        log.info("get ticket {} for user {}", id, userId);
+        return materialService.getNew(id);
+    }
+
     public void delete(int id) {
         int userId = SecurityUtil.authUserId();
         log.info("delete ticket {} for user {}", id, userId);
         materialService.delete(id, userId);
+    }
+
+    public void deleteNew(int id) {
+        int userId = SecurityUtil.authUserId();
+        log.info("delete ticket {} for user {}", id, userId);
+        materialService.deleteNew(id);
     }
 
     public List<Material> getAllForTicket(int ticketId) {
@@ -57,11 +70,25 @@ public class AbstractMaterialController {
         return materialService.create(material, ticketId, userId);
     }
 
+    public void createNew(Material material) {
+        int userId = SecurityUtil.authUserId();
+        log.info("create {} for user {}", material, userId);
+        checkNew(material);
+        addTemp(material);
+    }
+
     public void update(Material material, int id, int ticketId) {
         int userId = SecurityUtil.authUserId();
         log.info("update {} for user {}", material, userId);
         assureIdConsistent(material, id);
         materialService.update(material, ticketId, userId);
+    }
+
+    public void updateNew(Material material, int id) {
+        int userId = SecurityUtil.authUserId();
+        log.info("update {} for user {}", material, userId);
+        assureIdConsistent(material, id);
+        materialService.updateNew(material);
     }
 
     /**

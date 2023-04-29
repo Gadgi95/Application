@@ -11,7 +11,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.Objects;
 
 @Entity
 @Table(name = "materials")
@@ -39,7 +38,7 @@ public class Material extends AbstractNamedEntity implements HasId {
   private boolean hasFactoryMarriage;
 
   @Column(name = "marriageDetectionDate")
-  @Size(min = 2, max = 20)
+//  @Range(min = 0, max = 50)
   private Date marriageDetectionDate;
 
   @Column(name = "marriageDetectedBy")
@@ -47,11 +46,11 @@ public class Material extends AbstractNamedEntity implements HasId {
   private String marriageDetectedBy;
 
   @Column(name = "marriageDescription")
-  @Size(min = 2, max = 120)
+  @Size(max = 120)
   private String marriageDescription;
 
   @Column(name = "marriagePhotoUrl")
-  @Size(min = 2, max = 150)
+  @Size(max = 150)
   private String marriagePhotoUrl;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -60,10 +59,14 @@ public class Material extends AbstractNamedEntity implements HasId {
   @JsonIgnore
   private Ticket ticket;
 
-  public Material(String name, int quantity, String characteristics) {
+  public Material(Integer id, String name, int quantity, String characteristics, boolean hasFactoryMarriage, String marriageDescription) {
+    super(name);
+    this.id = id;
     this.name = name;
     this.quantity = quantity;
     this.characteristics = characteristics;
+    this.hasFactoryMarriage = hasFactoryMarriage;
+    this.marriageDescription = marriageDescription;
   }
 
   @Override
@@ -97,6 +100,12 @@ public class Material extends AbstractNamedEntity implements HasId {
 
   public boolean isHasFactoryMarriage() {
     return hasFactoryMarriage;
+  }
+  public String getBroke() {
+    if (hasFactoryMarriage) {
+      return "Да";
+    } else
+      return "Нет";
   }
 
   public void setHasFactoryMarriage(boolean hasFactoryMarriage) {

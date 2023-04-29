@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class RootController {
@@ -27,7 +26,7 @@ public class RootController {
     @GetMapping("/")
     public String root() {
         log.info("root");
-        return "login";
+        return "redirect:tickets";
     }
 
     @GetMapping("/users")

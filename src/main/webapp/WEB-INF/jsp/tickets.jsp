@@ -52,35 +52,35 @@
         <table class="table table-striped" id="datatable">
             <thead>
             <tr>
-                <th><spring:message code="ticket.creationDate"/></th>
-                <th><spring:message code="ticket.objectName"/></th>
-                <th><spring:message code="ticket.name"/></th>
-                <th><spring:message code="ticket.responsibleForeman"/></th>
-                <th><spring:message code="ticket.responsibleSupplier"/></th>
-                <th><spring:message code="ticket.deliveryDate"/></th>
-                <th><spring:message code="ticket.status"/></th>
-                <th><spring:message code="ticket.statusChangeDate"/></th>
-                <th><spring:message code="ticket.isClosed"/></th>
-                <th></th>
-                <th></th>
+                <th class="th_td"><spring:message code="ticket.creationDate"/></th>
+                <th class="th_td"><spring:message code="ticket.objectName"/></th>
+                <th class="th_td"><spring:message code="ticket.name"/></th>
+                <th class="th_td"><spring:message code="ticket.responsibleForeman"/></th>
+                <th class="th_td"><spring:message code="ticket.responsibleSupplier"/></th>
+                <th class="th_td"><spring:message code="ticket.deliveryDate"/></th>
+                <th class="th_td"><spring:message code="ticket.status"/></th>
+                <th class="th_td"><spring:message code="ticket.statusChangeDate"/></th>
+                <th class="th_td"><spring:message code="ticket.isClosed"/></th>
+                <th class="th_td"></th>
+                <th class="th_td"></th>
             </tr>
             </thead>
             <c:forEach items="${requestScope.tickets}" var="ticket">
                 <jsp:useBean id="ticket" type="com.example.application.to.TicketTo"/>
                 <tr data-ticket-excess="${ticket.excess}">
-                    <td>
+                    <td class="th_td">
                             ${fn:formatDateTime(ticket.creationDate)}
                     </td>
-                    <td>${ticket.objectName}</td>
-                    <td>${ticket.name}</td>
-                    <td>${ticket.responsibleForeman}</td>
-                    <td>${ticket.responsibleSupplier}</td>
-                    <td>${ticket.deliveryDate}</td>
-                    <td>${ticket.status}</td>
-                    <td>${ticket.statusChangeDate}</td>
-                    <td>${ticket.closed}</td>
-                    <td><button><a class="button_users" href="tickets/update?id=${ticket.id}"><span class="fa fa-pencil"></span></a></button></td>
-                    <td><button><a class="button_users" href="tickets/delete?id=${ticket.id}"><span class="fa fa-remove"></span></a></button></td>
+                    <td class="th_td">${ticket.objectName}</td>
+                    <td class="th_td">${ticket.name}</td>
+                    <td class="th_td">${ticket.responsibleForeman}</td>
+                    <td class="th_td">${ticket.responsibleSupplier}</td>
+                    <td class="th_td">${ticket.deliveryDate}</td>
+                    <td class="th_td">${ticket.status}</td>
+                    <td class="th_td">${ticket.statusChangeDate}</td>
+                    <td class="th_td">${ticket.isClosed()}</td>
+                    <td class="th_td"><button><a class="button_users" href="tickets/update?id=${ticket.id}"><span class="fa fa-pencil"></span></a></button></td>
+                    <td class="th_td"><button><a class="button_users" href="tickets/delete?id=${ticket.id}"><span class="fa fa-remove"></span></a></button></td>
                 </tr>
             </c:forEach>
         </table>

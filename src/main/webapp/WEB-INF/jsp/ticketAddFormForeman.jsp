@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
@@ -27,23 +27,28 @@
                     <span class="fa fa-check"></span>
                     <spring:message code="common.save"/>
                 </button>
-                <button class="btn btn-primary" onclick="window.history.back()" type="button">
-                    <span class="fa fa-close"></span>
-                    <spring:message code="common.cancel"/>
-                </button>
+                <a href="tickets/">
+                    <button class="btn btn-primary" type="button">
+                        <span class="fa fa-close"></span>
+                        <spring:message code="common.cancel"/>
+                    </button
+                </a>
             </form>
         </section>
+<%--        <section>--%>
+<%--            <jsp:include page="materials.jsp"/>--%>
+<%--        </section>--%>
         <section>
-            <hr>
-            <a href="tickets/materials/create"><button class="btn btn-primary">
-                <span class="fa fa-plus"></span>
-                <spring:message code="material.add"/>
-            </button></a>
-            <hr>
+                <hr>
+                <a href="tickets/materials/create"><button class="btn btn-primary">
+                    <span class="fa fa-plus"></span>
+                    <spring:message code="material.add"/>
+                </button></a>
+                <hr>
             <table class="table table-striped" id="datatable">
                 <thead>
                 <tr>
-                    <th><spring:message code="ticket.name"/></th>
+                    <th class="th_td"><spring:message code="ticket.name"/></th>
                     <th><spring:message code="material.name"/></th>
                     <th><spring:message code="material.quantity"/></th>
                     <th><spring:message code="material.characteristics"/></th>
@@ -62,18 +67,19 @@
                         <td>${material.name}</td>
                         <td>${material.quantity}</td>
                         <td>${material.characteristics}</td>
-                        <td>${material.hasFactoryMarriage}</td>
+                        <td>${material.broke}</td>
                         <td>${material.marriageDetectionDate}</td>
                         <td>${material.marriageDetectedBy}</td>
                         <td>${material.marriageDescription}</td>
-                        <td><button class="btn btn-primary"><a class="button_users" href="tickets/update?id=${material.id}"><spring:message code="material.edit"/></a></button></td>
-                        <td><button class="btn btn-primary"><a class="button_users" href="tickets/delete?id=${material.id}"><spring:message code="common.delete"/></a></button></td>
+                        <td><button><a class="button_users" href="tickets/materials/updateNew?id=${material.id}"><span class="fa fa-pencil"></span></a></button></td>
+                        <td><button><a class="button_users" href="tickets/materials/deleteNew?id=${material.id}"><span class="fa fa-remove"></span></a></button></td>
                     </tr>
                 </c:forEach>
             </table>
         </section>
     </div>
 </div>
+
 
 <%--<section class="modal fade">--%>
 <%--    <jsp:useBean id="material" type="com.example.application.model.Material" scope="request"/>--%>

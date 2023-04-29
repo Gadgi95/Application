@@ -1,3 +1,8 @@
+.th_td {
+    padding: 0.5rem !important;
+    border-top: 1px solid #dee2e6 !important;
+}
+
 .input_profile {
     margin-top: 45px;
 }
@@ -54,9 +59,9 @@
 .container1 {
     display:inline-block;
     color: #eee;
-    font-size: 36px;
-    margin-top: 45px;
-    margin-left: 20px;
+    font-size: 30px;
+    margin-top: 20px;
+    margin-left: 12px;
 }
 
 .subtitle {

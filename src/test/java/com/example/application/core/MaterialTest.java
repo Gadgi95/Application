@@ -31,7 +31,7 @@ public class MaterialTest {
 
     @Test
     void testMaterialSetters() {
-        Material material = new Material("", 0, "");
+        Material material = new Material(null,"", 0, "", false, "");
         String name = "Steel";
         int quantity = 100;
         String characteristics = "Alloy";

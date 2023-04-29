@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -18,6 +19,8 @@ public class DataJpaTicketRepository implements TicketRepository {
     private final CrudTicketRepository crudTicketRepository;
 
     private final CrudUserRepository crudUserRepository;
+
+    private static List<Object> temp = new ArrayList<>();
 
     public DataJpaTicketRepository(CrudTicketRepository crudTicketRepository, CrudUserRepository crudUserRepository) {
         this.crudTicketRepository = crudTicketRepository;
@@ -75,5 +78,19 @@ public class DataJpaTicketRepository implements TicketRepository {
     @Override
     public List<Ticket> getBetweenHalfOpenForAdmin(LocalDateTime atStartOfDayOrMin, LocalDateTime atStartOfNextDayOrMax) {
         return crudTicketRepository.getBetweenHalfOpenForAdmin(atStartOfDayOrMin, atStartOfNextDayOrMax);
+    }
+
+    public static List<Object> getTemp() {
+        return temp;
+    }
+
+    public static <T> T addTemp(T object) {
+        if (object instanceof Material) {
+            ((Material) object).setId(getTemp().size());
+            temp.add(object);
+            return object;
+        }
+        temp.add(object);
+        return object;
     }
 }

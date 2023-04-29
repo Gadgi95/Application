@@ -11,8 +11,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import static com.example.application.repository.datajpa.DataJpaTicketRepository.getTemp;
 import static com.example.application.util.DateTimeUtil.parseLocalDate;
 import static com.example.application.util.DateTimeUtil.parseLocalTime;
+import static com.example.application.repository.datajpa.DataJpaTicketRepository.addTemp;
+import static com.example.application.util.Util.cycleMaterials;
 
 @Controller
 @RequestMapping(value = "/tickets")
@@ -21,20 +24,25 @@ public class TicketUIController extends AbstractTicketController {
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
         model.addAttribute("ticket", super.get(getId(request)));
-        return "ticketFormForeman";
+        return "ticketAddFormForeman";
     }
 
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("ticket", new Ticket(null, "new", "новая", false, "Рига"));
-        return "ticketFormForeman";
+        getTemp().clear();
+        addTemp(new Ticket(null, "new", "новая", false, "Рига"));
+        if (getTemp().size() == 1) {
+            return "ticketAddFormForeman";
+        }
+        model.addAttribute("material", cycleMaterials());
+        return "ticketAddFormForeman";
     }
 
     @PostMapping()
     public String updateOrCreate(HttpServletRequest request) {
         Ticket ticket = new Ticket(null, request.getParameter("name"), "новая", false,
                 request.getParameter("objectName"));
-
         if (request.getParameter("id").isEmpty()) {
             super.create(ticket);
         } else {

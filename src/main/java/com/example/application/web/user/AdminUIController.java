@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -25,14 +26,14 @@ public class AdminUIController extends AbstractUserController {
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("user", new User(null, "new", "12345@gfdg.com", "3123534", Collections.singleton(Role.FOREMAN)));
+        model.addAttribute("user", new User(null, "new", "12345@gfdg.com", "3123534", Arrays.asList(Role.FOREMAN, Role.USER)));
         return "userForm";
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public String updateOrCreate(HttpServletRequest request) {
         User user = new User(null, request.getParameter("name"), request.getParameter("email"),
-                request.getParameter("password"), Collections.singleton(Role.FOREMAN));
+                request.getParameter("password"), Arrays.asList(Role.FOREMAN, Role.USER));
 
         if (request.getParameter("id").isEmpty()) {
             super.create(user);

@@ -41,7 +41,7 @@
                     </spring:bind>
 
                     <div class="text-right">
-                        <a class="btn btn-secondary" href="#" onclick="window.history.back()">
+                        <a class="btn btn-secondary" href="/tickets">
                             <span class="fa fa-close"></span>
                             <spring:message code="common.cancel"/>
                         </a>

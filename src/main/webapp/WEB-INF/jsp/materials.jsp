@@ -5,14 +5,14 @@
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
-<jsp:include page="fragments/bodyHeader.jsp"/>
+<%--<jsp:include page="fragments/bodyHeader.jsp"/>--%>
 
-<section class="modal fade">
-    <jsp:useBean id="material" type="com.example.application.model.Material" scope="request"/>
+<section>
+    <jsp:useBean id="material" class="com.example.application.model.Material" scope="request"/>
     <%--    `material.new` cause javax.el.ELException - bug tomcat --%>
     <h3><spring:message code="${material.isNew() ? 'material.add' : 'material.edit'}"/></h3>
     <hr>
-    <form method="post" action="tickets/materials">
+    <form method="post" action="tickets/materials/create">
         <input type="hidden" name="id" value="${material.id}">
         <dl>
             <dt><spring:message code="material.name"/>:</dt>
@@ -25,6 +25,14 @@
         <dl>
             <dt><spring:message code="material.characteristics"/>:</dt>
             <dd><input type="text" value="${material.characteristics}" name="characteristics" required></dd>
+        </dl>
+        <dl>
+            <dt><spring:message code="material.hasFactoryMarriage"/>:</dt>
+            <dd><input type="checkbox" value="${material.hasFactoryMarriage}" name="hasFactoryMarriage"></dd>
+        </dl>
+        <dl>
+            <dt><spring:message code="material.marriageDescription"/>:</dt>
+            <dd><input type="text" value="${material.marriageDescription}" name="marriageDescription"></dd>
         </dl>
         <button type="submit"><spring:message code="common.save"/></button>
         <button onclick="window.history.back()" type="button"><spring:message code="common.cancel"/></button>
