@@ -18,208 +18,226 @@ import java.util.List;
 @Table(name = "tickets")
 public class Ticket extends AbstractNamedEntity implements HasId {
 
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@Column(name = "creationDate", nullable = false, columnDefinition = "datetime default now()", updatable = false)
-	@NotNull
-	private LocalDateTime creationDate = LocalDateTime.now();
+    @Column(name = "creationDate", nullable = false, columnDefinition = "datetime default now()", updatable = false)
+    @NotNull
+    private LocalDateTime creationDate = LocalDateTime.now();
 
-	@Column(name = "status", nullable = false)
-	@NotBlank
-	@Size(min = 2, max = 30)
-	private String status;
+    @Column(name = "status", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 30)
+    private String status;
 
-	@Column(name = "responsibleSupplier")
-	@Size(min = 2, max = 128)
-	private String responsibleSupplier;
+    @Column(name = "responsibleSupplier")
+    @Size(min = 2, max = 128)
+    private String responsibleSupplier;
 
-	@Column(name = "deliveryDate")
-	@Size(min = 2, max = 20)
-	private String deliveryDate;
+    @Column(name = "deliveryDate")
+    @Size(min = 2, max = 20)
+    private String deliveryDate;
 
-	@Column(name = "statusChangeDate")
-	@Size(min = 2, max = 20)
-	private String statusChangeDate;
+    @Column(name = "statusChangeDate")
+    @Size(min = 2, max = 20)
+    private String statusChangeDate;
 
-	@Column(name = "isClosed", nullable = false)
-	@NotNull
-	private boolean isClosed;
+    @Column(name = "isClosed", nullable = false)
+    @NotNull
+    private boolean isClosed;
 
-	@Column(name = "closingDate")
-	@Size(min = 2, max = 20)
-	private String closingDate;
+    @Column(name = "closingDate")
+    @Size(min = 2, max = 20)
+    private String closingDate;
 
-	@Column(name = "closedBy")
-	@Size(min = 2, max = 128)
-	private String closedBy;
+    @Column(name = "closedBy")
+    @Size(min = 2, max = 128)
+    private String closedBy;
 
-	@Column(name = "objectName")
-	@Size(min = 2, max = 128)
-	private String objectName;
+    @Column(name = "objectName")
+    @Size(min = 2, max = 128)
+    private String objectName;
+    @Transient
+    private boolean flagToDelete;
 
-	@OneToMany(mappedBy = "ticket")
-	@LazyCollection(LazyCollectionOption.TRUE)
-	@OrderBy("name DESC")
-	@BatchSize(size = 100)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
-	private List<Material> materials;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket")
+    @OrderBy("name DESC")
+    @BatchSize(size = 100)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private List<Material> materials;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "user_id", nullable = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@BatchSize(size = 50)
-	@JsonIgnore
-	private User user;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @BatchSize(size = 50)
+    @JsonIgnore
+    private User user;
 
-	public Ticket(Integer id, String name, LocalDateTime creationDate, String status, String responsibleSupplier, String deliveryDate,
-				  String statusChangeDate, boolean isClosed, String closingDate, String closedBy,
-				  String objectName) {
-		super(name);
-		this.id = id;
-		this.creationDate = creationDate;
-		this.status = status;
-		this.responsibleSupplier = responsibleSupplier;
-		this.deliveryDate = deliveryDate;
-		this.statusChangeDate = statusChangeDate;
-		this.isClosed = isClosed;
-		this.closingDate = closingDate;
-		this.closedBy = closedBy;
-		this.objectName = objectName;
-	}
-	public Ticket(Integer id, String name, String status, boolean isClosed, String objectName) {
-		super(name);
-		this.id = id;
-		this.status = status;
-		this.isClosed = isClosed;
-		this.objectName = objectName;
-	}
-	public Ticket() {
-	}
+    public Ticket(Integer id, String name, LocalDateTime creationDate, String status, String responsibleSupplier, String deliveryDate,
+                  String statusChangeDate, boolean isClosed, String closingDate, String closedBy,
+                  String objectName) {
+        super(name);
+        this.id = id;
+        this.creationDate = creationDate;
+        this.status = status;
+        this.responsibleSupplier = responsibleSupplier;
+        this.deliveryDate = deliveryDate;
+        this.statusChangeDate = statusChangeDate;
+        this.isClosed = isClosed;
+        this.closingDate = closingDate;
+        this.closedBy = closedBy;
+        this.objectName = objectName;
+    }
 
-	@Override
-	public Integer getId() {
-		return id;
-	}
+    public Ticket(Integer id, String name, String status, boolean isClosed, String objectName) {
+        super(name);
+        this.id = id;
+        if (status == null) {
+            this.status = "новая";
+        } else if (status.equals("новая")) {
+            this.status = "новая";
+        } else if (status.equals("1")) {
+            this.status = "новая";
+        } else
+            this.status = "в работе";
+        this.isClosed = isClosed;
+        this.objectName = objectName;
+    }
 
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Ticket() {
+    }
 
-	public String getName() {
-		return name;
-	}
+    @Override
+    public Integer getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public List<Material> getMaterials() {
-		return materials;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setMaterials(List<Material> materials) {
-		this.materials = materials;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public LocalDateTime getCreationDate() {
-		return creationDate;
-	}
+    public List<Material> getMaterials() {
+        return materials;
+    }
 
-	public void setCreationDate(LocalDateTime creationDate) {
-		this.creationDate = creationDate;
-	}
+    public void setMaterials(List<Material> materials) {
+        this.materials = materials;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public String getResponsibleSupplier() {
-		return responsibleSupplier;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setResponsibleSupplier(String responsibleSupplier) {
-		this.responsibleSupplier = responsibleSupplier;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getDeliveryDate() {
-		return deliveryDate;
-	}
+    public String getResponsibleSupplier() {
+        return responsibleSupplier;
+    }
 
-	public void setDeliveryDate(String deliveryDate) {
-		this.deliveryDate = deliveryDate;
-	}
+    public void setResponsibleSupplier(String responsibleSupplier) {
+        this.responsibleSupplier = responsibleSupplier;
+    }
 
-	public String getStatusChangeDate() {
-		return statusChangeDate;
-	}
+    public String getDeliveryDate() {
+        return deliveryDate;
+    }
 
-	public void setStatusChangeDate(String statusChangeDate) {
-		this.statusChangeDate = statusChangeDate;
-	}
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
 
-	public boolean isClosed() {
-		return isClosed;
-	}
+    public String getStatusChangeDate() {
+        return statusChangeDate;
+    }
 
-	public void setClosed(boolean closed) {
-		isClosed = closed;
-	}
+    public void setStatusChangeDate(String statusChangeDate) {
+        this.statusChangeDate = statusChangeDate;
+    }
 
-	public String getClosingDate() {
-		return closingDate;
-	}
+    public boolean isClosed() {
+        return isClosed;
+    }
 
-	public void setClosingDate(String closingDate) {
-		this.closingDate = closingDate;
-	}
+    public void setClosed(boolean closed) {
+        isClosed = closed;
+    }
 
-	public String getClosedBy() {
-		return closedBy;
-	}
+    public String getClosingDate() {
+        return closingDate;
+    }
 
-	public void setClosedBy(String closedBy) {
-		this.closedBy = closedBy;
-	}
+    public void setClosingDate(String closingDate) {
+        this.closingDate = closingDate;
+    }
 
-	public String getObjectName() {
-		return objectName;
-	}
+    public String getClosedBy() {
+        return closedBy;
+    }
 
-	public void setObjectName(String objectName) {
-		this.objectName = objectName;
-	}
+    public void setClosedBy(String closedBy) {
+        this.closedBy = closedBy;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public String getObjectName() {
+        return objectName;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setObjectName(String objectName) {
+        this.objectName = objectName;
+    }
 
-	@Override
-	public String toString() {
-		return "main.java.Application{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", materials=" + materials +
-				", creationDate=" + creationDate +
-				", status=" + status +
-				", responsibleSupplier='" + responsibleSupplier + '\'' +
-				", deliveryDate=" + deliveryDate +
-				", statusChangeDate=" + statusChangeDate +
-				", isClosed=" + isClosed +
-				", closingDate=" + closingDate +
-				", closedBy='" + closedBy + '\'' +
-				'}';
-	}
+    public boolean isFlagToDelete() {
+        return flagToDelete;
+    }
+
+    public void setFlagToDelete(boolean flagToDelete) {
+        this.flagToDelete = flagToDelete;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", materials=" + materials +
+                ", creationDate=" + creationDate +
+                ", status=" + status +
+                ", responsibleSupplier='" + responsibleSupplier + '\'' +
+                ", deliveryDate=" + deliveryDate +
+                ", statusChangeDate=" + statusChangeDate +
+                ", isClosed=" + isClosed +
+                ", closingDate=" + closingDate +
+                ", closedBy='" + closedBy + '\'' +
+                '}';
+    }
 }

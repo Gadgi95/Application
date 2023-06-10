@@ -21,7 +21,7 @@
 		<spring.security.version>5.6.2</spring.security.version>
 
 		<!--    Tests  -->
-		<junit.version>4.13.2</junit.version>
+		<junit.jupiter.version>5.8.2</junit.jupiter.version>
 		<assertj.version>3.22.0</assertj.version>
 
 		<!--JSON-->
@@ -231,9 +231,9 @@
 
 		<!--Test-->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

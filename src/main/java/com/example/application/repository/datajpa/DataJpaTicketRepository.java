@@ -3,6 +3,7 @@ package com.example.application.repository.datajpa;
 import com.example.application.model.Material;
 import com.example.application.model.Ticket;
 import com.example.application.repository.TicketRepository;
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,20 +21,45 @@ public class DataJpaTicketRepository implements TicketRepository {
 
     private final CrudUserRepository crudUserRepository;
 
+    private final CrudMaterialRepository crudMaterialRepository;
+
     private static List<Object> temp = new ArrayList<>();
 
-    public DataJpaTicketRepository(CrudTicketRepository crudTicketRepository, CrudUserRepository crudUserRepository) {
+    public DataJpaTicketRepository(CrudTicketRepository crudTicketRepository, CrudUserRepository crudUserRepository, CrudMaterialRepository crudMaterialRepository) {
         this.crudTicketRepository = crudTicketRepository;
         this.crudUserRepository = crudUserRepository;
+        this.crudMaterialRepository = crudMaterialRepository;
     }
 
     @Override
     @Transactional
     public Ticket save(Ticket ticket, int userId) {
-        if (!ticket.isNew()) {
+        Integer ticketId = ticket.getId();
+        if (ticketId == null) {
+            ticket.setUser(crudUserRepository.getById(userId));
+            return crudTicketRepository.save(ticket);
+        }
+        if (!ticket.isNew() && get(ticket.getId()) == null) {
             return null;
         }
-        ticket.setUser(crudUserRepository.getOne(userId));
+        Ticket ticketFromBase = crudTicketRepository.getById(ticketId);
+        ticket.setUser(crudUserRepository.getById(userId));
+        ticket.setStatus(ticketFromBase.getStatus());
+        ticket.setResponsibleSupplier(ticketFromBase.getResponsibleSupplier());
+        ticket.setDeliveryDate(ticketFromBase.getDeliveryDate());
+        ticket.setClosed(ticketFromBase.isClosed());
+        ticket.setClosingDate(ticketFromBase.getClosingDate());
+        ticket.setClosedBy(ticketFromBase.getClosedBy());
+        return crudTicketRepository.save(ticket);
+    }
+
+    @Override
+    @Transactional
+    public Ticket saveForAdmin(Ticket ticket) {
+        if (!ticket.isNew() && get(ticket.getId()) == null) {
+            return null;
+        }
+        ticket.setCreationDate(crudTicketRepository.getById(ticket.getId()).getCreationDate());
         return crudTicketRepository.save(ticket);
     }
 
@@ -48,11 +74,23 @@ public class DataJpaTicketRepository implements TicketRepository {
     }
 
     @Override
-    public Ticket get(int id, int userId) {
+    public Ticket get(int id) {
         if (crudTicketRepository.findById(id) == null) {
             return null;
         }
         return crudTicketRepository.findById(id);
+    }
+
+    @Transactional
+    public Ticket getTicketForMaterial(int materialId) {
+        if (DataJpaMaterialRepository.temp == null) {
+            Ticket ticket = crudTicketRepository.getById(crudMaterialRepository.getById(materialId).getTicket().getId());
+            Hibernate.initialize(ticket.getMaterials());
+            return ticket;
+        }
+        Ticket ticket = DataJpaMaterialRepository.temp;
+        Hibernate.initialize(ticket.getMaterials());
+        return ticket;
     }
 
     @Override
@@ -66,8 +104,8 @@ public class DataJpaTicketRepository implements TicketRepository {
     }
 
     @Override
-    public Ticket getWithMaterial(int id, int userId) {
-        return crudTicketRepository.getWithMaterial(id, userId);
+    public Ticket getWithMaterial(int id) {
+        return crudTicketRepository.getWithMaterial(id);
     }
 
     @Override
@@ -87,6 +125,7 @@ public class DataJpaTicketRepository implements TicketRepository {
     public static <T> T addTemp(T object) {
         if (object instanceof Material) {
             ((Material) object).setId(getTemp().size());
+            ((Material) object).setFlagToDelete(true);
             temp.add(object);
             return object;
         }

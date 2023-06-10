@@ -12,7 +12,7 @@ public class UserUtil {
 
 
     public static User createNewFromTo(UserTo userTo) {
-        return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), new Date(), Collections.singleton(Role.USER));
+        return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), new Date(), Collections.singleton(Role.FOREMAN));
     }
 
     public static UserTo asTo(User user) {

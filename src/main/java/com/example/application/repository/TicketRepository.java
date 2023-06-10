@@ -10,16 +10,21 @@ public interface TicketRepository {
 
     Ticket save(Ticket ticket, int userId);
 
+    Ticket saveForAdmin(Ticket ticket);
+
     boolean delete(int id, int userId);
+
     boolean deleteForAdmin(int id);
 
-    Ticket get(int id, int userId);
+    Ticket get(int id);
+
+    Ticket getTicketForMaterial(int materialId);
 
     List<Ticket> getAll(int userId);
 
     List<Ticket> getAll();
 
-    Ticket getWithMaterial(int id, int userId);
+    Ticket getWithMaterial(int id);
 
     List<Ticket> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId);
 

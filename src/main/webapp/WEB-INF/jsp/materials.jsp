@@ -28,7 +28,16 @@
         </dl>
         <dl>
             <dt><spring:message code="material.hasFactoryMarriage"/>:</dt>
-            <dd><input type="checkbox" value="${material.hasFactoryMarriage}" name="hasFactoryMarriage"></dd>
+            <select name="hasFactoryMarriage" value="${material.hasFactoryMarriage}">
+                <c:if test="${material.hasFactoryMarriage}">
+                    <option value="true">Да</option>
+                    <option value="false">Нет</option>
+                </c:if>
+                <c:if test="${!(material.hasFactoryMarriage)}">
+                    <option value="false">Нет</option>
+                    <option value="true">Да</option>
+                </c:if>
+            </select>
         </dl>
         <dl>
             <dt><spring:message code="material.marriageDescription"/>:</dt>

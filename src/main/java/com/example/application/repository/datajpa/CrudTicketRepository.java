@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Transactional(readOnly = true)
 public interface CrudTicketRepository extends JpaRepository<Ticket, Integer> {
 
@@ -35,7 +36,8 @@ public interface CrudTicketRepository extends JpaRepository<Ticket, Integer> {
     @Query("SELECT t from Ticket t WHERE t.creationDate >= :startDate AND t.creationDate < :endDate ORDER BY t.creationDate DESC")
     List<Ticket> getBetweenHalfOpenForAdmin(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
-    @EntityGraph(attributePaths = {"tickets_materials"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT t FROM Ticket t INNER JOIN t.materials m WHERE t.id=:id AND t.user.id=:userId AND t.id=m.ticket.id")
-    Ticket getWithMaterial(@Param("id") int id, @Param("userId") int userId);
+    @EntityGraph(attributePaths = {"materials"}, type = EntityGraph.EntityGraphType.LOAD)
+//    @Query("SELECT t FROM Ticket t JOIN FETCH Material m WHERE t.id=:id AND t.id=m.ticket.id")
+    @Query("SELECT t FROM Ticket t WHERE t.id=:id")
+    Ticket getWithMaterial(@Param("id") int id);
 }

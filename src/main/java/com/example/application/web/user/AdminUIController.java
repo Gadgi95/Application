@@ -26,14 +26,14 @@ public class AdminUIController extends AbstractUserController {
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("user", new User(null, "new", "12345@gfdg.com", "3123534", Arrays.asList(Role.FOREMAN, Role.USER)));
+        model.addAttribute("user", new User(null, "new", "12345@gfdg.com", "3123534", Collections.singleton(Role.FOREMAN)));
         return "userForm";
     }
 
     @PostMapping()
     public String updateOrCreate(HttpServletRequest request) {
         User user = new User(null, request.getParameter("name"), request.getParameter("email"),
-                request.getParameter("password"), Arrays.asList(Role.FOREMAN, Role.USER));
+                request.getParameter("password"), Collections.singleton(Role.FOREMAN));
 
         if (request.getParameter("id").isEmpty()) {
             super.create(user);

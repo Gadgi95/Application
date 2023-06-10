@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://Application.example.com/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
@@ -16,19 +18,23 @@
                     <div class="row">
                         <div class="col-2">
                             <label for="startDate"><spring:message code="ticket.startDate"/>:</label>
-                            <input class="form-control" id="startDate" type="date" name="startDate" autocomplete="off" value="${param.startDate}">
+                            <input class="form-control" id="startDate" type="date" name="startDate" autocomplete="off"
+                                   value="${param.startDate}">
                         </div>
                         <div class="col-2">
                             <label for="endDate"><spring:message code="ticket.endDate"/>:</label>
-                            <input class="form-control" type="date" name="endDate" id="endDate" autocomplete="off" value="${param.endDate}">
+                            <input class="form-control" type="date" name="endDate" id="endDate" autocomplete="off"
+                                   value="${param.endDate}">
                         </div>
                         <div class="offset-2 col-3">
                             <label for="startTime"><spring:message code="ticket.startTime"/>:</label>
-                            <input class="form-control" type="time" name="startTime" id="startTime" autocomplete="off" value="${param.startTime}">
+                            <input class="form-control" type="time" name="startTime" id="startTime" autocomplete="off"
+                                   value="${param.startTime}">
                         </div>
                         <div class="col-3">
                             <label for="endTime"><spring:message code="ticket.endTime"/>:</label>
-                            <input class="form-control" name="endTime" id="endTime" type="time" autocomplete="off" value="${param.endTime}">
+                            <input class="form-control" name="endTime" id="endTime" type="time" autocomplete="off"
+                                   value="${param.endTime}">
                         </div>
                         <div style="padding: 0.75rem 1.25rem; margin-left: 600px;">
                             <button class="btn btn-danger" type="reset">
@@ -45,10 +51,14 @@
             </div>
         </div>
         <br/>
-        <a href="tickets/create"><button class="btn btn-primary">
-            <span class="fa fa-plus"></span>
-            <spring:message code="ticket.add"/>
-        </button></a>
+        <sec:authorize access="hasAnyRole('ADMIN', 'FOREMAN')">
+            <a href="tickets/create">
+                <button class="btn btn-primary">
+                    <span class="fa fa-plus"></span>
+                    <spring:message code="ticket.add"/>
+                </button>
+            </a>
+        </sec:authorize>
         <table class="table table-striped" id="datatable">
             <thead>
             <tr>
@@ -79,8 +89,18 @@
                     <td class="th_td">${ticket.status}</td>
                     <td class="th_td">${ticket.statusChangeDate}</td>
                     <td class="th_td">${ticket.isClosed()}</td>
-                    <td class="th_td"><button><a class="button_users" href="tickets/update?id=${ticket.id}"><span class="fa fa-pencil"></span></a></button></td>
-                    <td class="th_td"><button><a class="button_users" href="tickets/delete?id=${ticket.id}"><span class="fa fa-remove"></span></a></button></td>
+                        <td class="th_td">
+                            <button><a class="button_users" href="tickets/update?id=${ticket.id}"><span
+                                    class="fa fa-pencil"></span></a></button>
+                        </td>
+                    <sec:authorize access="hasAnyRole('ADMIN', 'FOREMAN')">
+                        <c:if test="${ticket.status.equals('новая')}">
+                            <td class="th_td">
+                                <button><a class="button_users" href="tickets/delete?id=${ticket.id}"><span
+                                        class="fa fa-remove"></span></a></button>
+                            </td>
+                        </c:if>
+                    </sec:authorize>
                 </tr>
             </c:forEach>
         </table>

@@ -23,6 +23,9 @@ public class Util {
         List<Material> materials = new ArrayList<>();
         for (int i = 1; i <= getTemp().size() - 1; i++) {
             materials.add((Material) getTemp().get(i));
+            if (materials.get(i-1).getId() == null) {
+                materials.get(i-1).setId(i+500_000);
+            }
         }
         return materials;
     }

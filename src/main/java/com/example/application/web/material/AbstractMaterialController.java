@@ -48,7 +48,7 @@ public class AbstractMaterialController {
     public void delete(int id) {
         int userId = SecurityUtil.authUserId();
         log.info("delete ticket {} for user {}", id, userId);
-        materialService.delete(id, userId);
+        materialService.delete(id);
     }
 
     public void deleteNew(int id) {
@@ -67,7 +67,7 @@ public class AbstractMaterialController {
         int userId = SecurityUtil.authUserId();
         log.info("create {} for user {}", material, userId);
         checkNew(material);
-        return materialService.create(material, ticketId, userId);
+        return materialService.create(material, ticketId);
     }
 
     public void createNew(Material material) {
@@ -77,17 +77,17 @@ public class AbstractMaterialController {
         addTemp(material);
     }
 
-    public void update(Material material, int id, int ticketId) {
+    public void update(Material material, int id) {
         int userId = SecurityUtil.authUserId();
         log.info("update {} for user {}", material, userId);
         assureIdConsistent(material, id);
-        materialService.update(material, ticketId, userId);
+        materialService.update(material);
     }
 
-    public void updateNew(Material material, int id) {
+    public void updateNew(Material material) {
         int userId = SecurityUtil.authUserId();
         log.info("update {} for user {}", material, userId);
-        assureIdConsistent(material, id);
+        assureIdConsistent(material, material.getId());
         materialService.updateNew(material);
     }
 
