@@ -23,7 +23,7 @@ CREATE TABLE tickets
     creationDate        DATETIME DEFAULT NOW() NOT NULL,
     status              VARCHAR(30)            NOT NULL,
     responsibleSupplier VARCHAR(128),
-    deliveryDate        VARCHAR(20),
+    deliveryDate        DATETIME,
     statusChangeDate    VARCHAR(20),
     isClosed            BOOLEAN                NOT NULL,
     closingDate         VARCHAR(20),

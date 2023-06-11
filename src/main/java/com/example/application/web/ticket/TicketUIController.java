@@ -91,7 +91,7 @@ public class TicketUIController extends AbstractTicketController {
     @PostMapping()
     public String updateOrCreate(HttpServletRequest request) {
         Ticket ticket = new Ticket(null, request.getParameter("name"), request.getParameter("status"), false,
-                request.getParameter("objectName"));
+                request.getParameter("objectName"), LocalDate.parse(request.getParameter("deliveryDate")));
         if (userService.get(SecurityUtil.authUserId()).getRoles().contains(Role.ADMIN) |
                 userService.get(SecurityUtil.authUserId()).getRoles().contains(Role.SUPPLIER)) {
             super.updateForAdmin(ticket, getId(request));
@@ -160,6 +160,6 @@ public class TicketUIController extends AbstractTicketController {
 
     private void workWithTemp() {
         getTemp().clear();
-        addTemp(new Ticket(null, "new", "новая", false, "Рига"));
+        addTemp(new Ticket(null, "new", "новая", false, "Рига", null));
     }
 }

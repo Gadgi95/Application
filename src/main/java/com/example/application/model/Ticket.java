@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class Ticket extends AbstractNamedEntity implements HasId {
 
     @Column(name = "deliveryDate")
     @Size(min = 2, max = 20)
-    private String deliveryDate;
+    private LocalDate deliveryDate;
 
     @Column(name = "statusChangeDate")
     @Size(min = 2, max = 20)
@@ -76,7 +77,7 @@ public class Ticket extends AbstractNamedEntity implements HasId {
     @JsonIgnore
     private User user;
 
-    public Ticket(Integer id, String name, LocalDateTime creationDate, String status, String responsibleSupplier, String deliveryDate,
+    public Ticket(Integer id, String name, LocalDateTime creationDate, String status, String responsibleSupplier, LocalDate deliveryDate,
                   String statusChangeDate, boolean isClosed, String closingDate, String closedBy,
                   String objectName) {
         super(name);
@@ -92,7 +93,7 @@ public class Ticket extends AbstractNamedEntity implements HasId {
         this.objectName = objectName;
     }
 
-    public Ticket(Integer id, String name, String status, boolean isClosed, String objectName) {
+    public Ticket(Integer id, String name, String status, boolean isClosed, String objectName, LocalDate deliveryDate) {
         super(name);
         this.id = id;
         if (status == null) {
@@ -105,6 +106,7 @@ public class Ticket extends AbstractNamedEntity implements HasId {
             this.status = "в работе";
         this.isClosed = isClosed;
         this.objectName = objectName;
+        this.deliveryDate = deliveryDate;
     }
 
     public Ticket() {
@@ -160,11 +162,11 @@ public class Ticket extends AbstractNamedEntity implements HasId {
         this.responsibleSupplier = responsibleSupplier;
     }
 
-    public String getDeliveryDate() {
+    public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(String deliveryDate) {
+    public void setDeliveryDate(LocalDate deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 

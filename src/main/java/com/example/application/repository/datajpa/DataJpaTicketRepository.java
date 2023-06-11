@@ -1,8 +1,10 @@
 package com.example.application.repository.datajpa;
 
+import com.example.application.AuthorizedUser;
 import com.example.application.model.Material;
 import com.example.application.model.Ticket;
 import com.example.application.repository.TicketRepository;
+import com.example.application.web.SecurityUtil;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -47,6 +49,7 @@ public class DataJpaTicketRepository implements TicketRepository {
         ticket.setStatus(ticketFromBase.getStatus());
         ticket.setResponsibleSupplier(ticketFromBase.getResponsibleSupplier());
         ticket.setDeliveryDate(ticketFromBase.getDeliveryDate());
+        ticket.setFlagToDelete(ticketFromBase.isFlagToDelete());
         ticket.setClosed(ticketFromBase.isClosed());
         ticket.setClosingDate(ticketFromBase.getClosingDate());
         ticket.setClosedBy(ticketFromBase.getClosedBy());
@@ -56,10 +59,30 @@ public class DataJpaTicketRepository implements TicketRepository {
     @Override
     @Transactional
     public Ticket saveForAdmin(Ticket ticket) {
+        int userId = SecurityUtil.authUserId();
         if (!ticket.isNew() && get(ticket.getId()) == null) {
             return null;
         }
-        ticket.setCreationDate(crudTicketRepository.getById(ticket.getId()).getCreationDate());
+        Ticket ticketFromBase = crudTicketRepository.getById(ticket.getId());
+        ticket.setCreationDate(ticketFromBase.getCreationDate());
+        ticket.setUser(crudUserRepository.getById(ticketFromBase.getUser().getId()));
+        ticket.setResponsibleSupplier(crudUserRepository.getById(userId).getName());
+        ticket.setFlagToDelete(ticketFromBase.isFlagToDelete());
+        ticket.setName(ticketFromBase.getName());
+        ticket.setObjectName(ticketFromBase.getObjectName());
+        ticket.setStatusChangeDate(ticketFromBase.getStatusChangeDate());
+        if (ticketFromBase.getDeliveryDate() == null || ticket.getDeliveryDate().isAfter(ticketFromBase.getDeliveryDate())) {
+            ticket.setDeliveryDate(ticket.getDeliveryDate());
+            return crudTicketRepository.save(ticket);
+        }
+        if (ticket.getDeliveryDate() == null || ticket.getDeliveryDate().isEqual(ticketFromBase.getDeliveryDate())) {
+            ticket.setDeliveryDate(ticketFromBase.getDeliveryDate());
+            return crudTicketRepository.save(ticket);
+        }
+        if (ticket.getDeliveryDate().isBefore(ticketFromBase.getDeliveryDate())) {
+            ticket.setDeliveryDate(ticketFromBase.getDeliveryDate());
+            return crudTicketRepository.save(ticket);
+        }
         return crudTicketRepository.save(ticket);
     }
 

@@ -17,14 +17,24 @@
                 <input type="hidden" name="id" value="${ticket.id}">
                 <dl>
                     <dt><spring:message code="ticket.deliveryDate"/>:</dt>
-                    <dd><input type="date" value="${ticket.deliveryDate}" size=40 name="deliveryDate" required></dd>
+                    <dd><input type="date" value="${ticket.deliveryDate.toLocalDate()}" size=40 name="deliveryDate" required></dd>
                 </dl>
                 <dl>
                     <dt><spring:message code="ticket.status"/>:</dt>
-                    <dd><select name="status" value="${ticket.status}" required>
-                        <option value="1">Новая</option>
-                        <option value="2">В работе</option>
-                    </select></dd>
+                    <dd>
+                        <c:if test="${ticket.status.equals('новая')}">
+                            <select name="status" value="${ticket.status}" required>
+                                <option value="1">Новая</option>
+                                <option value="2">В работе</option>
+                            </select>
+                        </c:if>
+                        <c:if test="${ticket.status.equals('в работе')}">
+                            <select name="status" value="${ticket.status}" required>
+                                <option value="1">В работе</option>
+                                <option value="2">Новая</option>
+                            </select>
+                        </c:if>
+                    </dd>
                     <%--                    <dd><input type="checkbox" value="${ticket.status}" name="status" required></dd>--%>
                 </dl>
                 <button class="btn btn-primary" type="submit">

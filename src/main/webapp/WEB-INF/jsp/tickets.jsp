@@ -11,7 +11,12 @@
 
 <div class="jumbotron pt-4">
     <div style="margin-left: 0px;" class="container">
-        <h3 class="text-center"><spring:message code="ticket.title"/></h3>
+        <sec:authorize access="hasAnyRole('ADMIN', 'SUPPLIER')">
+            <h3 class="text-center"><spring:message code="ticket.all"/></h3>
+        </sec:authorize>
+        <sec:authorize access="hasRole('FOREMAN')">
+            <h3 class="text-center"><spring:message code="ticket.title"/></h3>
+        </sec:authorize>
         <div class="card border-dark">
             <div class="card-body pb-0">
                 <form id="filter" method="get" action="tickets/filter">
