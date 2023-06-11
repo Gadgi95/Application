@@ -38,7 +38,6 @@ public class Ticket extends AbstractNamedEntity implements HasId {
     private String responsibleSupplier;
 
     @Column(name = "deliveryDate")
-    @Size(min = 2, max = 20)
     private LocalDate deliveryDate;
 
     @Column(name = "statusChangeDate")

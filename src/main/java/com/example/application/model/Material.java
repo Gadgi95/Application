@@ -31,7 +31,7 @@ public class Material extends AbstractNamedEntity implements HasId {
 
     @NotBlank
     @Column(name = "characteristics")
-    @Size(min = 2, max = 120)
+    @Size(max = 120)
     private String characteristics;
 
     @Column(name = "hasFactoryMarriage")

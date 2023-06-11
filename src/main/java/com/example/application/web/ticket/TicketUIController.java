@@ -47,7 +47,6 @@ public class TicketUIController extends AbstractTicketController {
         List<Material> materials = super.get(ticketId).getMaterials();
         if (userService.get(SecurityUtil.authUserId()).getRoles().contains(Role.ADMIN) |
                 userService.get(SecurityUtil.authUserId()).getRoles().contains(Role.SUPPLIER)) {
-
             model.addAttribute("ticket", super.get(ticketId));
             workWithTemp();
             for (int i = 1; i <= materials.size(); i++) {
@@ -90,12 +89,14 @@ public class TicketUIController extends AbstractTicketController {
 
     @PostMapping()
     public String updateOrCreate(HttpServletRequest request) {
-        Ticket ticket = new Ticket(null, request.getParameter("name"), request.getParameter("status"), false,
-                request.getParameter("objectName"), LocalDate.parse(request.getParameter("deliveryDate")));
         if (userService.get(SecurityUtil.authUserId()).getRoles().contains(Role.ADMIN) |
                 userService.get(SecurityUtil.authUserId()).getRoles().contains(Role.SUPPLIER)) {
+            Ticket ticket = new Ticket(null, request.getParameter("name"), request.getParameter("status"), false,
+                    request.getParameter("objectName"), LocalDate.parse(request.getParameter("deliveryDate")));
             super.updateForAdmin(ticket, getId(request));
         } else {
+            Ticket ticket = new Ticket(null, request.getParameter("name"), request.getParameter("status"), false,
+                    request.getParameter("objectName"), null);
             if (request.getParameter("id").isEmpty()) {
                 Ticket ticketTemp = (Ticket) getTemp().get(0);
                 ticketTemp.setName(ticket.getName());

@@ -71,6 +71,7 @@ public class DataJpaTicketRepository implements TicketRepository {
         ticket.setName(ticketFromBase.getName());
         ticket.setObjectName(ticketFromBase.getObjectName());
         ticket.setStatusChangeDate(ticketFromBase.getStatusChangeDate());
+//        ticket.setStatusChangeDate();
         if (ticketFromBase.getDeliveryDate() == null || ticket.getDeliveryDate().isAfter(ticketFromBase.getDeliveryDate())) {
             ticket.setDeliveryDate(ticket.getDeliveryDate());
             return crudTicketRepository.save(ticket);
