@@ -10,170 +10,193 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "materials")
-@NamedEntityGraph(name = Material.graph, attributeNodes = {@NamedAttributeNode("ticket")})
+//@NamedEntityGraph(name = Material.graph, attributeNodes = {@NamedAttributeNode("ticket")})
 public class Material extends AbstractNamedEntity implements HasId {
 
-  public static final String graph = "Material.withTicket";
+    public static final String graph = "Material.withTicket";
 
-  @Id
-  @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-  @NotNull
-  @Column(name = "quantity")
-  @Range(min = 0, max = 5000)
-  private int quantity;
+    @NotNull
+    @Column(name = "quantity")
+    @Range(min = 0, max = 5000)
+    private int quantity;
 
-  @NotBlank
-  @Column(name = "characteristics")
-  @Size(min = 2, max = 120)
-  private String characteristics;
+    @NotBlank
+    @Column(name = "characteristics")
+    @Size(max = 120)
+    private String characteristics;
 
-  @Column(name = "hasFactoryMarriage")
-  private boolean hasFactoryMarriage;
+    @Column(name = "hasFactoryMarriage")
+    private boolean hasFactoryMarriage;
 
-  @Column(name = "marriageDetectionDate")
+    @Column(name = "marriageDetectionDate")
 //  @Range(min = 0, max = 50)
-  private Date marriageDetectionDate;
+    private LocalDate marriageDetectionDate;
 
-  @Column(name = "marriageDetectedBy")
-  @Size(min = 2, max = 128)
-  private String marriageDetectedBy;
+    @Column(name = "marriageDetectedBy")
+    @Size(min = 2, max = 128)
+    private String marriageDetectedBy;
 
-  @Column(name = "marriageDescription")
-  @Size(max = 120)
-  private String marriageDescription;
+    @Column(name = "marriageDescription")
+    @Size(max = 120)
+    private String marriageDescription;
 
-  @Column(name = "marriagePhotoUrl")
-  @Size(max = 150)
-  private String marriagePhotoUrl;
+    @Column(name = "marriagePhotoUrl")
+    @Size(max = 150)
+    private String marriagePhotoUrl;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "ticket_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
-  @JsonIgnore
-  private Ticket ticket;
+    @Transient
+    private boolean flagToDelete;
 
-  public Material(Integer id, String name, int quantity, String characteristics, boolean hasFactoryMarriage, String marriageDescription) {
-    super(name);
-    this.id = id;
-    this.name = name;
-    this.quantity = quantity;
-    this.characteristics = characteristics;
-    this.hasFactoryMarriage = hasFactoryMarriage;
-    this.marriageDescription = marriageDescription;
-  }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ticket_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Ticket ticket;
 
-  @Override
-  public Integer getId() {
-    return id;
-  }
+    public Material() {
+    }
 
-  @Override
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    public Material(Integer id, String name, int quantity, String characteristics, boolean hasFactoryMarriage, String marriageDescription) {
+        super(name);
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+        this.characteristics = characteristics;
+        this.hasFactoryMarriage = hasFactoryMarriage;
+        this.marriageDescription = marriageDescription;
+    }
 
-  public Material() {
-  }
+    @Override
+    public Integer getId() {
+        return id;
+    }
 
-  public int getQuantity() {
-    return quantity;
-  }
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  public void setQuantity(int quantity) {
-    this.quantity = quantity;
-  }
 
-  public String getCharacteristics() {
-    return characteristics;
-  }
+    public int getQuantity() {
+        return quantity;
+    }
 
-  public void setCharacteristics(String characteristics) {
-    this.characteristics = characteristics;
-  }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-  public boolean isHasFactoryMarriage() {
-    return hasFactoryMarriage;
-  }
-  public String getBroke() {
-    if (hasFactoryMarriage) {
-      return "Да";
-    } else
-      return "Нет";
-  }
+    public String getCharacteristics() {
+        return characteristics;
+    }
 
-  public void setHasFactoryMarriage(boolean hasFactoryMarriage) {
-    this.hasFactoryMarriage = hasFactoryMarriage;
-  }
+    public void setCharacteristics(String characteristics) {
+        this.characteristics = characteristics;
+    }
 
-  public Date getMarriageDetectionDate() {
-    return marriageDetectionDate;
-  }
+    public boolean isHasFactoryMarriage() {
+        return hasFactoryMarriage;
+    }
 
-  public void setMarriageDetectionDate(Date marriageDetectionDate) {
-    this.marriageDetectionDate = marriageDetectionDate;
-  }
+    public String getBroke() {
+        if (hasFactoryMarriage) {
+            return "Да";
+        } else
+            return "Нет";
+    }
 
-  public String getMarriageDetectedBy() {
-    return marriageDetectedBy;
-  }
+    public void setHasFactoryMarriage(boolean hasFactoryMarriage) {
+        this.hasFactoryMarriage = hasFactoryMarriage;
+    }
 
-  public void setMarriageDetectedBy(String marriageDetectedBy) {
-    this.marriageDetectedBy = marriageDetectedBy;
-  }
+    public LocalDate getMarriageDetectionDate() {
+        return marriageDetectionDate;
+    }
 
-  public String getMarriageDescription() {
-    return marriageDescription;
-  }
+    public void setMarriageDetectionDate(LocalDate marriageDetectionDate) {
+        this.marriageDetectionDate = marriageDetectionDate;
+    }
 
-  public void setMarriageDescription(String marriageDescription) {
-    this.marriageDescription = marriageDescription;
-  }
+    public String getMarriageDetectedBy() {
+        return marriageDetectedBy;
+    }
 
-  public String getMarriagePhotoUrl() {
-    return marriagePhotoUrl;
-  }
+    public void setMarriageDetectedBy(String marriageDetectedBy) {
+        this.marriageDetectedBy = marriageDetectedBy;
+    }
 
-  public void setMarriagePhotoUrl(String marriagePhotoUrl) {
-    this.marriagePhotoUrl = marriagePhotoUrl;
-  }
+    public String getMarriageDescription() {
+        return marriageDescription;
+    }
 
-  public Ticket getTicket() {
-    return ticket;
-  }
+    public void setMarriageDescription(String marriageDescription) {
+        this.marriageDescription = marriageDescription;
+    }
 
-  public void setTicket(Ticket ticket) {
-    this.ticket = ticket;
-  }
+    public String getMarriagePhotoUrl() {
+        return marriagePhotoUrl;
+    }
 
-  public void detectFactoryMarriage(boolean hasFactoryMarriage, Date marriageDetectionDate, String marriageDetectedBy,
-                                    String marriageDescription, String marriagePhotoUrl) {
-    this.hasFactoryMarriage = hasFactoryMarriage;
-    this.marriageDetectionDate = marriageDetectionDate;
-    this.marriageDetectedBy = marriageDetectedBy;
-    this.marriageDescription = marriageDescription;
-    this.marriagePhotoUrl = marriagePhotoUrl;
-  }
+    public void setMarriagePhotoUrl(String marriagePhotoUrl) {
+        this.marriagePhotoUrl = marriagePhotoUrl;
+    }
 
-  @Override
-  public String toString() {
-    return "Material{" +
-            "id=" + id +
-            ", quantity=" + quantity +
-            ", characteristics='" + characteristics + '\'' +
-            ", hasFactoryMarriage=" + hasFactoryMarriage +
-            ", marriageDetectionDate=" + marriageDetectionDate +
-            ", marriageDetectedBy='" + marriageDetectedBy + '\'' +
-            ", marriageDescription='" + marriageDescription + '\'' +
-            ", marriagePhotoUrl='" + marriagePhotoUrl + '\'' +
-            ", ticket=" + ticket +
-            ", name='" + name + '\'' +
-            '}';
-  }
+    public boolean isFlagToDelete() {
+        return flagToDelete;
+    }
+
+    public void setFlagToDelete(boolean flagToDelete) {
+        this.flagToDelete = flagToDelete;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    public void detectFactoryMarriage(boolean hasFactoryMarriage, LocalDate marriageDetectionDate, String marriageDetectedBy,
+                                      String marriageDescription, String marriagePhotoUrl) {
+        this.hasFactoryMarriage = hasFactoryMarriage;
+        this.marriageDetectionDate = marriageDetectionDate;
+        this.marriageDetectedBy = marriageDetectedBy;
+        this.marriageDescription = marriageDescription;
+        this.marriagePhotoUrl = marriagePhotoUrl;
+    }
+
+    @Override
+    public String toString() {
+        String ticketId;
+        if (ticket == null) {
+            ticketId = "null";
+        } else {
+            if (ticket.getId() == null) {
+                ticketId = "null";
+            } else {
+                ticketId = ticket.getId().toString();
+            }
+        }
+        return "Material{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", characteristics='" + characteristics + '\'' +
+                ", hasFactoryMarriage=" + hasFactoryMarriage +
+                ", marriageDetectionDate=" + marriageDetectionDate +
+                ", marriageDetectedBy='" + marriageDetectedBy + '\'' +
+                ", marriageDescription='" + marriageDescription + '\'' +
+                ", marriagePhotoUrl='" + marriagePhotoUrl + '\'' +
+                ", ticketId=" + ticketId +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

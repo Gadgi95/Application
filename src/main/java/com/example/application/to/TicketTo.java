@@ -5,6 +5,7 @@ import com.example.application.model.Material;
 import com.example.application.model.ObjectName;
 
 import java.beans.ConstructorProperties;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ public class TicketTo {
     private final String responsibleSupplier;
     private final String responsibleForeman;
 
-    private final String deliveryDate;
+    private final LocalDate deliveryDate;
 
     private final String statusChangeDate;
 
@@ -39,7 +40,7 @@ public class TicketTo {
 
     @ConstructorProperties({"id", "name", "creationDate", "status", "responsibleSupplier", "responsibleForeman", "deliveryDate", "statusChangeDate",
             "closingDate", "closedBy", "objectName", "isClosed", "excess"})
-    public TicketTo(Integer id, String name, LocalDateTime creationDate, String status, String responsibleSupplier, String responsibleForeman, String deliveryDate,
+    public TicketTo(Integer id, String name, LocalDateTime creationDate, String status, String responsibleSupplier, String responsibleForeman, LocalDate deliveryDate,
                     String statusChangeDate, boolean isClosed, String closingDate, String closedBy,
                     String objectName, boolean excess) {
         this.id = id;
@@ -80,7 +81,7 @@ public class TicketTo {
         return responsibleForeman;
     }
 
-    public String getDeliveryDate() {
+    public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
 

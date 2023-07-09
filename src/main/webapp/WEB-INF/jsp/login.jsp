@@ -17,7 +17,7 @@
             <div class="error">Неверные учетные данные</div>
         </c:if>
         <c:if test="${not empty param.message}">
-            <div><spring:message code="${param.message}" text=""/></div>
+            <div style="color: white; font-size: small"><spring:message code="${param.message}" text=""/></div>
         </c:if>
     </div>
     <div class="input-container ic2">
@@ -37,10 +37,10 @@
     <br>
     <br>
     <div class="wrapper">
-        <a href="profile/register">
-            <button class="btn btn-primary">
-                <spring:message code="app.register"/>
-            </button>
+        <a href="profile/register" class="text-decoration-none">
+            <%--            <button class="btn btn-primary">--%>
+            <spring:message code="app.register"/>
+            <%--            </button>--%>
         </a>
     </div>
     <br>

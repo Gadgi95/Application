@@ -1,6 +1,7 @@
 package com.example.application.web;
 
 import com.example.application.model.Role;
+import com.example.application.model.Ticket;
 import com.example.application.service.TicketService;
 import com.example.application.service.UserService;
 import com.example.application.util.TicketsUtil;
@@ -45,7 +46,8 @@ public class RootController {
     @GetMapping("/tickets")
     public String getTickets(Model model) {
         log.info("tickets");
-        if (userService.get(SecurityUtil.authUserId()).getRoles().contains(Role.ADMIN)) {
+        if (userService.get(SecurityUtil.authUserId()).getRoles().contains(Role.ADMIN) |
+                userService.get(SecurityUtil.authUserId()).getRoles().contains(Role.SUPPLIER)) {
             model.addAttribute("tickets",
                     TicketsUtil.getTos(ticketService.getAll()));
         } else

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -31,7 +32,7 @@ public abstract class AbstractTicketController {
     public Ticket get(int id) {
         int userId = SecurityUtil.authUserId();
         log.info("get ticket {} for user {}", id, userId);
-        return service.get(id, userId);
+        return service.get(id);
     }
 
     public void delete(int id) {
@@ -60,6 +61,13 @@ public abstract class AbstractTicketController {
         service.update(ticket, userId);
     }
 
+    public void updateForAdmin(Ticket ticket, int id) {
+        int userId = SecurityUtil.authUserId();
+        log.info("update {} for user {}", ticket, userId);
+        assureIdConsistent(ticket, id);
+        service.updateForAdmin(ticket);
+    }
+
     /**
      * <ol>Filter separately
      * <li>by date</li>
@@ -67,7 +75,7 @@ public abstract class AbstractTicketController {
      * </ol>
      */
     public List<TicketTo> getBetween(@Nullable LocalDate startDate, @Nullable LocalTime startTime,
-                                            @Nullable LocalDate endDate, @Nullable LocalTime endTime) {
+                                     @Nullable LocalDate endDate, @Nullable LocalTime endTime) {
         int userId = SecurityUtil.authUserId();
         log.info("getBetween dates({} - {}) time({} - {}) for user {}", startDate, endDate, startTime, endTime, userId);
         if (userService.get(userId).getRoles().contains(Role.ADMIN)) {

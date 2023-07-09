@@ -6,38 +6,47 @@
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
 <%--<jsp:include page="fragments/bodyHeader.jsp"/>--%>
-    <section>
-        <jsp:useBean id="material" class="com.example.application.model.Material" scope="request"/>
-        <%--    `material.new` cause javax.el.ELException - bug tomcat --%>
-        <h3><spring:message code="${material.isNew() ? 'material.add' : 'material.edit'}"/></h3>
-        <hr>
-            <form method="post" action="tickets/materials/createNew">
-                <input type="hidden" name="id" value="${material.id}">
-                <dl>
-                  <dt><spring:message code="material.name"/>:</dt>
-                  <dd><input type="text" value="${material.name}" size=40 name="name" required></dd>
-                </dl>
-                <dl>
-                  <dt><spring:message code="material.quantity"/>:</dt>
-                  <dd><input type="number" value="${material.quantity}" name="quantity" required></dd>
-                </dl>
-                <dl>
-                  <dt><spring:message code="material.characteristics"/>:</dt>
-                  <dd><input type="text" value="${material.characteristics}" name="characteristics" required></dd>
-                </dl>
-                <dl>
-                  <dt><spring:message code="material.hasFactoryMarriage"/>:</dt>
-                  <dd><input type="checkbox" value="${material.hasFactoryMarriage}" name="hasFactoryMarriage"></dd>
-                </dl>
-                <dl>
-                  <dt><spring:message code="material.marriageDescription"/>:</dt>
-                  <dd><input type="text" value="${material.marriageDescription}" name="marriageDescription"></dd>
-                </dl>
-                <button type="submit"><spring:message code="common.save"/></button>
-                <a href="/tickets/materials">
-                    <button type="button"><spring:message code="common.cancel"/></button>
-                </a>
-            </form>
-    </section>
+<section>
+    <jsp:useBean id="material" class="com.example.application.model.Material" scope="request"/>
+    <%--    `material.new` cause javax.el.ELException - bug tomcat --%>
+    <h3><spring:message code="${material.isNew() ? 'material.add' : 'material.edit'}"/></h3>
+    <hr>
+    <form method="post" action="tickets/materials/create/new">
+        <input type="hidden" name="id" value="${material.id}">
+        <dl>
+            <dt><spring:message code="material.name"/>:</dt>
+            <dd><input type="text" value="${material.name}" size=40 name="name" required></dd>
+        </dl>
+        <dl>
+            <dt><spring:message code="material.quantity"/>:</dt>
+            <dd><input type="number" value="${material.quantity}" name="quantity" required></dd>
+        </dl>
+        <dl>
+            <dt><spring:message code="material.characteristics"/>:</dt>
+            <dd><input type="text" value="${material.characteristics}" name="characteristics" required></dd>
+        </dl>
+        <dl>
+            <dt><spring:message code="material.hasFactoryMarriage"/>:</dt>
+            <select name="hasFactoryMarriage" value="${material.hasFactoryMarriage}">
+                <c:if test="${material.hasFactoryMarriage}">
+                    <option value="true">Да</option>
+                    <option value="false">Нет</option>
+                </c:if>
+                <c:if test="${!(material.hasFactoryMarriage)}">
+                    <option value="false">Нет</option>
+                    <option value="true">Да</option>
+                </c:if>
+            </select>
+        </dl>
+        <dl>
+            <dt><spring:message code="material.marriageDescription"/>:</dt>
+            <dd><input type="text" value="${material.marriageDescription}" name="marriageDescription"></dd>
+        </dl>
+        <button type="submit"><spring:message code="common.save"/></button>
+        <a href="/tickets/materials">
+            <button type="button"><spring:message code="common.cancel"/></button>
+        </a>
+    </form>
+</section>
 </body>
 </html>

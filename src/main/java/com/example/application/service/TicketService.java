@@ -22,8 +22,12 @@ public class TicketService {
         this.ticketRepository = ticketRepository;
     }
 
-    public Ticket get(int id, int userId) {
-        return ticketRepository.get(id, userId);
+    public Ticket get(int id) {
+        return ticketRepository.getWithMaterial(id);
+    }
+
+    public Ticket getTicketForMaterial(int materialId) {
+        return checkNotFoundWithId(ticketRepository.getTicketForMaterial(materialId), materialId);
     }
 
     public void delete(int id, int userId) {
@@ -41,6 +45,11 @@ public class TicketService {
     public void update(Ticket ticket, int userId) {
         Assert.notNull(ticket, "ticket must not be null");
         checkNotFoundWithId(ticketRepository.save(ticket, userId), ticket.id());
+    }
+
+    public void updateForAdmin(Ticket ticket) {
+        Assert.notNull(ticket, "ticket must not be null");
+        checkNotFoundWithId(ticketRepository.saveForAdmin(ticket), ticket.id());
     }
 
     public Ticket create(Ticket ticket, int userId) {

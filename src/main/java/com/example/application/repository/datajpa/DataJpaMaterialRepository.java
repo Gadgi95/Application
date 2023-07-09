@@ -1,10 +1,13 @@
 package com.example.application.repository.datajpa;
 
 import com.example.application.model.Material;
+import com.example.application.model.Ticket;
 import com.example.application.repository.MaterialRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -12,14 +15,24 @@ public class DataJpaMaterialRepository implements MaterialRepository {
 
     private static final Sort SORT_NAME = Sort.by(Sort.Direction.ASC, "name");
 
-    CrudMaterialRepository crudMaterialRepository;
+    private final CrudTicketRepository crudTicketRepository;
 
-    public DataJpaMaterialRepository(CrudMaterialRepository crudMaterialRepository) {
+    private final CrudMaterialRepository crudMaterialRepository;
+
+    public static Ticket temp;
+
+    public DataJpaMaterialRepository(CrudTicketRepository crudTicketRepository, CrudMaterialRepository crudMaterialRepository) {
+        this.crudTicketRepository = crudTicketRepository;
         this.crudMaterialRepository = crudMaterialRepository;
     }
 
     @Override
+    @Transactional
     public Material save(Material material) {
+        if (material.getId() != null) {
+            temp = crudTicketRepository.getById(crudMaterialRepository.getById(material.getId()).getTicket().getId());
+            material.setTicket(temp);
+        }
         return crudMaterialRepository.save(material);
     }
 

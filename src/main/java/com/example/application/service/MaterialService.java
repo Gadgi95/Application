@@ -6,6 +6,7 @@ import com.example.application.repository.MaterialRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.example.application.util.validation.ValidationUtil.checkNotFoundWithId;
@@ -31,41 +32,67 @@ public class MaterialService {
         return (Material) checkNotFoundWithId(getTemp().get(id), id);
     }
 
-    public void delete(int id, int userId) {
-        Ticket ticket = checkNotFoundWithId(ticketService.get(id, userId), userId);
-        checkNotFoundWithId(materialRepository.delete(id, ticket.id()), id);
+    //Удалить материал при редактировании заявки
+    public void delete(int id) {
+        if (id <= 500_000) {
+            Ticket ticket = (Ticket) getTemp().get(0);
+            checkNotFoundWithId(materialRepository.delete(id, ticket.id()), id);
+            deleteNew(id);
+        } else {
+            deleteNew(id);
+        }
     }
 
     //Удалить материал при создании заявки
     public void deleteNew(int id) {
-        checkNotFoundWithId(getTemp().remove(id), id);
+        for (int i = 1; i <= getTemp().size() - 1; i++) {
+            if (id == ((Material) getTemp().get(i)).getId()) {
+                getTemp().remove(i);
+            }
+        }
     }
 
     public List<Material> getAllForTicket(int ticketId) {
         return materialRepository.getAllForTicket(ticketId);
     }
 
-    public void update(Material material, int ticketId, int userId) {
+    public void update(Material material) {
         Assert.notNull(material, "meal must not be null");
-        Ticket ticket = checkNotFoundWithId(ticketService.get(ticketId, userId), userId);
         checkNotFoundWithId(materialRepository.save(material), material.id());
     }
 
     //Редактировать материал при создании заявки
     public void updateNew(Material material) {
         Assert.notNull(material, "meal must not be null");
-        checkNotFoundWithId(getTemp().get(material.id()), material.id());
-        Material materialNew = (Material) getTemp().get(material.id());
-        materialNew.setName(material.getName());
-        materialNew.setQuantity(material.getQuantity());
-        materialNew.setCharacteristics(material.getCharacteristics());
-        materialNew.setHasFactoryMarriage(material.isHasFactoryMarriage());
-        materialNew.setMarriageDescription(material.getMarriageDescription());
+        int materialId = material.getId();
+        for (int i = 1; i <= getTemp().size() - 1; i++) {
+            if (material.getId() == materialId) {
+                Material materialNew = (Material) getTemp().get(i);
+                materialNew.setName(material.getName());
+                materialNew.setQuantity(material.getQuantity());
+                materialNew.setCharacteristics(material.getCharacteristics());
+                materialNew.setHasFactoryMarriage(material.isHasFactoryMarriage());
+                materialNew.setMarriageDescription(material.getMarriageDescription());
+            }
+        }
     }
 
-    public Material create(Material material, int ticketId, int userId) {
+    public Material create(Material material, int ticketId) {
         Assert.notNull(material, "meal must not be null");
-        material.setTicket(ticketService.get(ticketId, userId));
+        material.setTicket(ticketService.get(ticketId));
+        if (material.getId() >= 500_000) {
+            material.setId(null);
+        }
         return materialRepository.save(material);
+    }
+
+    private void setDateFactoryMarriage(Material material) {
+        if (material.isHasFactoryMarriage()) {
+            if (material.getMarriageDetectionDate() == null) {
+                material.setMarriageDetectionDate(LocalDate.now());
+            }
+        } else if (material.getMarriageDetectionDate() != null) {
+            material.setMarriageDetectionDate(null);
+        }
     }
 }
